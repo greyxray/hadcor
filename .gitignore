@@ -1,0 +1,17 @@
+*.root
+*.png
+*.eps
+*.o
+*~
+*#
+*.root*
+grep
+err_*
+main
+log_*
+*.dat
+*.d
+*.hhh*
+log
+log2
+*.ccc*

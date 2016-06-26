@@ -1,0 +1,22 @@
+#!/bin/sh
+
+SOURCE=hadronisation_corrections_v1.1.cxx
+EXE=exe
+
+#if [ "$1" ]
+#then
+# SOURCE="$1.cxx"
+#fi
+
+echo compiling $EXE
+rm -f $EXE *.o
+
+echo "g++ -o $EXE $SOURCE `root-config --cflags` `root-config --libs` `gsl-config --cflags` `gsl-config --libs` -lMinuit -lMathMore"
+g++ -g -o  $EXE $SOURCE -I/diskmnt/b/huettmaa/CodeTim/lib/GSL/include `root-config --cflags` `root-config --libs` `gsl-config --libs` -lMinuit -lMathMore -L/diskmnt/b/huettmaa/CodeTim/lib/GSL/lib 
+
+rm -f log_$EXE err_log_$EXE
+
+./$EXE $2 #> log_$EXE 2> err_log_$EXE  &
+#tail -f err_log_$EXE
+#exit 0
+#readme

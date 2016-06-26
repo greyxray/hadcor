@@ -1,0 +1,35 @@
+#!/usr/bin/perl -w
+
+my $use_corr = "0";
+my $use_2ndcorr = "0";
+my $use_clustered = "0";
+my $parameters = $use_corr . " " . $use_2ndcorr . " " . $use_clustered;
+#my @periods = ("0405e", "06e", "0607p");
+my @periods = ("0405e");
+#my $mc_corr_type = "lepto_corr"; #"lepto_corr"
+#my @periods = ("989900");
+my $executable = "./main";
+#my @data_type = ("data", "mc_prph", "mc_bg_rad", "mc_bg_norad");
+#my @data_type = ("mc_prph", "mc_bg_rad", "mc_bg_norad");
+#my @data_type = ("mc_bg_rad");
+my @data_type = ("mc_prph");
+#system("make clean");
+#system("make $executable");
+for(my $i=0; $i<@periods; $i++) {
+    print("\n\n\n=============================== starting $periods[$i] =============================\n");
+    for(my $j=0; $j<@data_type; $j++) {
+	my $log = "log_" . $data_type[$j] . $periods[$i] . "parton";
+	my $log_err = "err_" . $log ;
+	system("rm $log $log_err");
+	#system("$executable $periods[$i] $data_type[$j] $parameters");
+	my $my_mail = ' 2>&1 | grep "Error"  && echo \'Your computation is done\' | mail -s \'My task\' greyxray@gmail.com &';
+	system("$executable $periods[$i] $data_type[$j] $parameters $my_mail");
+	print("$executable $periods[$i] $data_type[$j] $parameters & \n");
+    }
+    print("==================================== end of ${periods[$i]} ================================\n");
+}
+
+#my $log = "log_data04p";# . "_$use_corr$use_2ndcorr$use_clustered" ;
+#my $log_err = "err_" . $log ;
+#system("$executable 04p data $parameters > $log 2> $log_err &");
+#print("$executable 04p data $parameters > $log 2> $log_err &\n");
