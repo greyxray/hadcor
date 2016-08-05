@@ -3,10 +3,10 @@
 SOURCE=hadronisation_corrections_v1.1.cxx
 EXE=exe
 
-#if [ "$1" ]
-#then
-# SOURCE="$1.cxx"
-#fi
+if [ "$1" ]
+then
+ SOURCE="$1.cxx"
+fi
 
 echo compiling $EXE
 rm -f $EXE *.o

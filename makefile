@@ -4,12 +4,15 @@
 ## B. Waugh 2005-07-22
 ##
 
-# Default executable to compile
+# Default executble to compile
 EXECUTABLE = main
 # Location of KtJet installation
+#KTDIR = /data/zenith234b/kuprash/programs/ktjet_files
+#KTDIR = /afs/desy.de/group/zeus/pool/kuprash/programs/KtJet-1.08
 KTDIR = /afs/desy.de/user/g/glusheno/programs/KtJet-1.08
 #KTDIR = /usr/local
 # Location of CLHEP installation
+#CLHEPDIR = /data/zenith234b/kuprash/programs/clhep_files
 CLHEPDIR = /afs/cern.ch/sw/lcg/external/clhep/2.0.4.0/slc4_amd64_gcc34
 #CLHEPDIR = /usr/local
 # Following line may be needed if using version 1 of CLHEP
@@ -18,14 +21,14 @@ CLHEPDIR = /afs/cern.ch/sw/lcg/external/clhep/2.0.4.0/slc4_amd64_gcc34
 #KTFLAGS = -DKTDOUBLEPRECISION
 
 # Programs and flags
-CXX          = g++
-CXXFLAGS     = -O0 -ansi -g
+CXX          = g++ 
+CXXFLAGS     = -O0 -ansi
 RM           = rm -f 
 
 # Assign or Add variables
 CXXFLAGS    +=  -I$(KTDIR)/include -I$(CLHEPDIR)/include -Iinc $(shell root-config --cflags)
 CXXFLAGS    += $(CLHEP1FLAG) $(KTFLAGS)
-LIBS         = -L$(KTDIR)/lib -lKtJet -L$(CLHEPDIR)/lib -lCLHEP $(shell root-config --libs) 
+LIBS         = -L$(KTDIR)/lib -lKtJet -L$(CLHEPDIR)/lib -lCLHEP $(shell root-config --libs)
 GARBAGE      = *.o src/*.o
 SOURCE_FILES = $(shell ls -1 src/*.c)
 SOURCE_FILESF:= $(shell ls -1 src/*.f)
@@ -40,10 +43,9 @@ INC          = -I./inc
 .PRECIOUS: %.o
 
 default: $(EXECUTABLE) 
-#   $(CXX) -o $@ $@.o $(OBJ) $(CXXFLAGS) $(LIBS)  -lgfortran -B /lib/ssa
-#	$(CXX) -o $@ $@.o $(OBJ) $(CXXFLAGS) $(LIBS) -l g2c -B /lib/ssa
+
 % : %.o $(OBJ) makefile
-	$(CXX) -o $@ $@.o $(OBJ) $(CXXFLAGS) $(LIBS) -lgfortran -B /lib/ssa
+	$(CXX) -o $@ $@.o $(OBJ) $(CXXFLAGS) $(LIBS)  -lgfortran -B /lib/ssa
 
 %.o : %.cxx 
 	$(CXX) $(CXXFLAGS)  -c $<

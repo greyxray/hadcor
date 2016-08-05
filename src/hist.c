@@ -21,12 +21,14 @@ void Hist::Init(TDirectory** dir)
   dstw[1] = new TH1D("h_dstw1", "DSTW bits 64-127", 64, 64., 127.);
   fltw[0] = new TH1D("h_fltw0", "FLTW bits 0-31", 32, 0., 31.);
   fltw[1] = new TH1D("h_fltw1", "FLTW bits 32-63", 32, 32., 63.);
-  for(Int_t i=0; i<6; i++) {
+  for(Int_t i=0; i<6; i++) 
+  {
     TString s; s.Form("h_sltw%i", i);
     TString s_title; s_title.Form("SLTW bits %i-%i", i*32, i*32+31);
     sltw[i] = new TH1D(s, s_title, 32, Double_t(i*32), Double_t(i*32+31));
   }
-  for(Int_t i=0; i<15; i++) {
+  for(Int_t i=0; i<15; i++) 
+  {
     TString s; s.Form("h_tltw%i", i);
     TString s_title; s_title.Form("TLTW bits %i-%i", i*32, i*32+31);
     tltw[i] = new TH1D(s, s_title, 32, Double_t(i*32), Double_t(i*32+31));
@@ -34,14 +36,13 @@ void Hist::Init(TDirectory** dir)
   const Int_t n_x_bins = 500;
   Double_t  x_el_binning[n_x_bins+1];
   for(Int_t i=0; i<n_x_bins+1; i++)
-    x_el_binning[i] = TMath::Exp(float(i)*11.5/float(n_x_bins))/TMath::Exp(11.5);
+    x_el_binning[i] = TMath::Exp(float(i) * 11.5 / float(n_x_bins)) / TMath::Exp(11.5);
 
   const Int_t n_q2_bins = 200;
   Double_t  q2_binning[n_q2_bins+1];
-  for(Int_t i=0; i<n_q2_bins+1; i++) {
-    q2_binning[i] = q2start + (q2end-q2start)*TMath::Exp(float(i)*5./float(n_q2_bins))/TMath::Exp(5.);
-    cout << "q2 binning: " << i << " " << q2_binning[i] << endl;
-  }
+  for(Int_t i=0; i<n_q2_bins+1; i++) 
+    q2_binning[i] = q2start + (q2end - q2start) * TMath::Exp(float(i) * 5. / float(n_q2_bins)) / TMath::Exp(5.);
+  
   mccorel_q2_y = new TH2D("h2d_mccorel_q2_y", "x - Q^{2}, y - y", n_q2_bins-1, q2_binning, 200, 0., 1.);
   mccorel_q2_x = new TH2D("h2d_mccorel_q2_x", "x - Q^{2}, y - x", n_q2_bins-1, q2_binning, n_x_bins-1, x_el_binning);
   mccorel_q2_y_noweight = new TH2D("h2d_mccorel_q2_y_noweight", "x - Q^{2}, y - y, no weight", n_q2_bins-1, q2_binning, 200, 0., 1.);
@@ -97,6 +98,12 @@ void Hist::Init(TDirectory** dir)
   had_cross_et_jet = new TH1D("h_had_cross_et_jet", "had_cross_et_jet", number_et_jetbins, et_jet_bin);
   had_cross_et_jet2 = new TH1D("h_had_cross_et_jet2", "had_cross_et_jet (many bins)", 100, 0., 100.);
   had_cross_eta_jet = new TH1D("h_had_cross_eta_jet", "had_cross_eta_jet", number_eta_jetbins, eta_jet_bin);
+        had_cross_xgamma = new TH1D("h_had_cross_xgamma", "had_cross_xgamma", number_xgamma_bins, xgamma_bin);
+        had_cross_xp = new TH1D("h_had_cross_xp", "had_cross_xp", number_xp_bins, xp_bin);
+        had_cross_dphi = new TH1D("h_had_cross_dphi", "had_cross_dphi", number_dphi_bins, dphi_bin);
+        had_cross_deta = new TH1D("h_had_cross_deta", "had_cross_deta", number_deta_bins, deta_bin);
+        had_cross_dphi_e_ph = new TH1D("h_had_cross_dphi_e_ph", "had_cross_dphi_e_ph", number_dphi_e_ph_bins, dphi_e_ph_bin);
+        had_cross_deta_e_ph = new TH1D("h_had_cross_deta_e_ph", "had_cross_deta_e_ph", number_deta_e_ph_bins, deta_e_ph_bin);
 
   part_cross_et = new TH1D("h_part_cross_et", "part_cross_et", number_etbins, et_bin);
   part_cross_eta = new TH1D("h_part_cross_eta", "part_cross_eta", number_etabins, eta_bin_crosssec);
@@ -128,6 +135,12 @@ void Hist::Init(TDirectory** dir)
   hd_cross_x = new TH1D("h_hd_cross_x", "hd_cross_x", number_xbins, x_bin);
   hd_cross_et_jet = new TH1D("h_hd_cross_et_jet", "hd_cross_et_jet", number_et_jetbins, et_jet_bin);
   hd_cross_eta_jet = new TH1D("h_hd_cross_eta_jet", "hd_cross_eta_jet", number_eta_jetbins, eta_jet_bin);
+        hd_cross_xgamma = new TH1D("h_hd_cross_xgamma", "hd_cross_xgamma", number_xgamma_bins, xgamma_bin);
+        hd_cross_xp = new TH1D("h_hd_cross_xp", "hd_cross_xp", number_xp_bins, xp_bin);
+        hd_cross_dphi = new TH1D("h_hd_cross_dphi", "hd_cross_dphi", number_dphi_bins, dphi_bin);
+        hd_cross_deta = new TH1D("h_hd_cross_deta", "hd_cross_deta", number_deta_bins, deta_bin);
+        hd_cross_dphi_e_ph = new TH1D("h_hd_cross_dphi_e_ph", "hd_cross_dphi_e_ph", number_dphi_e_ph_bins, dphi_e_ph_bin);
+        hd_cross_deta_e_ph = new TH1D("h_hd_cross_deta_e_ph", "hd_cross_deta_e_ph", number_deta_e_ph_bins, deta_e_ph_bin);
 
   prof_det_cross_et = new TProfile("prof_det_cross_et", "det_cross_et", number_etbins, et_bin);
   prof_det_cross_eta = new TProfile("prof_det_cross_eta", "det_cross_eta", number_etabins, eta_bin_crosssec);
@@ -142,6 +155,12 @@ void Hist::Init(TDirectory** dir)
   prof_had_cross_x = new TProfile("prof_had_cross_x", "had_cross_x", number_xbins, x_bin);
   prof_had_cross_et_jet = new TProfile("prof_had_cross_et_jet", "had_cross_et_jet", number_et_jetbins, et_jet_bin);
   prof_had_cross_eta_jet = new TProfile("prof_had_cross_eta_jet", "had_cross_eta_jet", number_eta_jetbins, eta_jet_bin);
+        prof_had_cross_xgamma = new TProfile("prof_had_cross_xgamma", "had_cross_xgamma", number_xgamma_bins, xgamma_bin);
+        prof_had_cross_xp = new TProfile("prof_had_cross_xp", "had_cross_xp", number_xp_bins, xp_bin);
+        prof_had_cross_dphi = new TProfile("prof_had_cross_dphi", "had_cross_dphi", number_dphi_bins, dphi_bin);
+        prof_had_cross_deta = new TProfile("prof_had_cross_deta", "had_cross_deta", number_deta_bins, deta_bin);
+        prof_had_cross_dphi_e_ph = new TProfile("prof_had_cross_dphi_e_ph", "had_cross_dphi_e_ph", number_dphi_e_ph_bins, dphi_e_ph_bin);
+        prof_had_cross_deta_e_ph = new TProfile("prof_had_cross_deta_e_ph", "had_cross_deta_e_ph", number_deta_e_ph_bins, deta_e_ph_bin);
 
   prof_hd_cross_et = new TProfile("prof_hd_cross_et", "hd_cross_et", number_etbins, et_bin);
   prof_hd_cross_eta = new TProfile("prof_hd_cross_eta", "hd_cross_eta", number_etabins, eta_bin_crosssec);

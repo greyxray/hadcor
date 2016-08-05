@@ -2,27 +2,56 @@
 #define  constants_h
 #include <TH1D.h>
 
-   
-static const Int_t number_Q2bins = 5;
+//NEW CS VARIABLES PARAMETERS OF HISTOGRAMS
+static  const Int_t number_Q2bins = 5;
 static  const Int_t number_etabins = 4;
 static  const Int_t number_etbins = 4;
 static  const Int_t number_xbins = 4;
 static  const Int_t number_et_jetbins = 6;//warning
 static  const Int_t number_eta_jetbins = 4;
 
+static  const Int_t number_xgamma_bins = 6; // 6: 1 - 0.4 ; 0.4 - 0.6; 0.6 - 0.7; 0.7-0.8; 0.8-0.9; 0.9-1;
+static  const Int_t number_xp_bins = 6; //my 5: 0 - 0.002; 0.002 - 0.004; 0.004 - 0.006; 0.006 - 0.008; 0.008 - 0.01; 0.01 -0.03
+static  const Int_t number_dphi_bins = 7;//5; //art 5: 0..45; 45..85; 85-120; 120-145; 145-180
+static  const Int_t number_deta_bins = 6; //my 7:  -2.2 - -1.5; -1.5 - -0.8; -0.8 - -1.1;-1.1 - 0.6; 0.6 - 1.3; 1.3 - 2 ; 2 - 2.7
+static  const Int_t number_dphi_e_ph_bins = 6; //
+static  const Int_t number_deta_e_ph_bins = 5;//7; //
+/*
+  set_hist_atributes(70,  "h_phjet_dphi_el_ph_true_unmerged", "Photon_with_jet", "#Delta#phi_{e,#gamma}, per bin", 0.0, 3.5, 0.0, kFALSE, 25);
+  set_hist_atributes(71,  "h_phjet_deta_el_ph_true_unmerged", "Photon_with_jet", "#Delta#eta_{e,#gamma}, per bin",  -4.5, 0., 0.0, kFALSE, 10);
+
+  phjet_dphi_el_ph_true_unmerged = new TH1D("h_phjet_dphi_el_ph_true_unmerged", "#phi_{el} - #phi_{photon}", 200, -0.5, 3.5);//many unmerged bins
+  phjet_deta_el_ph_true = new TH1D("h_phjet_deta_el_ph_true", "#eta_{el} - #eta_{photon}", 25, -3.6, -0.6);//merged bins
+  phjet_deta_el_ph_true_unmerged = new TH1D("h_phjet_deta_el_ph_true_unmerged", "#eta_{el} - #eta_{photon}", 200, -7., 7.);//many unmerged bins
+*/
+
 static  const Int_t number_mbins = 4;
 static  const Int_t number_xibins = 5;
 static  const Int_t number_xbjbins = 5;
-
-
 static const Int_t number_Q2bins_trijet = 5;
 
+//*****************new variables***********************//
+static Double_t xgamma_bin[number_xgamma_bins + 1] = {0, 0.4, 0.6, 0.7, 0.8, 0.9, 1};
+static Double_t xp_bin[number_xp_bins + 1] = {0, 0.005, 0.01, 0.015, 0.025, 0.04, 0.07 };//{0, 0.004, 0.006, 0.008,  0.010 , 0.015 , 0.030};//{0, 0.004, 0.006, 0.008, 0.009, 0.03};//{0,  0.004, 0.006, 0.008, 0.01, 0.03};
+static Double_t dphi_bin[number_dphi_bins + 1] = {0, 90, 130, 140, 150, 160, 170, 180};//{0., 45., 85., 120., 145., 180.};
+static Double_t deta_bin[number_deta_bins + 1] = {-2.2, -1.5, -0.8, -0.1, 0.6, 1.3, 2.0};//{-2.2,  -0.8, -0.2, 0.4, 1.0, 1.5, 2.7};//{-2.2,  -0.8, -0.1, 0.6, 1.3, 2., 2.7};
+static Double_t dphi_e_ph_bin[number_dphi_e_ph_bins + 1] = {0., 45., 80., 110., 135., 155., 180.};//{0., 30., 60., 90., 120., 150., 180.};
+static Double_t deta_e_ph_bin[number_deta_e_ph_bins + 1] = {-3.6, -3.0, -2.4, -1.8, -1.2, -0.6 };//{-4.5, -3.6, -2.75, -2.25, -1.8, -1.2, -0.6, 0.};//{-4.5, -2.75, -2.25, -1.8, -1.2, 0.};//{-4.5, -3.0, -2.25, -1.5, -0.75, 0.};
+
+// For xp it might be better to divide the upper bin:  0.010 - 0.015 - 0.030
+// For delta-eta(egamma) it may be good to divide the outer bins each into
+// two parts.  Could you remake with these changes for us to look at?
+
+
 static Double_t et_bin[number_etbins+1] = {4., 6., 8., 10., 15.};
+  static Double_t et_bin_err[number_etbins] = {1, 1, 1, 2.5};
 static Double_t eta_bin_crosssec[number_etabins + 1] = {-0.7, -0.3, 0.1, 0.5, 0.9};
+  static Double_t eta_bin_crosssec_err[number_etabins] = {0.2, 0.2, 0.2, 0.2};
 //usual binning *bin1.root
 //static Double_t Q2_bin[number_Q2bins+1] = {10., 40., 80., 150., 350.};
 //static Double_t x_bin[number_xbins+1] = {2.e-4, 1.e-3, 3.e-3, 1.e-2, 2.e-2};
 //static Double_t et_jet_bin[number_et_jetbins+1] = {2.5, 5., 10., 18., 35.};
+
 //static Double_t eta_jet_bin[number_eta_jetbins+1] = {-1.5, -0.75, 0., 0.9, 1.8};
 
 //optimal binning : *.root
@@ -33,23 +62,127 @@ static Double_t eta_bin_crosssec[number_etabins + 1] = {-0.7, -0.3, 0.1, 0.5, 0.
 
 //Peter's suggestion : *bin2.root FINAL!!!!
 static Double_t Q2_bin[number_Q2bins+1] = {10., 20., 40., 80., 150., 350.};
+  static Double_t Q2_bin_err[number_Q2bins] = {5., 10., 20., 35., 100.};
 static Double_t x_bin[number_xbins+1] = {2.e-4, 1.e-3, 3.e-3, 1.e-2, 2.e-2};
+  static Double_t x_bin_err[number_xbins] = {4.e-4, 1.e-3, 3.5e-3, 5.e-3};
 static Double_t et_jet_bin[number_et_jetbins+1] = {2.5, 4., 6., 8., 10., 15., 35.};
+  static Double_t et_jet_bin_err[number_et_jetbins] = {0.75, 1., 1., 1., 2.5, 10.};
 static Double_t eta_jet_bin[number_eta_jetbins+1] = {-1.5, -0.7, 0.1, 0.9, 1.8};
+  static Double_t eta_jet_bin_err[number_eta_jetbins] = {0.4, 0.4, 0.4, 0.45};
 
-static  Double_t y_Spiesberger_pos_nlo_et[number_etbins] = {2.320, 1.054, 0.522, 0.180};
+//**********************************************//
+
+static  Double_t y_Spiesberger_pos_nlo_et[number_etbins] = {2.320, 1.054, 0.522, 0.180}; // for paper
+//static  Double_t y_Spiesberger_pos_nlo_et[number_etbins] = {2.5651, 1.1818, 0.5787, 0.2034}; // running aem
 static  Double_t y_Spiesberger_pos_nlo_eta[number_etabins] = {6.728, 5.305, 5.027, 4.827};
 static  Double_t y_Spiesberger_pos_nlo_Q2[number_Q2bins] = {0.2089, 0.1000, 0.0491, 0.0232, 0.00538};
 static  Double_t y_Spiesberger_pos_nlo_x[number_xbins] = {3408, 1623, 344.1, 31.43};
 static  Double_t y_Spiesberger_pos_nlo_et_jet[number_et_jetbins] = {1.297, 1.0375, 0.7803,  0.5558, 0.2829, 0.0281};
 static  Double_t y_Spiesberger_pos_nlo_eta_jet[number_eta_jetbins] = {1.477, 2.954, 3.380, 2.780};
 
-static  Double_t y_Spiesberger_ele_nlo_et[number_etbins] = {2.382, 1.114, 0.567, 0.202};
+static  Double_t y_Spiesberger_pos_nlo_et_min[number_etbins] = {0.1420000, 0.0400000, 0.0234000, 0.0052000}; // for paper
+//static  Double_t y_Spiesberger_pos_nlo_et_min[number_etbins] = {0.0505, 0.0309, 0.0108, 0.0056}; // running aem
+static  Double_t y_Spiesberger_pos_nlo_eta_min[number_etabins] = {0.3920000, 0.2540000, 0.2430000, 0.2190000};
+static  Double_t y_Spiesberger_pos_nlo_Q2_min[number_Q2bins] = {0.0140000, 0.0058700, 0.0021700, 0.0013300, 0.0002920};
+static  Double_t y_Spiesberger_pos_nlo_x_min[number_xbins] = {233.0000000, 84.0000000, 25.0000000, 2.3000000};
+static  Double_t y_Spiesberger_pos_nlo_et_jet_min[number_et_jetbins] = {0.1000000, 0.0633000, 0.0374000, 0.0216000, 0.0079000, 0.0003000};
+static  Double_t y_Spiesberger_pos_nlo_eta_jet_min[number_eta_jetbins] = {0.1710000, 0.1810000, 0.2120000, 0.1310000};
+
+static  Double_t y_Spiesberger_pos_nlo_et_max[number_etbins] = {0.1210000, 0.0630000, 0.0244000, 0.0078000}; // for paper
+//static  Double_t y_Spiesberger_pos_nlo_et_max[number_etbins] = {0.0111, 0.0133, 0.0145, 0.0011}; // running aem
+static  Double_t y_Spiesberger_pos_nlo_eta_max[number_etabins] = {0.3900000, 0.3040000, 0.1800000, 0.1840000};
+static  Double_t y_Spiesberger_pos_nlo_Q2_max[number_Q2bins] = {0.0086000, 0.0043100, 0.0028300, 0.0012500, 0.0002900};
+static  Double_t y_Spiesberger_pos_nlo_x_max[number_xbins] = {108.0000000, 77.0000000, 26.1000000, 2.6400000};
+static  Double_t y_Spiesberger_pos_nlo_et_jet_max[number_et_jetbins] = {0.1070000, 0.0540000, 0.0368000, 0.0260000, 0.0096000, 0.0005000};
+static  Double_t y_Spiesberger_pos_nlo_eta_jet_max[number_eta_jetbins] = {0.1480000, 0.1840000, 0.1380000, 0.0890000};
+
+static  Double_t y_Spiesberger_ele_nlo_et[number_etbins] = {2.382, 1.114, 0.567, 0.202}; // for paper
+//static  Double_t y_Spiesberger_ele_nlo_et[number_etbins] = {2.6250, 1.2254, 0.6290, 0.2246}; // running aem
 static  Double_t y_Spiesberger_ele_nlo_eta[number_etabins] = {7.130, 5.626, 5.270, 4.981};
 static  Double_t y_Spiesberger_ele_nlo_Q2[number_Q2bins] = {0.2148, 0.1043, 0.0519, 0.0246, 0.00576};
 static  Double_t y_Spiesberger_ele_nlo_x[number_xbins] = {3475, 1710, 372.3, 33.99};
 static  Double_t y_Spiesberger_ele_nlo_et_jet[number_et_jetbins] = {1.385, 1.122,  0.8381, 0.5747, 0.2866, 0.0260};
 static  Double_t y_Spiesberger_ele_nlo_eta_jet[number_eta_jetbins] = {1.544, 3.066, 3.530, 2.994};
+
+static  Double_t y_Spiesberger_ele_nlo_et_min[number_etbins] = {0.1290000, 0.0490000, 0.0247000, 0.0070000}; // for paper
+//static  Double_t y_Spiesberger_ele_nlo_et_min[number_etbins] = {0.0303, 0.0110, 0.0175, 0.0019}; // running aem
+static  Double_t y_Spiesberger_ele_nlo_eta_min[number_etabins] = {0.4290000, 0.2530000, 0.2160000, 0.1930000};
+static  Double_t y_Spiesberger_ele_nlo_Q2_min[number_Q2bins] = {0.0146000, 0.0061100, 0.0022800, 0.0012800, 0.0003270};
+static  Double_t y_Spiesberger_ele_nlo_x_min[number_xbins] = {239.0000000, 84.0000000, 29.4000000, 2.4700000};
+static  Double_t y_Spiesberger_ele_nlo_et_jet_min[number_et_jetbins] = {0.1030000, 0.0650000, 0.0286000, 0.0160000, 0.0110000, 0.0007200};
+static  Double_t y_Spiesberger_ele_nlo_eta_jet_min[number_eta_jetbins] = {0.2050000, 0.2090000, 0.1920000, 0.1550000};
+
+static  Double_t y_Spiesberger_ele_nlo_et_max[number_etbins] = {0.1320000, 0.0540000, 0.0264000, 0.0072000}; // for paper
+//static  Double_t y_Spiesberger_ele_nlo_et_max[number_etbins] = {0.0273, 0.0225, 0.0027, 0.0044}; // running aem
+static  Double_t y_Spiesberger_ele_nlo_eta_max[number_etabins] = {0.3390000, 0.2860000, 0.2230000, 0.2170000};
+static  Double_t y_Spiesberger_ele_nlo_Q2_max[number_Q2bins] = {0.0086000, 0.0045000, 0.0028900, 0.0014800, 0.0003130};
+static  Double_t y_Spiesberger_ele_nlo_x_max[number_xbins] = {116.0000000, 74.0000000, 27.0000000, 2.5100000};
+static  Double_t y_Spiesberger_ele_nlo_et_jet_max[number_et_jetbins] = {0.1080000, 0.0560000, 0.0363000, 0.0259000, 0.0107000, 0.0003900};
+static  Double_t y_Spiesberger_ele_nlo_eta_jet_max[number_eta_jetbins] = {0.1440000, 0.2100000, 0.1570000, 0.0540000};
+
+//
+// here come results obtained with running aem
+//
+
+// HERAPDF1.0
+/* static  Double_t y_Spiesberger_pos_nlo_ra_et[number_etbins] = {2.54605E+000,1.19055E+000,5.92450E-001,2.03460E-001}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_eta[number_etabins] = {7.4335, 5.8875, 5.58975, 5.29525}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_Q2[number_Q2bins] = {0.23303, 0.111245, 0.0543575, 0.0255742857142857, 0.0059355}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_x[number_xbins] = {3833.75, 1804.8, 376.157142857143, 34.477}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_et_jet[number_et_jetbins] = {1.4264, 1.14915, 0.86305, 0.61005, 0.3175, 0.032177}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_eta_jet[number_eta_jetbins] = {1.60525, 3.28575, 3.7325, 3.12911111111111}; */
+
+/* static  Double_t y_Spiesberger_ele_nlo_ra_et[number_etbins] = {2.61190E+000,1.25150E+000,6.33250E-001,2.26620E-001}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_eta[number_etabins] = {7.852, 6.2275, 5.8245, 5.5495}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_Q2[number_Q2bins] = {0.23892, 0.115905, 0.0572375, 0.0272342857142857, 0.0063785}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_x[number_xbins] = {3901.125, 1897.45, 406.542857142857, 37.365}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_et_jet[number_et_jetbins] = {1.52786666666667, 1.23375, 0.9209, 0.6367, 0.32124, 0.029575}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_eta_jet[number_eta_jetbins] = {1.66175, 3.38675, 3.925875, 3.34788888888889}; */
+
+/* static  Double_t y_Spiesberger_pos_nlo_ra_fast_et[number_etbins] = {2.55655E+000,1.19519E+000,5.88445E-001,2.03834E-001}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_fast_eta[number_etabins] = {7.4335, 5.8875, 5.58975, 5.29525}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_fast_Q2[number_Q2bins] = {0.23303, 0.111245, 0.0543575, 0.0255742857142857, 0.0059355}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_fast_x[number_xbins] = {3833.75, 1804.8, 376.157142857143, 34.477}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_fast_et_jet[number_et_jetbins] = {1.4264, 1.14915, 0.86305, 0.61005, 0.3175, 0.032177}; */
+/* static  Double_t y_Spiesberger_pos_nlo_ra_fast_eta_jet[number_eta_jetbins] = {1.60525, 3.28575, 3.7325, 3.12911111111111}; */
+
+/* static  Double_t y_Spiesberger_ele_nlo_ra_fast_et[number_etbins] = {2.63028E+000,1.25297E+000,6.36125E-001,2.27486E-001}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_fast_eta[number_etabins] = {7.852, 6.2275, 5.8245, 5.5495}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_fast_Q2[number_Q2bins] = {0.23892, 0.115905, 0.0572375, 0.0272342857142857, 0.0063785}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_fast_x[number_xbins] = {3901.125, 1897.45, 406.542857142857, 37.365}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_fast_et_jet[number_et_jetbins] = {1.52786666666667, 1.23375, 0.9209, 0.6367, 0.32124, 0.029575}; */
+/* static  Double_t y_Spiesberger_ele_nlo_ra_fast_eta_jet[number_eta_jetbins] = {1.66175, 3.38675, 3.925875, 3.34788888888889}; */
+
+//CTEQ6.6 (et ONLY!!!)
+static  Double_t y_Spiesberger_pos_nlo_ra_et[number_etbins] = {2.47800E+000,1.14940E+000,5.67750E-001,1.96440E-001};
+static  Double_t y_Spiesberger_pos_nlo_ra_eta[number_etabins] = {7.4335, 5.8875, 5.58975, 5.29525};
+static  Double_t y_Spiesberger_pos_nlo_ra_Q2[number_Q2bins] = {0.23303, 0.111245, 0.0543575, 0.0255742857142857, 0.0059355};
+static  Double_t y_Spiesberger_pos_nlo_ra_x[number_xbins] = {3833.75, 1804.8, 376.157142857143, 34.477};
+static  Double_t y_Spiesberger_pos_nlo_ra_et_jet[number_et_jetbins] = {1.4264, 1.14915, 0.86305, 0.61005, 0.3175, 0.032177};
+static  Double_t y_Spiesberger_pos_nlo_ra_eta_jet[number_eta_jetbins] = {1.60525, 3.28575, 3.7325, 3.12911111111111};
+
+static  Double_t y_Spiesberger_ele_nlo_ra_et[number_etbins] = {2.54720E+000,1.19550E+000,6.09150E-001,2.17460E-001};
+static  Double_t y_Spiesberger_ele_nlo_ra_eta[number_etabins] = {7.852, 6.2275, 5.8245, 5.5495};
+static  Double_t y_Spiesberger_ele_nlo_ra_Q2[number_Q2bins] = {0.23892, 0.115905, 0.0572375, 0.0272342857142857, 0.0063785};
+static  Double_t y_Spiesberger_ele_nlo_ra_x[number_xbins] = {3901.125, 1897.45, 406.542857142857, 37.365};
+static  Double_t y_Spiesberger_ele_nlo_ra_et_jet[number_et_jetbins] = {1.52786666666667, 1.23375, 0.9209, 0.6367, 0.32124, 0.029575};
+static  Double_t y_Spiesberger_ele_nlo_ra_eta_jet[number_eta_jetbins] = {1.66175, 3.38675, 3.925875, 3.34788888888889};
+
+static  Double_t y_Spiesberger_pos_nlo_ra_fast_et[number_etbins] = {2.48224E+000,1.15623E+000,5.67670E-001,1.95962E-001};
+static  Double_t y_Spiesberger_pos_nlo_ra_fast_eta[number_etabins] = {7.4335, 5.8875, 5.58975, 5.29525};
+static  Double_t y_Spiesberger_pos_nlo_ra_fast_Q2[number_Q2bins] = {0.23303, 0.111245, 0.0543575, 0.0255742857142857, 0.0059355};
+static  Double_t y_Spiesberger_pos_nlo_ra_fast_x[number_xbins] = {3833.75, 1804.8, 376.157142857143, 34.477};
+static  Double_t y_Spiesberger_pos_nlo_ra_fast_et_jet[number_et_jetbins] = {1.4264, 1.14915, 0.86305, 0.61005, 0.3175, 0.032177};
+static  Double_t y_Spiesberger_pos_nlo_ra_fast_eta_jet[number_eta_jetbins] = {1.60525, 3.28575, 3.7325, 3.12911111111111};
+
+static  Double_t y_Spiesberger_ele_nlo_ra_fast_et[number_etbins] = {2.54852E+000,1.20789E+000,6.10730E-001,2.17412E-001};
+static  Double_t y_Spiesberger_ele_nlo_ra_fast_eta[number_etabins] = {7.852, 6.2275, 5.8245, 5.5495};
+static  Double_t y_Spiesberger_ele_nlo_ra_fast_Q2[number_Q2bins] = {0.23892, 0.115905, 0.0572375, 0.0272342857142857, 0.0063785};
+static  Double_t y_Spiesberger_ele_nlo_ra_fast_x[number_xbins] = {3901.125, 1897.45, 406.542857142857, 37.365};
+static  Double_t y_Spiesberger_ele_nlo_ra_fast_et_jet[number_et_jetbins] = {1.52786666666667, 1.23375, 0.9209, 0.6367, 0.32124, 0.029575};
+static  Double_t y_Spiesberger_ele_nlo_ra_fast_eta_jet[number_eta_jetbins] = {1.66175, 3.38675, 3.925875, 3.34788888888889};
+
+/// end of running aem
 
 static  Double_t y_Spiesberger_pos_lo_et[number_etbins] = {2.527, 1.191, 0.593, 0.202};
 static  Double_t y_Spiesberger_pos_lo_eta[number_etabins] = {7.697, 5.853, 5.382, 5.159};
@@ -58,6 +191,20 @@ static  Double_t y_Spiesberger_pos_lo_x[number_xbins] = {3037, 1736, 462.5, 43.5
 static  Double_t y_Spiesberger_pos_lo_et_jet[number_et_jetbins] = {1.464, 1.111, 0.8830, 0.6402, 0.3149, 0.0297};
 static  Double_t y_Spiesberger_pos_lo_eta_jet[number_eta_jetbins] = {2.354, 3.631, 3.348, 2.406};
 
+static  Double_t y_Spiesberger_pos_lo_et_min[number_etbins] = {0.4450000, 0.1870000, 0.0804000, 0.0212000};
+static  Double_t y_Spiesberger_pos_lo_eta_min[number_etabins] = {1.2980000, 0.9910000, 0.8500000, 0.7050000};
+static  Double_t y_Spiesberger_pos_lo_Q2_min[number_Q2bins] = {0.0359000, 0.0177800, 0.0098200, 0.0040700, 0.0007080};
+static  Double_t y_Spiesberger_pos_lo_x_min[number_xbins] = {525.0000000, 292.0000000, 68.4000000, 4.1100000};
+static  Double_t y_Spiesberger_pos_lo_et_jet_min[number_et_jetbins] = {0.3440000, 0.2059000, 0.1338000, 0.0804000, 0.0295000, 0.0014500};
+static  Double_t y_Spiesberger_pos_lo_eta_jet_min[number_eta_jetbins] = {0.4380000, 0.6210000, 0.5160000, 0.3040000};
+
+static  Double_t y_Spiesberger_pos_lo_et_max[number_etbins] = {0.3770000, 0.1540000, 0.0650000, 0.0167000};
+static  Double_t y_Spiesberger_pos_lo_eta_max[number_etabins] = {1.0930000, 0.8320000, 0.6940000, 0.5650000};
+static  Double_t y_Spiesberger_pos_lo_Q2_max[number_Q2bins] = {0.0303000, 0.0148000, 0.0081600, 0.0033300, 0.0005530};
+static  Double_t y_Spiesberger_pos_lo_x_max[number_xbins] = {449.0000000, 246.0000000, 55.4000000, 3.0700000};
+static  Double_t y_Spiesberger_pos_lo_et_jet_max[number_et_jetbins] = {0.2890000, 0.1710000, 0.1116000, 0.0657000, 0.0238000, 0.0010600};
+static  Double_t y_Spiesberger_pos_lo_eta_jet_max[number_eta_jetbins] = {0.3800000, 0.5270000, 0.4230000, 0.2310000};
+
 static  Double_t y_Spiesberger_ele_lo_et[number_etbins] = {2.622, 1.262, 0.642, 0.227};
 static  Double_t y_Spiesberger_ele_lo_eta[number_etabins] = {8.125, 6.239, 5.702, 5.416};
 static  Double_t y_Spiesberger_ele_lo_Q2[number_Q2bins] = {0.2047, 0.1055, 0.0610, 0.0305, 0.00729};
@@ -65,47 +212,119 @@ static  Double_t y_Spiesberger_ele_lo_x[number_xbins] = {3115, 1839, 498.7, 46.9
 static  Double_t y_Spiesberger_ele_lo_et_jet[number_et_jetbins] = {1.568, 1.207, 0.9540, 0.6782, 0.3223, 0.0273};
 static  Double_t y_Spiesberger_ele_lo_eta_jet[number_eta_jetbins] = {2.443, 3.791, 3.564, 2.610};
 
-static  Double_t y_Zotov_et[number_etbins] = {3.827017, 2.147384, 1.247388, 5.357702e-1};
-static  Double_t y_Zotov_eta[number_etabins] = {1.30E+001, 1.13E+001, 9.98E+000, 8.52E+000};
-static  Double_t y_Zotov_Q2[number_Q2bins] = {6.16E-001, 2.45E-001, 9.72E-002, 3.16E-002, 5.42E-003};
-static  Double_t y_Zotov_x[number_xbins] = {9.36E+003, 3.45E+003, 5.83E+002, 4.29E+001};
-static  Double_t y_Zotov_et_jet[number_et_jetbins] = {2.19E+000, 2.03E+000, 1.67E+000, 1.22E+000, 5.93E-001, 5.09E-002};
-static  Double_t y_Zotov_eta_jet[number_eta_jetbins] = {5.35E+000, 6.31E+000, 5.27E+000, 3.97E+000};
+static  Double_t y_Spiesberger_ele_lo_et_min[number_etbins] = {0.4540000, 0.1930000, 0.0831000, 0.0228000};
+static  Double_t y_Spiesberger_ele_lo_eta_min[number_etabins] = {1.3350000, 1.0180000, 0.8630000, 0.7210000};
+static  Double_t y_Spiesberger_ele_lo_Q2_min[number_Q2bins] = {0.0366000, 0.0182300, 0.0100900, 0.0042000, 0.0007290};
+static  Double_t y_Spiesberger_ele_lo_x_min[number_xbins] = {533.0000000, 301.0000000, 70.8000000, 4.2100000};
+static  Double_t y_Spiesberger_ele_lo_et_jet_min[number_et_jetbins] = {0.3540000, 0.2127000, 0.1379000, 0.0826000, 0.0297000, 0.0013600};
+static  Double_t y_Spiesberger_ele_lo_eta_jet_min[number_eta_jetbins] = {0.4430000, 0.6310000, 0.5290000, 0.3170000};
 
-static  Double_t y_Zotov_et_eyl[number_etbins] = {0.};//0.077259, 0.019416, 0.00582, 0.0000084};
-static  Double_t y_Zotov_eta_eyl[number_etabins] = {0.};//{0.28564, 0.13898, 0.172415, 0.076321};
-static  Double_t y_Zotov_Q2_eyl[number_Q2bins] = {0.};//{0.0042655, 0.0028603, 0.00343944, 0.00148881, 0.000175671};
-static  Double_t y_Zotov_x_eyl[number_xbins] = {0.};
-static  Double_t y_Zotov_et_jet_eyl[number_et_jetbins] = {0.};
-static  Double_t y_Zotov_eta_jet_eyl[number_eta_jetbins] = {0.};
+static  Double_t y_Spiesberger_ele_lo_et_max[number_etbins] = {0.3830000, 0.1580000, 0.0677000, 0.0177000};
+static  Double_t y_Spiesberger_ele_lo_eta_max[number_etabins] = {1.1150000, 0.8530000, 0.7100000, 0.5760000};
+static  Double_t y_Spiesberger_ele_lo_Q2_max[number_Q2bins] = {0.0309000, 0.0152000, 0.0084000, 0.0034200, 0.0005780};
+static  Double_t y_Spiesberger_ele_lo_x_max[number_xbins] = {456.0000000, 252.0000000, 57.2000000, 3.1400000};
+static  Double_t y_Spiesberger_ele_lo_et_jet_max[number_et_jetbins] = {0.2990000, 0.1770000, 0.1139000, 0.0655000, 0.0239000, 0.0010700};
+static  Double_t y_Spiesberger_ele_lo_eta_jet_max[number_eta_jetbins] = {0.3870000, 0.5380000, 0.4370000, 0.2390000};
 
-static  Double_t y_Zotov_et_eyh[number_etbins] = {0.};//0.103759, 0.031662, 0.00958, 0.0041325};
-static  Double_t y_Zotov_eta_eyh[number_etabins] = {0.};//0.09112, 0.15142, 0.109484, 0.160555};
-static  Double_t y_Zotov_Q2_eyh[number_Q2bins] = {0.};//0.0065276, 0.0016325, 0.00262898, 0.00126356, 0.000214477};
-static  Double_t y_Zotov_x_eyh[number_xbins] = {0.};
-static  Double_t y_Zotov_et_jet_eyh[number_et_jetbins] = {0.};
-static  Double_t y_Zotov_eta_jet_eyh[number_eta_jetbins] = {0.};
+static  Double_t y_Zotov_et[number_etbins] = {3.495248, 1.881006, 1.075966, 0.449562};
+static  Double_t y_Zotov_eta[number_etabins] = {11.360027, 10.052792, 8.805129, 7.662673};
+static  Double_t y_Zotov_Q2[number_Q2bins] = {0.509965, 0.214755, 0.089220, 0.030072, 0.005290};
+static  Double_t y_Zotov_x[number_xbins] = {8050.307500, 3054.110500, 537.109800, 41.495265};
+static  Double_t y_Zotov_et_jet[number_et_jetbins] = {1.895937, 1.783060, 1.491320, 1.090219, 0.532862, 0.045571};
+static  Double_t y_Zotov_eta_jet[number_eta_jetbins] = {4.748785, 5.722657, 4.643728, 3.400125};
 
-static Double_t eyl_syst_et[number_etbins] = {0.330169022,0.168249286,0.087743121,0.030058075};
-static Double_t eyl_syst_eta[number_etabins] = {1.189436548,0.763698993,0.687645812,0.685620475};
-static Double_t eyl_syst_Q2[number_Q2bins] = {0.036086494,0.016873383,0.010891640,0.003702754,0.000990727};
-static Double_t eyl_syst_x[number_xbins] = {511.936872904,207.904061741,65.059802668,8.384118618};
-static Double_t eyl_syst_et_jet[number_et_jetbins] = {0.263185938,0.140872205,0.119718166,0.103524212,0.032934415,0.005581137};
-static Double_t eyl_syst_eta_jet[number_eta_jetbins] = {0.279390688,0.324957743,0.433653925,0.482568274};
+static  Double_t y_Zotov_et_eyl[number_etbins] = {0.341544, 0.257052, 0.174815, 0.087082};//0.077259, 0.019416, 0.00582, 0.0000084};
+static  Double_t y_Zotov_eta_eyl[number_etabins] = {1.551864, 1.387609, 1.116696, 0.899415};//{0.28564, 0.13898, 0.172415, 0.076321};
+static  Double_t y_Zotov_Q2_eyl[number_Q2bins] = {0.108413, 0.029199, 0.007544, 0.001766, 0.000234};//{0.0042655, 0.0028603, 0.00343944, 0.00148881, 0.000175671};
+static  Double_t y_Zotov_x_eyl[number_xbins] = {1299.269500, 404.222500, 45.759700, 2.147375};
+static  Double_t y_Zotov_et_jet_eyl[number_et_jetbins] = {0.291646, 0.247816, 0.193900, 0.127446, 0.061705, 0.004948};
+static  Double_t y_Zotov_eta_jet_eyl[number_eta_jetbins] = {0.597137, 0.603969, 0.613762, 0.589267};
 
-static Double_t eyh_syst_et[number_etbins] = {0.316130344,0.124424408,0.083197857,0.030862840};
-static Double_t eyh_syst_eta[number_etabins] = {1.016515079,0.715740975,0.685390308,0.588175306};
-static Double_t eyh_syst_Q2[number_Q2bins] = {0.038957003,0.018060491,0.006273332,0.003419672,0.000786238};
-static Double_t eyh_syst_x[number_xbins] = {534.704606970,217.183968304,45.861072485,9.031963124};
-static Double_t eyh_syst_et_jet[number_et_jetbins] = {0.236725452,0.133781457,0.119310615,0.085284157,0.052627055,0.005354525};
-static Double_t eyh_syst_eta_jet[number_eta_jetbins] = {0.245547853,0.306921828,0.431799594,0.397256927};
+static  Double_t y_Zotov_et_eyh[number_etbins] = {0.341544, 0.257052, 0.174815, 0.087082};//0.103759, 0.031662, 0.00958, 0.0041325};
+static  Double_t y_Zotov_eta_eyh[number_etabins] = {1.551864, 1.387609, 1.116696, 0.899415};//0.09112, 0.15142, 0.109484, 0.160555};
+static  Double_t y_Zotov_Q2_eyh[number_Q2bins] = {0.108413, 0.029199, 0.007544, 0.001766, 0.000234};//0.0065276, 0.0016325, 0.00262898, 0.00126356, 0.000214477};
+static  Double_t y_Zotov_x_eyh[number_xbins] = {1299.269500, 404.222500, 45.759700, 2.147375};
+static  Double_t y_Zotov_et_jet_eyh[number_et_jetbins] = {0.291646, 0.247816, 0.193900, 0.127446, 0.061705, 0.004948};
+static  Double_t y_Zotov_eta_jet_eyh[number_eta_jetbins] = {0.597137, 0.603969, 0.613762, 0.589267};
 
-static Double_t y_1stcross_et[number_etbins] = {2.41818500, 1.31228600, 0.62352600, 0.24772540};
-static Double_t y_1stcross_eta[number_etabins] = {7.35327000, 6.46609000, 5.55047800, 5.12890200};
-static Double_t y_1stcross_Q2[number_Q2bins] = {0.29033640, 0.12958410, 0.04843650, 0.02239158, 0.00368611};
-static Double_t y_1stcross_x[number_xbins] = {4695.07, 1795.362, 271.719, 26.63652};
-static Double_t y_1stcross_eta_jet[number_eta_jetbins] = {1.48587900, 2.68198900, 3.84862700, 3.68495};
-static Double_t y_1stcross_et_jet[number_et_jetbins] = {1.48100300, 1.15483400, 0.97312100, 0.68623900, 0.29178700, 0.02654470};
+/* static Double_t eyl_syst_et[number_etbins] = {0.330169022,0.168249286,0.087743121,0.030058075}; */
+/* static Double_t eyl_syst_eta[number_etabins] = {1.189436548,0.763698993,0.687645812,0.685620475}; */
+/* static Double_t eyl_syst_Q2[number_Q2bins] = {0.036086494,0.016873383,0.010891640,0.003702754,0.000990727}; */
+/* static Double_t eyl_syst_x[number_xbins] = {511.936872904,207.904061741,65.059802668,8.384118618}; */
+/* static Double_t eyl_syst_et_jet[number_et_jetbins] = {0.263185938,0.140872205,0.119718166,0.103524212,0.032934415,0.005581137}; */
+/* static Double_t eyl_syst_eta_jet[number_eta_jetbins] = {0.279390688,0.324957743,0.433653925,0.482568274}; */
+
+/* static Double_t eyh_syst_et[number_etbins] = {0.316130344,0.124424408,0.083197857,0.030862840}; */
+/* static Double_t eyh_syst_eta[number_etabins] = {1.016515079,0.715740975,0.685390308,0.588175306}; */
+/* static Double_t eyh_syst_Q2[number_Q2bins] = {0.038957003,0.018060491,0.006273332,0.003419672,0.000786238}; */
+/* static Double_t eyh_syst_x[number_xbins] = {534.704606970,217.183968304,45.861072485,9.031963124}; */
+/* static Double_t eyh_syst_et_jet[number_et_jetbins] = {0.236725452,0.133781457,0.119310615,0.085284157,0.052627055,0.005354525}; */
+/* static Double_t eyh_syst_eta_jet[number_eta_jetbins] = {0.245547853,0.306921828,0.431799594,0.397256927}; */
+
+static Double_t eyl_syst_et[number_etbins] = {0.221894006, 0.118678762, 0.087901800, 0.034040892};
+static Double_t eyl_syst_eta[number_etabins] = {0.797297321, 0.635746988, 0.626181818, 0.651630915};
+static Double_t eyl_syst_Q2[number_Q2bins] = {0.030775081, 0.015025327, 0.006774138, 0.002560945, 0.000684151};
+static Double_t eyl_syst_x[number_xbins] = {457.005501488, 173.886629364, 33.941110078, 7.698774575};
+static Double_t eyl_syst_et_jet[number_et_jetbins] = {0.183548169, 0.145839524, 0.121718906, 0.087550653, 0.036331115, 0.006231391};
+static Double_t eyl_syst_eta_jet[number_eta_jetbins] = {0.231408677, 0.313109375, 0.359690027, 0.364821034}; 
+
+  static Double_t eyl_syst_xgamma[number_xgamma_bins] =       {0,  0., 0., 0.,  0., 0.};
+  static Double_t eyl_syst_xp[number_xp_bins] =               {0,  0., 0., 0.,  0., 0.};
+  static Double_t eyl_syst_dphi[number_dphi_bins] =           {0., 0., 0., 0.,  0., 0., 0.};
+  static Double_t eyl_syst_deta[number_deta_bins] =           {0,  0., 0., 0.,  0., 0.};
+  static Double_t eyl_syst_dphi_e_ph[number_dphi_e_ph_bins] = {0., 0., 0., 0.,  0., 0.};
+  static Double_t eyl_syst_deta_e_ph[number_deta_e_ph_bins] = {0., 0., 0., 0.,  0.};// {0., 0., 0., 0.,  0., 0, 0};
+
+static Double_t eyh_syst_et[number_etbins] = {0.221894006, 0.118678762, 0.087901800, 0.034040892};
+static Double_t eyh_syst_eta[number_etabins] = {0.797297321, 0.635746988, 0.626181818, 0.651630915};
+static Double_t eyh_syst_Q2[number_Q2bins] = {0.030775081, 0.015025327, 0.006774138, 0.002560945, 0.000684151};
+static Double_t eyh_syst_x[number_xbins] = {457.005501488, 173.886629364, 33.941110078, 7.698774575};
+static Double_t eyh_syst_et_jet[number_et_jetbins] = {0.183548169, 0.145839524, 0.121718906, 0.087550653, 0.036331115, 0.006231391};
+static Double_t eyh_syst_eta_jet[number_eta_jetbins] = {0.231408677, 0.313109375, 0.359690027, 0.364821034}; 
+
+  static Double_t eyh_syst_xgamma[number_xgamma_bins] =     {0,  0., 0., 0.,  0., 0.};
+  static Double_t eyh_syst_xp[number_xp_bins] =         {0,  0., 0., 0.,  0., 0.};
+  static Double_t eyh_syst_dphi[number_dphi_bins] =       {0., 0., 0., 0.,  0., 0., 0.};
+  static Double_t eyh_syst_deta[number_deta_bins] =       {0,  0., 0., 0.,  0., 0.};
+  static Double_t eyh_syst_dphi_e_ph[number_dphi_e_ph_bins] = {0., 0., 0., 0.,  0., 0.};
+  static Double_t eyh_syst_deta_e_ph[number_deta_e_ph_bins] = {0., 0., 0., 0.,  0.};// {0., 0., 0., 0.,  0., 0, 0};
+
+/* static Double_t y_1stcross_et[number_etbins] = {2.41818500, 1.31228600, 0.62352600, 0.24772540}; */
+/* static Double_t y_1stcross_eta[number_etabins] = {7.35327000, 6.46609000, 5.55047800, 5.12890200}; */
+/* static Double_t y_1stcross_Q2[number_Q2bins] = {0.29033640, 0.12958410, 0.04843650, 0.02239158, 0.00368611}; */
+/* static Double_t y_1stcross_x[number_xbins] = {4695.07, 1795.362, 271.719, 26.63652}; */
+/* static Double_t y_1stcross_eta_jet[number_eta_jetbins] = {1.48587900, 2.68198900, 3.84862700, 3.68495}; */
+/* static Double_t y_1stcross_et_jet[number_et_jetbins] = {1.48100300, 1.15483400, 0.97312100, 0.68623900, 0.29178700, 0.02654470}; */
+
+//systematics
+  static Double_t y_1stcross_et[number_etbins] = {2.380595, 1.281126, 0.615687, 0.2556284};
+  static Double_t y_1stcross_eta[number_etabins] = {7.56376, 6.7092, 5.833198, 5.155802};
+  static Double_t y_1stcross_Q2[number_Q2bins] = {0.2978664, 0.1291481, 0.0486016, 0.02243448, 0.00374546};
+  static Double_t y_1stcross_x[number_xbins] = {4869.363, 1811.322, 278.144, 25.08412};
+  static Double_t y_1stcross_et_jet[number_et_jetbins] = {1.397993, 1.192586, 1.008039, 0.742206, 0.315349, 0.0305625};
+  static Double_t y_1stcross_eta_jet[number_eta_jetbins] = {1.529209, 2.844649, 3.910317, 3.57312}; 
+
+  static Double_t y_1stcross_xgamma[number_xgamma_bins] =     {0,  0., 0., 0.,  0., 0.};
+  static Double_t y_1stcross_xp[number_xp_bins] =         {0,  0., 0., 0.,  0., 0.};
+  static Double_t y_1stcross_dphi[number_dphi_bins] =       {0., 0., 0., 0.,  0., 0., 0.};
+  static Double_t y_1stcross_deta[number_deta_bins] =       {0,  0., 0., 0.,  0., 0.};
+  static Double_t y_1stcross_dphi_e_ph[number_dphi_e_ph_bins] = {0., 0., 0., 0.,  0., 0.};
+  static Double_t y_1stcross_deta_e_ph[number_deta_e_ph_bins] = {0., 0., 0., 0.,  0.};// {0., 0., 0., 0.,  0., 0, 0};
+
+static Double_t y_1stcross_stat_err_et[number_etbins] = {0.176738497667854, 0.101735141240576, 0.0757867780543711, 0.0250895660515701};
+static Double_t y_1stcross_stat_err_eta[number_etabins] = {0.592805180136139, 0.535135083185741, 0.552219412138907, 0.528456345547378};
+static Double_t y_1stcross_stat_err_Q2[number_Q2bins] = {0.0241382608376184, 0.0116559102705781, 0.00522137006664161, 0.00231890492485138, 0.000652872072841993};
+static Double_t y_1stcross_stat_err_x[number_xbins] = {333.870254537837, 139.355179833726, 31.4037400209657, 6.87083375343924};
+static Double_t y_1stcross_stat_err_et_jet[number_et_jetbins] = {0.163429798765586, 0.108232420004359, 0.0976833027625499, 0.0722924934799188, 0.0320890488381956, 0.00565461683652827};
+static Double_t y_1stcross_stat_err_eta_jet[number_eta_jetbins] = {0.172542804225502, 0.246457814901476, 0.32935485426664, 0.290544835217837}; 
+
+//? corrections on hadronisations
+static Double_t hadronisation_et[number_etbins] = {0.838210272, 0.889243789, 0.935850904, 0.990858773};
+static Double_t hadronisation_eta[number_etabins] = {0.931679121, 0.906123134, 0.856993579, 0.812842358};
+static Double_t hadronisation_Q2[number_Q2bins] = {0.925662245, 0.890410989, 0.841515777, 0.855468932, 0.877568605};
+static Double_t hadronisation_x[number_xbins] = {0.960521282, 0.863584534, 0.822940578, 0.851649185};
+static Double_t hadronisation_et_jet[number_et_jetbins] = {0.817530672, 0.829958746, 0.865591600, 0.997190900, 1.019911904, 1.072649139};
+static Double_t hadronisation_eta_jet[number_eta_jetbins] = {0.656861428, 0.806478183, 0.961334927, 1.071164515};
 
 //Peter's suggestion : *bin2.root jet_jet > 4 GeV FINAL!!!!
 //static Double_t Q2_bin[number_Q2bins+1] = {10., 20., 40., 80., 150., 350.};

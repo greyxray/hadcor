@@ -1,0 +1,139 @@
+var_overview
+*******************
+	variables new and in ntuples08
+Npart
+Part_p
+nppart
+ppart
+bosene
+bospx
+bospy
+bospz
+
+*******************
+	variables new and not in ntuples08
+
+*******************
+	variables old and not in ntuples08 - send to Ian
+
+Int_t         Part_jetid[511];   //[npart_my] - in SelectPartonLevel
+Kpjets - most probably list of jets 4-momentum - needs to be constructed 
+	./src/SelectPrPhKtJetB.c:161:        Double_t zu_jetEnergy = Kpjets[Kzufoidjet[zloop]-1][3];
+Kzufotype : - Tufo[Nzufos][4]
+	./src/SelectPrPhKtJetB.c:123:        if (Kzufotype[zloop] != 31) ...
+Knzufos :	- the same as ZUFOS
+	./src/SelectPrPhKtJetB.c:18:        for(Int_t zloop = 0; zloop < Knzufos; zloop++)...
+	./src/selector.c:669:				...
+Kzufofmax :	- need to constract separately - have no procedure
+	./src/SelectPrPhKtJetB.c:60:        Double_t zu_fmax     = Kzufofmax[zloop];...
+Kzufodeltaz :	- need to constract separately - have no procedure
+	./src/SelectPrPhKtJetB.c:62:        Double_t zu_deltaz   = Kzufodeltaz[zloop] / 5.45;...
+	./src/selector.c:410:					myKzufodeltaz[zloop] = Kzufodeltaz[zloop]/5.45;...
+
+Photid - unknown id=5 :
+	./src/selector.c:515:					if(Photid[ploop] == 5)
+Kzufoeta :	- needs to be constructed separately
+	./src/SelectPrPhKtJetB.c:44:        Double_t zu_eta = Kzufoeta[zloop];
+Ktrnjets :	- unknown origin - prob num of jets - needs to be constructed separately
+	./src/SelectHadronLevel.c:137:    if (Ktrnjets<1) 
+	./src/SelectHadronLevel.c:141:	     if (nodebugmode) cout << "rejected by Ktrnjets<1: " << Ktrnjets << endl;
+Kzufoemcfrac :	- needs to be constructed separately = EMC Energy /  Total Energy 
+	./src/SelectPrPhKtJetB.c:116:        if (Kzufoemcfrac[zloop] < 0.9)
+	./src/SelectPrPhKtJetB.c:120:              if (nodebugmode) cout << "photon with eta " << zu_eta << " rejected, because emcfrac = " << Kzufoemcfrac[zloop] << endl;
+	./src/SelectPrPhKtJetB.c:197:                cell_energy_frac = Kzufoemcfrac[zloop];
+	./src/SelectPrPhKtJetB.c:246:            ZuCand.SetEMCfrac(Kzufoemcfrac[zloop]);
+Part_jetid : - hadron level; unknown origin - needs to be constructed separately
+	./src/SelectPartonLevel.c:63:        index_jet=Part_jetid[i]-1;
+	./src/SelectPartonLevel.c:75:        index_jet=Part_jetid[i]-1;
+	./src/SelectHadronLevel.c:74:  	      index_jet = Part_jetid[i] - 1;
+	./src/SelectHadronLevel.c:90:  	      index_jet = Part_jetid[i] - 1;
+Ktrjets : - 4-momenta of jet by index of jet - needs to be constructed separately
+	./src/SelectHadronLevel.c:120:    v_true_jet_cont_prompt_photon->SetPxPyPzE(Ktrjets[index_jet][0], Ktrjets[index_jet][1], Ktrjets[index_jet][2], Ktrjets[index_jet][3]);
+	./src/SelectHadronLevel.c:149:    if ((Part_p[index_true_photon][3]/Ktrjets[index_jet][3])<0.9) 
+	./src/SelectHadronLevel.c:153:	     if (nodebugmode) cout << "rejected by photon/jet energy ratio: " << Part_p[index_true_photon][3]/Ktrjets[index_jet][3] << endl;
+Kzufos - the same as Zufos:
+	./src/SelectPrPhKtJetB.c:20:            Double_t zufo_px = Kzufos[zloop][0], zufo_py = Kzufos[zloop][1], zufo_pz = Kzufos[zloop][2];
+	./src/SelectPrPhKtJetB.c:45:        Double_t zu_pt = TMath::Sqrt(Kzufos[zloop][0]*Kzufos[zloop][0] + Kzufos[zloop][1]*Kzufos[zloop][1]);
+	./src/SelectPrPhKtJetB.c:46:        Float_t zu_theta = TMath::ATan2(zu_pt, Kzufos[zloop][2]);
+	./src/SelectPrPhKtJetB.c:48:        v_photon.SetXYZ(Kzufos[zloop][0], Kzufos[zloop][1], Kzufos[zloop][2]);
+	./src/SelectPrPhKtJetB.c:51:        Float_t photon_e = Kzufos[zloop][3] * systPhE; //systematics 290715
+	./src/SelectPrPhKtJetB.c:59:        Double_t zu_et_uncorr = Kzufos[zloop][3] * systPhE * TMath::Sin(zu_theta); //! error? 070815
+	./src/SelectPrPhKtJetB.c:162:        if ((Kzufos[zloop][3] * systPhE / zu_jetEnergy) < 0.9)
+	./src/SelectPrPhKtJetB.c:166:              if (nodebugmode) cout << "photon with eta " << zu_eta << " rejected, because e_phot/e_jet_cont_phot = " << (Kzufos[zloop][3] * systPhE/zu_jetEnergy)<< endl;
+	./src/SelectPrPhKtJetB.c:196:                jet_energy_frac = Kzufos[zloop][3] * systPhE/zu_jetEnergy;
+	./src/SelectPrPhKtJetB.c:202:                v_uncorr_prompt_photon->SetPxPyPzE(Kzufos[zloop][0], 
+	./src/SelectPrPhKtJetB.c:203:                                                  Kzufos[zloop][1], 
+	./src/SelectPrPhKtJetB.c:204:                                                  Kzufos[zloop][2], 
+	./src/SelectPrPhKtJetB.c:205:                                                  Kzufos[zloop][3] * systPhE);
+	./src/SelectPrPhKtJetB.c:206:                Double_t corfac = zu_e_corr / (Kzufos[zloop][3] * systPhE);
+	./src/SelectPrPhKtJetB.c:207:                v_corr_prompt_photon->SetPxPyPzE(corfac * Kzufos[zloop][0],
+	./src/SelectPrPhKtJetB.c:208:                                                corfac * Kzufos[zloop][1],
+	./src/SelectPrPhKtJetB.c:209:                                                corfac * Kzufos[zloop][2],
+	./src/SelectPrPhKtJetB.c:210:                                                corfac * Kzufos[zloop][3] * systPhE);
+	./src/SelectPrPhKtJetB.c:234:            ZuCand.SetE(Kzufos[zloop][3]);
+	./src/SelectPrPhKtJetB.c:235:            ZuCand.momentum.SetXYZ(Kzufos[zloop][0],Kzufos[zloop][1],Kzufos[zloop][2]);
+Kzufoet : - needs to be constructed separately
+	./src/SelectPrPhKtJetB.c:44:        Double_t zu_eta = Kzufoeta[zloop];
+Photn :	- goes with photid - needs to be constructed separately
+	./src/selector.c:513:				for(Int_t ploop=0; ploop < Photn; ploop++)
+Photp :	- goes with photid - needs to be constructed separately
+	./src/SelectPrPhKtJetB.c:16:        TVector3 v_true_rad_photon(Photp[i_true_rad_photon][0], Photp[i_true_rad_photon][1], Photp[i_true_rad_photon][2]);
+Kzufoidjet :
+	./src/SelectPrPhKtJetB.c:161:        Double_t zu_jetEnergy = Kpjets[Kzufoidjet[zloop]-1][3];
+	./src/SelectPrPhKtJetB.c:170:        TVector3 jet_contained_prph(Kpjets[Kzufoidjet[zloop]-1][0], 
+	./src/SelectPrPhKtJetB.c:171:                                    Kpjets[Kzufoidjet[zloop]-1][1],
+	./src/SelectPrPhKtJetB.c:172:                                    Kpjets[Kzufoidjet[zloop]-1][2]);
+	./src/SelectPrPhKtJetB.c:211:                v_prompt_photon_jet->SetPxPyPzE(Kpjets[Kzufoidjet[zloop]-1][0],
+	./src/SelectPrPhKtJetB.c:212:                                                Kpjets[Kzufoidjet[zloop]-1][1],
+	./src/SelectPrPhKtJetB.c:213:                                                Kpjets[Kzufoidjet[zloop]-1][2],
+	./src/SelectPrPhKtJetB.c:214:                                                Kpjets[Kzufoidjet[zloop]-1][3]);
+
+
+*******************
+  variables old and not in ntuples08 and not used
+
+Npart_my :
+Ktrjetntrac
+Photmothprt
+Ktrjeteta
+Fmce5partlist
+Ktrjetchar
+Ktrjetpt
+Fmce5npart :
+Photprphjetindex :
+Fmce5enelist :
+Ktrjetet
+Fmce5true
+Ktrjetphi
+Photmothid
+Photisthep
+
+Part_motherprt :
+E5cellptr :
+Trk_id2 :
+E5imbmod :
+Kpjeteta
+Kpjetet
+Part_motherid :
+Knjets :
+Kzufopt :
+E5fcell :
+Kzufophi :
+E5calprobrank :
+Part_charge
+E5fmodu :
+Kpjetnzu :
+E5ncell :
+Kpjetpt :
+E5subprob :
+E5dphi :
+Kpjetemcfrac :
+Filter :
+Part_isthep :
+E5dtheta :
+Kpjetdeltaz :
+Kpjetfmax :
+Kzufoncells :
+Zufopos :
+Bpchn :
+
