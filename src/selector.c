@@ -118,7 +118,7 @@ Bool_t selector::Process()
 		Int_t missed = 0;
 		int num_had(0), num_part(0);
 	check_cuts = kTRUE;
-	for(Long64_t entry = 0; entry < nentries  && debugcontinue; entry++)
+	for(Long64_t entry = 0; entry < nentries -1  && debugcontinue; entry++)
 	{
 		// To test specific entry
 			// if (entry < 4 ) continue;
@@ -1403,6 +1403,32 @@ Bool_t selector::Process()
 				if ( (take_part_event && !take_had_event) || 
 					 (take_part_event && take_had_event && hist.part_cross_eta_jet->FindBin(part_eta_jet) != hist.had_cross_eta_jet->FindBin(had_eta_jet)) ) 
 					hist.part_nohad_cross_eta_jet->Fill(part_eta_jet);
+				//new vars
+				if ( (take_part_event && !take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_xgamma->FindBin(part_xgamma) != hist.had_cross_xgamma->FindBin(had_xgamma)) ) 
+					hist.part_nohad_cross_xgamma->Fill(part_xgamma);
+
+				if ( (take_part_event && !take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_xp->FindBin(part_xp) != hist.had_cross_xp->FindBin(had_xp)) ) 
+					hist.part_nohad_cross_xp->Fill(part_xp);
+
+				if ( (take_part_event && !take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_dphi->FindBin(part_dphi) != hist.had_cross_dphi->FindBin(had_dphi)) ) 
+					hist.part_nohad_cross_dphi->Fill(part_dphi);
+
+				if ( (take_part_event && !take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_deta->FindBin(part_deta) != hist.had_cross_deta->FindBin(had_deta)) ) 
+					hist.part_nohad_cross_deta->Fill(part_deta);
+
+				if ( (take_part_event && !take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_dphi_e_ph->FindBin(part_dphi_e_ph) != hist.had_cross_dphi_e_ph->FindBin(had_dphi_e_ph)) ) 
+				{
+					hist.part_nohad_cross_dphi_e_ph->Fill(part_dphi_e_ph);
+				}
+
+				if ( (take_part_event && !take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
+					hist.part_nohad_cross_deta_e_ph->Fill(part_deta_e_ph);
 
 			//had nopart || part_bin != had_bin
 				if ( (!take_part_event && take_had_event) || 
@@ -1430,11 +1456,37 @@ Bool_t selector::Process()
 				if ( (!take_part_event && take_had_event) || 
 					 (take_part_event && take_had_event && hist.part_cross_eta_jet->FindBin(part_eta_jet) != hist.had_cross_eta_jet->FindBin(had_eta_jet)) ) 
 					hist.had_nopart_cross_eta_jet->Fill(had_eta_jet);
+				//new vars
+
+				if ( (!take_part_event && take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_xgamma->FindBin(part_xgamma) != hist.had_cross_xgamma->FindBin(had_xgamma)) ) 
+					hist.had_nopart_cross_xgamma->Fill(had_xgamma);
+
+				if ( (!take_part_event && take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_xp->FindBin(part_xp) != hist.had_cross_xp->FindBin(had_xp)) ) 
+					hist.had_nopart_cross_xp->Fill(had_xp);
+
+				if ( (!take_part_event && take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_dphi->FindBin(part_dphi) != hist.had_cross_dphi->FindBin(had_dphi)) ) 
+					hist.had_nopart_cross_dphi->Fill(had_dphi);
+
+				if ( (!take_part_event && take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_deta->FindBin(part_deta) != hist.had_cross_deta->FindBin(had_deta)) ) 
+					hist.had_nopart_cross_deta->Fill(had_deta);
+
+				if ( (!take_part_event && take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_dphi_e_ph->FindBin(part_dphi_e_ph) != hist.had_cross_dphi_e_ph->FindBin(had_dphi_e_ph)) ) 
+				{
+					hist.had_nopart_cross_dphi_e_ph->Fill(had_dphi_e_ph);
+				}
+				if ( (!take_part_event && take_had_event) || 
+					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
+					hist.had_nopart_cross_deta_e_ph->Fill(had_deta_e_ph);
 
 		}// if exact event
 		hadron_level_jets.clear();
 	}// for entry over entries
-	
+
 	Terminate();
 	cout << "num_had = " << num_had << " num_part = " << num_part << endl; 
 	return kTRUE;

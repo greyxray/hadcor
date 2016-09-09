@@ -26,7 +26,29 @@ void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type,
 	{
 		if(run_period == "0405e") 
 		{
-			chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/output/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/25000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");                        
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/25000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_2.root");			
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_2.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_2.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_2.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_2.root");
+			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");
+			//problem chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_2.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_2.root");
+
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_2.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_2.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
+			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_2.root");
+
+			
 			cout << "/nfs/dust/zeus/group/glushenko/zmcsp/output/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01.root" << " added to chain in fill" << endl;
 			cout << chain->GetEntries() << " events chained" << endl;
 			/*

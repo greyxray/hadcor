@@ -112,6 +112,12 @@ void Hist::Init(TDirectory** dir)
   part_cross_et_jet = new TH1D("h_part_cross_et_jet", "part_cross_et_jet", number_et_jetbins, et_jet_bin);
   part_cross_et_jet2 = new TH1D("h_part_cross_et_jet2", "part_cross_et_jet (many bins)", 100, 0., 100.);
   part_cross_eta_jet = new TH1D("h_part_cross_eta_jet", "part_cross_eta_jet", number_eta_jetbins, eta_jet_bin);
+    part_cross_xgamma = new TH1D("h_part_cross_xgamma", "part_cross_xgamma", number_xgamma_bins, xgamma_bin);
+    part_cross_xp = new TH1D("h_part_cross_xp", "part_cross_xp", number_xp_bins, xp_bin);
+    part_cross_dphi = new TH1D("h_part_cross_dphi", "part_cross_dphi", number_dphi_bins, dphi_bin);
+    part_cross_deta = new TH1D("h_part_cross_deta", "part_cross_deta", number_deta_bins, deta_bin);
+    part_cross_dphi_e_ph = new TH1D("h_part_cross_dphi_e_ph", "part_cross_dphi_e_ph", number_dphi_e_ph_bins, dphi_e_ph_bin);
+    part_cross_deta_e_ph = new TH1D("h_part_cross_deta_e_ph", "part_cross_deta_e_ph", number_deta_e_ph_bins, deta_e_ph_bin);
 
   part_nohad_cross_et = new TH1D("h_part_nohad_cross_et", "part_nohad_cross_et", number_etbins, et_bin);
   part_nohad_cross_eta = new TH1D("h_part_nohad_cross_eta", "part_nohad_cross_eta", number_etabins, eta_bin_crosssec);
@@ -120,6 +126,12 @@ void Hist::Init(TDirectory** dir)
   part_nohad_cross_et_jet = new TH1D("h_part_nohad_cross_et_jet", "part_nohad_cross_et_jet", number_et_jetbins, et_jet_bin);
   part_nohad_cross_et_jet2 = new TH1D("h_part_nohad_cross_et_jet2", "part_nohad_cross_et_jet (many bins)", 100, 0., 100.);
   part_nohad_cross_eta_jet = new TH1D("h_part_nohad_cross_eta_jet", "part_nohad_cross_eta_jet", number_eta_jetbins, eta_jet_bin);
+    part_nohad_cross_xgamma = new TH1D("h_part_nohad_cross_xgamma", "part_nohad_cross_xgamma", number_xgamma_bins, xgamma_bin);
+    part_nohad_cross_xp = new TH1D("h_part_nohad_cross_xp", "part_nohad_cross_xp", number_xp_bins, xp_bin);
+    part_nohad_cross_dphi = new TH1D("h_part_nohad_cross_dphi", "part_nohad_cross_dphi", number_dphi_bins, dphi_bin);
+    part_nohad_cross_deta = new TH1D("h_part_nohad_cross_deta", "part_nohad_cross_deta", number_deta_bins, deta_bin);
+    part_nohad_cross_dphi_e_ph = new TH1D("h_part_nohad_cross_dphi_e_ph", "part_nohad_cross_dphi_e_ph", number_dphi_e_ph_bins, dphi_e_ph_bin);
+    part_nohad_cross_deta_e_ph = new TH1D("h_part_nohad_cross_deta_e_ph", "part_nohad_cross_deta_e_ph", number_deta_e_ph_bins, deta_e_ph_bin);
 
   had_nopart_cross_et = new TH1D("h_had_nopart_cross_et", "had_nopart_cross_et", number_etbins, et_bin);
   had_nopart_cross_eta = new TH1D("h_had_nopart_cross_eta", "had_nopart_cross_eta", number_etabins, eta_bin_crosssec);
@@ -128,6 +140,12 @@ void Hist::Init(TDirectory** dir)
   had_nopart_cross_et_jet = new TH1D("h_had_nopart_cross_et_jet", "had_nopart_cross_et_jet", number_et_jetbins, et_jet_bin);
   had_nopart_cross_et_jet2 = new TH1D("h_had_nopart_cross_et_jet2", "had_nopart_cross_et_jet (many bins)", 100, 0., 100.);
   had_nopart_cross_eta_jet = new TH1D("h_had_nopart_cross_eta_jet", "had_nopart_cross_eta_jet", number_eta_jetbins, eta_jet_bin);
+        had_nopart_cross_xgamma = new TH1D("h_had_nopart_cross_xgamma", "had_nopart_cross_xgamma", number_xgamma_bins, xgamma_bin);
+        had_nopart_cross_xp = new TH1D("h_had_nopart_cross_xp", "had_nopart_cross_xp", number_xp_bins, xp_bin);
+        had_nopart_cross_dphi = new TH1D("h_had_nopart_cross_dphi", "had_nopart_cross_dphi", number_dphi_bins, dphi_bin);
+        had_nopart_cross_deta = new TH1D("h_had_nopart_cross_deta", "had_nopart_cross_deta", number_deta_bins, deta_bin);
+        had_nopart_cross_dphi_e_ph = new TH1D("h_had_nopart_cross_dphi_e_ph", "had_nopart_cross_dphi_e_ph", number_dphi_e_ph_bins, dphi_e_ph_bin);
+        had_nopart_cross_deta_e_ph = new TH1D("h_had_nopart_cross_deta_e_ph", "had_nopart_cross_deta_e_ph", number_deta_e_ph_bins, deta_e_ph_bin);
 
   hd_cross_et = new TH1D("h_hd_cross_et", "hd_cross_et", number_etbins, et_bin);
   hd_cross_eta = new TH1D("h_hd_cross_eta", "hd_cross_eta", number_etabins, eta_bin_crosssec);

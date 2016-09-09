@@ -2,10 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+
+
+#include <stdio.h>      /* printf, fgets */
+#include <stdlib.h>     /* atoi */
+
 using namespace std;
 
 bool nodebugmode = false;
-
+int filenum = 1;
 #include <TH1D.h>
 #include <TChain.h>
 #include <TString.h>
@@ -113,16 +118,22 @@ int main(int argc, char *argv[])
     s_use_clustered = (TString)argv[5];
     if(s_use_clustered=="1") {
       use_clustered = kTRUE;
-    } else
-      if(s_use_clustered=="0") {
-	use_clustered = kFALSE;
-      } else
-	{
-	  cout << "unknown parameter for use_clustered (1 or 0): " << s_use_clustered << endl;
-	  exit(-1);
-	}
+    } 
+    else if(s_use_clustered=="0") {
+	   use_clustered = kFALSE;
+      } 
+    else
+  	{
+  	  cout << "unknown parameter for use_clustered (1 or 0): " << s_use_clustered << endl;
+  	  exit(-1);
+  	}
   }
-  
+  if (argc > 6) 
+  {
+    filenum = atoi (argv[6]);
+    cout << "filenum: " << filenum << " should: " << argv[6] << endl;
+  }
+
   TString s_chain;
 
   s_chain = "orange";

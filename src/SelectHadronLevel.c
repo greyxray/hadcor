@@ -307,6 +307,8 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
             }
             x_gamma /= (2. * E_e * Mc_y);
             x_pomeron /= (2. * E_p);
+            if (x_gamma >= 1) x_gamma = 0.999;
+
 
             Double_t hardest_jet_et = true_jets[index_of_accomp_jet].et();
             Double_t hardest_jet_eta = true_jets[index_of_accomp_jet].eta();
@@ -321,6 +323,29 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	hist.had_Q2->Fill(Mc_q2, wtx);
         	hist.had_x->Fill(Mc_x, wtx);
 
+          //{0.0002, 0.001, 0.003, 0.01, 0.02};
+          if (Mc_x >= 0.02) 
+          {
+            cout <<"==============>Mc_x exceeded upper limit\n";
+            Mc_x = 0.015;
+          }
+          else if (Mc_x < 0.0002) 
+          {
+            cout <<"==============>Mc_x exceeded lower limit\n";
+            Mc_x = 0.0005;
+          }
+
+                  if (temp_deta_e_ph >= -0.6) 
+                  {
+                    cout <<"==============>temp_deta_e_ph exceeded upper limit\n";
+                    temp_deta_e_ph = -1.0;
+                  }
+                  else if (temp_deta_e_ph < -3.6) 
+                  {
+                    cout <<"==============>temp_deta_e_ph exceeded lower limit\n";
+                    temp_deta_e_ph = -3.1;
+                  }
+          
         	hist.had_cross_et->Fill(input_hadrons[index_photon_vector].et(), wtx);
         	hist.had_cross_eta->Fill(input_hadrons[index_photon_vector].eta(), wtx);
         	hist.had_cross_Q2->Fill(Mc_q2, wtx);
@@ -341,6 +366,18 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	had_eta_jet = accomp_jet_eta;
         	had_x = Mc_x;
         	had_Q2 = Mc_q2;
+
+                  had_xgamma = (input_hadrons[index_photon_vector].e() - input_hadrons[index_photon_vector].pz() 
+                                + true_jets[index_of_accomp_jet].e() - true_jets[index_of_accomp_jet].pz() ) / (2. * E_e * Mc_y);
+
+                  if (had_xgamma >=1) had_xgamma = 0.999;
+                  if (x_gamma != had_xgamma) exit(-1);
+                  had_xp = (input_hadrons[index_photon_vector].e() + input_hadrons[index_photon_vector].pz() 
+                                + true_jets[index_of_accomp_jet].e() + true_jets[index_of_accomp_jet].pz() ) / (2. * E_p);
+                  had_dphi = delta_phi(true_jets[index_of_accomp_jet].phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
+                  had_deta = true_jets[index_of_accomp_jet].eta() - had_eta;
+                  had_dphi_e_ph = delta_phi(v_true_electron.Phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
+                  had_deta_e_ph = v_true_electron.Eta() - had_eta;
 
         	hist.prof_had_cross_et->Fill(input_hadrons[index_photon_vector].et(), input_hadrons[index_photon_vector].et(), wtx);
         	hist.prof_had_cross_eta->Fill(input_hadrons[index_photon_vector].eta(), input_hadrons[index_photon_vector].eta(), wtx);

@@ -99,8 +99,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       if (check_cuts) cout << "rejected by cut on true q2 = " << Mc_q2 << endl;
     }
     TVector3 v_true_electron(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2]); // Four-momentum of final state lepton
-    if ((v_true_electron.Theta()*180.0/TMath::Pi() < 139.8 ) ||
-        (v_true_electron.Theta()*180.0/TMath::Pi() > 180.0 ))  
+    if ((v_true_electron.Theta()*180.0 / TMath::Pi() < 140.0 ) ||
+        (v_true_electron.Theta()*180.0 / TMath::Pi() > 180.0 ))  
     {
       take_pevent = kFALSE;
       if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta()*180.0/TMath::Pi() << endl;
@@ -294,6 +294,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
     					     TMath::Sqrt(Ppart[i][0] * Ppart[i][0] 
                               + Ppart[i][1] * Ppart[i][1] 
                               + Ppart[i][2] * Ppart[i][2]));
+            
           input_partons.push_back(r);
         }
 
@@ -435,18 +436,6 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                   accomp_jet_et = v_true_parton_acc_jet->Et();
                   accomp_jet_eta = v_true_parton_acc_jet->Eta();
 
-                  hist.part_prph_e->Fill(input_partons[index_photon_vector].et(), wtx);
-                  hist.part_jet_e->Fill(accomp_jet_et, wtx);
-                  hist.part_Q2->Fill(Mc_q2, wtx);
-                  hist.part_x->Fill(Mc_x, wtx);
-
-                  hist.part_cross_et->Fill(input_partons[index_photon_vector].et(), wtx);
-                  hist.part_cross_eta->Fill(input_partons[index_photon_vector].eta(), wtx);
-                  hist.part_cross_Q2->Fill(Mc_q2, wtx);
-                  hist.part_cross_x->Fill(Mc_x, wtx);
-                  hist.part_cross_et_jet->Fill(accomp_jet_et, wtx);
-                  hist.part_cross_et_jet2->Fill(accomp_jet_et, wtx);
-                  hist.part_cross_eta_jet->Fill(accomp_jet_eta, wtx);
 
                   part_et = input_partons[index_photon_vector].et();
                   part_eta = input_partons[index_photon_vector].eta();
@@ -454,6 +443,72 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                   part_eta_jet = accomp_jet_eta;
                   part_x = Mc_x;
                   part_Q2 = Mc_q2;
+                  part_xgamma = (input_partons[index_photon_vector].e() - input_partons[index_photon_vector].pz() 
+                                + v_true_parton_acc_jet->E() - v_true_parton_acc_jet->Pz() ) / (2. * E_e * Mc_y);
+                  if (part_xgamma >= 1) part_xgamma = 0.999;
+                  part_xp = (input_partons[index_photon_vector].e() + input_partons[index_photon_vector].pz() 
+                                + v_true_parton_acc_jet->E() + v_true_parton_acc_jet->Pz() ) / (2. * E_p);
+                  part_dphi = delta_phi(v_true_parton_acc_jet->Phi(), input_partons[index_photon_vector].phi()) * 180.0/TMath::Pi();
+                  part_deta = accomp_jet_eta - part_eta;
+                  part_dphi_e_ph = delta_phi(v_true_electron.Phi(), input_partons[index_photon_vector].phi()) * 180.0/TMath::Pi();
+                  part_deta_e_ph = v_true_electron.Eta() - part_eta;
+
+                  hist.part_prph_e->Fill(part_et, wtx);
+                  hist.part_jet_e->Fill(accomp_jet_et, wtx);
+                  hist.part_Q2->Fill(part_Q2, wtx);
+                  hist.part_x->Fill(part_x, wtx);
+
+
+                  if (part_x >= 2.e-2) 
+                  {
+                    cout <<"==============>parx_x exceeded upper limit\n";
+                    part_x = 18.e-3;
+                  }
+                  else if (part_x < 2.e-4) 
+                  {
+                    cout <<"==============>parx_x exceeded lower limit\n";
+                    part_x = 2.e-4;
+                  }
+
+                  if (part_deta >= 2) 
+                  {
+                    cout <<"==============>part_deta exceeded upper limit\n";
+                    part_deta = 1.5;
+                  }
+                  else if (part_deta < -2.2) 
+                  {
+                    cout <<"==============>part_deta exceeded lower limit\n";
+                    part_deta = -2.0;
+                  }
+
+                  if (part_deta_e_ph >= -0.6) 
+                  {
+                    cout <<"==============>part_deta_e_ph exceeded upper limit\n";
+                    part_deta_e_ph = -1.0;
+                  }
+                  else if (part_deta_e_ph < -3.6) 
+                  {
+                    cout <<"==============>part_deta_e_ph exceeded lower limit\n";
+                    part_deta_e_ph = -3.1;
+                  }
+                  hist.part_cross_et->Fill(part_et, wtx);
+                  hist.part_cross_eta->Fill(part_eta, wtx);
+                  hist.part_cross_Q2->Fill(part_Q2, wtx);
+                  hist.part_cross_x->Fill(part_x, wtx);
+                  hist.part_cross_et_jet->Fill(accomp_jet_et, wtx);
+                  hist.part_cross_et_jet2->Fill(accomp_jet_et, wtx);
+                  hist.part_cross_eta_jet->Fill(accomp_jet_eta, wtx);
+                    hist.part_cross_xgamma->Fill(part_xgamma, wtx);
+                    hist.part_cross_xp->Fill(part_xp, wtx);
+                    hist.part_cross_dphi->Fill(part_dphi, wtx);
+                    hist.part_cross_deta->Fill(part_deta, wtx);
+                    cout << "===============> part_deta=============>" << part_deta << endl;
+                    cout << "===============> jet=============>" << accomp_jet_eta << endl;
+                    cout << "===============> prph=============>" << part_eta << endl;
+                    hist.part_cross_dphi_e_ph->Fill(part_dphi_e_ph, wtx);
+                    hist.part_cross_deta_e_ph->Fill(part_deta_e_ph, wtx);
+
+
                 }// if (here_is_true_jet
             } //    if (is_true_prph_candidate)
         } 

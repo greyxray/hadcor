@@ -47,12 +47,12 @@ class Hist
     TH1D* had_cross_et_jet;
     TH1D* had_cross_et_jet2;
     TH1D* had_cross_eta_jet;
-    TH1D* had_cross_xgamma;
-    TH1D* had_cross_xp;
-    TH1D* had_cross_dphi;
-    TH1D* had_cross_deta;
-    TH1D* had_cross_dphi_e_ph;
-    TH1D* had_cross_deta_e_ph;
+      TH1D* had_cross_xgamma;
+      TH1D* had_cross_xp;
+      TH1D* had_cross_dphi;
+      TH1D* had_cross_deta;
+      TH1D* had_cross_dphi_e_ph;
+      TH1D* had_cross_deta_e_ph;
 
     TH1D* part_cross_et;
     TH1D* part_cross_eta;
@@ -61,12 +61,12 @@ class Hist
     TH1D* part_cross_et_jet;
     TH1D* part_cross_et_jet2;
     TH1D* part_cross_eta_jet;  
-    TH1D* part_cross_xgamma;
-    TH1D* part_cross_xp;
-    TH1D* part_cross_dphi;
-    TH1D* part_cross_deta;
-    TH1D* part_cross_dphi_e_ph;
-    TH1D* part_cross_deta_e_ph;
+      TH1D* part_cross_xgamma;
+      TH1D* part_cross_xp;
+      TH1D* part_cross_dphi;
+      TH1D* part_cross_deta;
+      TH1D* part_cross_dphi_e_ph;
+      TH1D* part_cross_deta_e_ph;
 
     TH1D* part_nohad_cross_et;
     TH1D* part_nohad_cross_eta;
@@ -75,12 +75,12 @@ class Hist
     TH1D* part_nohad_cross_et_jet;
     TH1D* part_nohad_cross_et_jet2;
     TH1D* part_nohad_cross_eta_jet;  
-    TH1D* part_nohad_cross_xgamma;
-    TH1D* part_nohad_cross_xp;
-    TH1D* part_nohad_cross_dphi;
-    TH1D* part_nohad_cross_deta;
-    TH1D* part_nohad_cross_dphi_e_ph;
-    TH1D* part_nohad_cross_deta_e_ph;
+      TH1D* part_nohad_cross_xgamma;
+      TH1D* part_nohad_cross_xp;
+      TH1D* part_nohad_cross_dphi;
+      TH1D* part_nohad_cross_deta;
+      TH1D* part_nohad_cross_dphi_e_ph;
+      TH1D* part_nohad_cross_deta_e_ph;
 
     TH1D* had_nopart_cross_et;
     TH1D* had_nopart_cross_eta;
@@ -89,12 +89,12 @@ class Hist
     TH1D* had_nopart_cross_et_jet;
     TH1D* had_nopart_cross_et_jet2;
     TH1D* had_nopart_cross_eta_jet;  
-    TH1D* had_nopart_cross_xgamma;
-    TH1D* had_nopart_cross_xp;
-    TH1D* had_nopart_cross_dphi;
-    TH1D* had_nopart_cross_deta;
-    TH1D* had_nopart_cross_dphi_e_ph;
-    TH1D* had_nopart_cross_deta_e_ph;
+      TH1D* had_nopart_cross_xgamma;
+      TH1D* had_nopart_cross_xp;
+      TH1D* had_nopart_cross_dphi;
+      TH1D* had_nopart_cross_deta;
+      TH1D* had_nopart_cross_dphi_e_ph;
+      TH1D* had_nopart_cross_deta_e_ph;
 
     TH1D* hd_cross_et;
     TH1D* hd_cross_eta;

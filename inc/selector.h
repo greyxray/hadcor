@@ -78,12 +78,25 @@ class selector {
     Double_t        had_eta_jet;
     Double_t        had_x;
     Double_t        had_Q2;
+    Double_t         had_xgamma;
+    Double_t        had_xp;
+    Double_t        had_dphi;
+    Double_t        had_deta;
+    Double_t        had_dphi_e_ph;
+    Double_t        had_deta_e_ph;
+    
     Double_t        part_et;
     Double_t        part_eta;
     Double_t        part_et_jet;
     Double_t        part_eta_jet;
     Double_t        part_x;
     Double_t        part_Q2;
+    Double_t        part_xgamma;
+    Double_t        part_xp;
+    Double_t        part_dphi;
+    Double_t        part_deta;
+    Double_t        part_dphi_e_ph;
+    Double_t        part_deta_e_ph;
   //--------------------------------
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
   TEventList     *event_list; 
