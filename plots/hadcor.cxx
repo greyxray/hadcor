@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <math.h>
+#include <iomanip>      // std::setprecision
 using namespace std;
 
 #include <TH1D.h>
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
 	gStyle->SetTitleY(0.99);
 	gStyle->SetTitleX(0.15);
 
-	TFile *file2 = new TFile("../mc_prph0405e_parton_1-4_5_6.1_7-10.root", "read"); 
+	TFile *file2 = new TFile("../mc_prph0405e_all.root", "read"); //mc_prph0405e_parton_1-4_5_6.1_7-10.root
 	cout << "files attached" << endl;
 
 	const Int_t n_hist = 12;
@@ -192,18 +193,20 @@ hist_had_to_part_prph[i]->Sumw2();
 		cout << "in bins of " << s_var[j] << ": " << endl;
 		for(Int_t i = 0; i < hist_had_to_part_prph[j]->GetNbinsX(); i++) 
 		{
-			cout << "\t" << i << ")";
-			cout << "\t\t" << hist_had_prph[j]->GetBinContent(i+1) << " +- " << hist_had_prph[j]->GetBinError(i+1) << " / " <<
-			 hist_part_prph[j]->GetBinContent(i+1) << " +- " << hist_part_prph[j]->GetBinError(i+1) 
-			 << " = " << hist_had_to_part_prph[j]->GetBinContent(i+1) << " +- " << hist_had_to_part_prph[j]->GetBinError(i+1) 
-			 << " || "<< hist_had_to_part_prph[j]->GetBinContent(i+1) \
+			Double_t uncor_err = hist_had_to_part_prph[j]->GetBinContent(i+1) \
 			 * sqrt(pow(hist_had_prph[j]->GetBinError(i+1)/hist_had_prph[j]->GetBinContent(i+1), 2) \
-			 	+ pow(hist_part_prph[j]->GetBinError(i+1) /hist_part_prph[j]->GetBinContent(i+1),2))  << endl;
-			 /*
-			  << " || "<< hist_had_to_part_prph[j]->GetBinContent(i+1) \
-			 * sqrt(pow(hist_had_prph[j]->GetBinError(i+1)/hist_had_prph[j]->GetBinContent(i+1), 2) \
-			 	+ pow(hist_part_prph[j]->GetBinError(i+1) /hist_part_prph[j]->GetBinContent(i+1),2))
-			 */
+			 	+ pow(hist_part_prph[j]->GetBinError(i+1) /hist_part_prph[j]->GetBinContent(i+1), 2))  ;
+
+			// cout << "\t" << i << ")" << "\t\t" << hist_had_prph[j]->GetBinContent(i+1) << " +- " << hist_had_prph[j]->GetBinError(i+1) << " / " <<
+			//  hist_part_prph[j]->GetBinContent(i+1) << " +- " << hist_part_prph[j]->GetBinError(i+1) 
+			//  << " = " << hist_had_to_part_prph[j]->GetBinContent(i+1) << " +- " << hist_had_to_part_prph[j]->GetBinError(i+1) 
+			//  << " || "<< uncor_err
+			//  << " or (%) " << (uncor_err - hist_had_to_part_prph[j]->GetBinError(i+1) )/ hist_had_to_part_prph[j]->GetBinContent(i+1) 
+			//  << endl;
+
+			 cout << setprecision(3) << hist_had_to_part_prph[j]->GetBinContent(i+1) << " +- " 
+			 	  << setprecision(3) << hist_had_to_part_prph[j]->GetBinError(i+1)  << " " << endl;
+
 			 if (hist_had_to_part_prph[j]->GetBinContent(i+1) > max_hadcor) max_hadcor = hist_had_to_part_prph[j]->GetBinContent(i+1);
 
 			 if (hist_part_prph[j]->GetBinContent(i+1) == 0)

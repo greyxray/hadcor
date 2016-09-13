@@ -17,7 +17,7 @@ int filenum = 1;
 #include "constants.h"
 #include "selector.h"
 #include "runinfo.h"
-extern void fill_chain(TChain* chain, TString period, Bool_t data, TString mc_type, Bool_t use_clustered);
+extern void fill_chain(TChain* chain, TString period, Bool_t data, TString mc_type, Bool_t use_clustered, int filenum);
 
 int main(int argc, char *argv[])
 {
@@ -139,11 +139,12 @@ int main(int argc, char *argv[])
   s_chain = "orange";
 
   TChain* ch = new TChain(s_chain);
-  fill_chain(ch, period, data, mc_type, use_clustered);
+  fill_chain(ch, period, data, mc_type, use_clustered, filenum);
   //  ch->Add("0.root");
   //  ch->Add("1.root");
   //  ch->Add("62107_1.root");
   selector PromptPhotonPlusJetDIS;
+  PromptPhotonPlusJetDIS.filenum = filenum;
   PromptPhotonPlusJetDIS.Init(ch, period, data, mc_type, mc_corr_type, use_corr, use_2ndcorr, use_clustered);
   PromptPhotonPlusJetDIS.Begin();
   //  for(Int_t i=0; i<ch->GetEntries(); i++) 

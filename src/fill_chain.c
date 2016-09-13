@@ -20,56 +20,85 @@ using namespace std;
 #include "PrivateNtuplesNames.h"
 void fill(TChain* chain, TString location, TString* str, Int_t n);
 
-void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type, Bool_t use_clustered)
+void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type, Bool_t use_clustered, int filenum)
 {
   	if(mc_type == "mc_prph")
 	{
 		if(run_period == "0405e") 
 		{
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/25000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");                        
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/25000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_2.root");			
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_2.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_2.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_2.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_2.root");
-			// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");
-			//problem chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_2.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_2.root");
+			if (filenum == 1)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/25000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");                        
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/25000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_2.root");	
+			}		
+			if (filenum == 2)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_2.root");
+			}
+			if (filenum == 3)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_2.root");
+			}
+			if (filenum == 4)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_2.root");
+			}
+			if (filenum == 5)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_2.root");
+			}
+			if (filenum == 6)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");
+				//problem chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_2.root");
+			}
+			if (filenum == 7)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_2.root");
+			}
+			if (filenum == 8)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_2.root");
+			}
+			if (filenum == 9)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_2.root");
+			}
+			if (filenum == 10)
+			{
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_2.root");
+			}
 
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_2.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_2.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
-			//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_2.root");
-
-			
-			cout << "/nfs/dust/zeus/group/glushenko/zmcsp/output/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01.root" << " added to chain in fill" << endl;
+			//cout << "/nfs/dust/zeus/group/glushenko/zmcsp/output/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01.root" << " added to chain in fill" << endl;
 			cout << chain->GetEntries() << " events chained" << endl;
+
 			/*
 			if (!use_clustered)
 			  fill(chain, str_location_prph0405e, rootFile_prph0405e, numberOfRootFiles_prph0405e);
 			else
 			  fill(chain, str_location_prph0405eprivate, rootFile_prph0405eprivate, numberOfRootFiles_prph0405eprivate);
 			  */      
-		} 
+		}
 	    else if(run_period == "06e") 
 	    {
 			if (!use_clustered)
 			  fill(chain, str_location_prph06e, rootFile_prph06e, numberOfRootFiles_prph06e);
 			else
 			  fill(chain, str_location_prph06eprivate, rootFile_prph06eprivate, numberOfRootFiles_prph06eprivate);      
-	    } 
+	    }
 	    else 
 	    {
 	    	cerr << "mc_prph: unknown period: " << run_period << endl; 
 	    	exit(-1);
-	    }   
+	    }
 	}
   	else
     {

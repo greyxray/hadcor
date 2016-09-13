@@ -8,7 +8,6 @@ using namespace std;
 #include <TLorentzVector.h>
 #include <TMath.h>
 #include <TObjArray.h>
-//#include "Dijets.h"
 #include "KtJet/KtEvent.h"
 #include "KtJet/KtLorentzVector.h"
 using KtJet::KtLorentzVector;
@@ -36,14 +35,6 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       v.SetPxPyPzE(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
       had_et_sum += v.Et();
     }
-    /*  
-      hist.had_sum_e->Fill(had_e_sum, wtx);
-      hist.had_sum_px->Fill(had_px_sum, wtx);
-      hist.had_sum_py->Fill(had_py_sum, wtx);
-      hist.had_sum_pz->Fill(had_pz_sum, wtx);
-      hist.had_sum_et->Fill(had_et_sum, wtx);
-      cout << "event #" << Eventnr << ": " << had_e_sum << " " << had_px_sum << " " << had_py_sum << " " << had_pz_sum << " " << had_et_sum << endl;
-    */
 
   // General check of mom-energy conservation on the parton level:
     Double_t part_px_sum = 892.48 * TMath::Sin(2.7e-4);
@@ -82,7 +73,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       hist.had_q2->Fill(Mc_q2, wtx);
       hist.had_y->Fill(Mc_y, wtx);
 
-  //  initialisation of some starting parameters
+  // Initialisation of some starting parameters
     Bool_t take_pevent = kTRUE;
     Bool_t here_is_true_prph = kTRUE;
     Bool_t is_true_prph_candidate = kTRUE;
@@ -103,7 +94,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
         (v_true_electron.Theta()*180.0 / TMath::Pi() > 180.0 ))  
     {
       take_pevent = kFALSE;
-      if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta()*180.0/TMath::Pi() << endl;
+      if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta() * 180.0 / TMath::Pi() << endl;
     }
     if (Mc_pfsl[3] < 10.)
     {
@@ -111,55 +102,15 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       if (check_cuts) cout << "rejected by cut on true electron energy = " << Mc_pfsl[3] << endl;
     }
 
-  //chek validity of parton level MC
+  // chek validity of parton level MC
     if (Nppart < 1)
     {
       take_pevent = kFALSE;
       if (check_cuts) cout << "in this event Nppart < 1" << endl;
     }
 
-  /* additional filling before
-    if (take_pevent) 
-    {
-      hist.dis_Q2_true_part->Fill(Mc_q2, wtx); 
-      hist.dis_electron_e_true_part->Fill(Mc_pfsl[3], wtx); 
-      hist.dis_electron_theta_true_part->Fill(v_true_electron.Theta()*180.0/TMath::Pi(), wtx); 
-      hist.dis_x_true_part->Fill(Mc_x, wtx); 
-      hist.dis_y_true_part->Fill(Mc_y, wtx); 
-    }
-  */
-
-  //find true photon
-  //on the HADRON level --> index_true_hadron_partlevel
+  // Find true photon on the HADRON level --> index_true_hadron_partlevel
     Int_t index_true_photon_hadlevel = -1;
-    Int_t index_jet = -1;//this variable is to compare with Sanja, Nazar, Ian, Natasha
-    
-    // if (!Data)
-    // {
-    //   if (mc_type == "mc_bg_rad")/* || mc_type == "mc_bg_norad")*/
-    //     for (Int_t i = 0; i < Npart; i++)
-    //       if (Part_id[i] == 5)
-    //       {
-    //         index_jet = Part_jetid[i] - 1;
-    //         index_true_photon_hadlevel = i;
-    //         break;
-    //       }
-    //   else if (mc_type == "mc_prph")
-    //     for (Int_t i = 0; i < Npart; i++)
-    //       if (Part_id[i] == 12)
-    //       {
-    //         index_jet = Part_jetid[i] - 1;
-    //         index_true_photon_hadlevel = i;
-    //         break;
-
-    //       }
-    // }
-    // if (index_true_photon_hadlevel < 0)
-    // {
-    //   here_is_true_prph = kFALSE;
-    //   if (check_cuts) cout << "there is no photon in hadron level" << endl;
-    // }
-     //New
     for(Int_t i = 0; i < Npart; i++)
      {
        cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
@@ -171,26 +122,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
        }
      }
 
-  //find true photon 
-  //on the PARTON level --> index_true_photon_partlevel
+  // Find true photon on the PARTON level --> index_true_photon_partlevel
     Int_t index_true_photon_partlevel = -1;
-
-    //find the photon among partons
-     // No such instance in the MC - will force to put gamma from hadron level
-      // for(Int_t i = 0; i < Nppart; i++) 
-      // {
-      //   if (Idpart[i] == 29) //fmcprt -> gamma
-      //   {
-      //     index_true_photon_partlevel = i;
-      //     break;
-      //   }
-      // } 
-      // if (index_true_photon_partlevel < 0)
-      // {
-      //   here_is_true_prph = kFALSE;
-      //   if (check_cuts) cout << "there is no photon in parton level" << endl;
-      // }
-
     //parameters init 
       is_true_prph_candidate = here_is_true_prph;// True if on had and part lev
       Int_t index_true_electron_hadlevel = -1;
@@ -198,7 +131,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       Int_t index_photon_vector = -1;
       Int_t index_photon_jet = -1;
 
-  // finding e and additional energy check for prph
+  // Finding e and additional energy check for prph
     if (take_pevent && here_is_true_prph) 
     {
       //find the electron at hadron level
@@ -208,64 +141,28 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
             index_true_electron_hadlevel = i;
             break;
           }
-
       //find the electron at parton level
         for(Int_t i = 0; i < Nppart; i++)
-          if ((Idpart[i]==23) || (Idpart[i]==24))// e- e+
+          if ((Idpart[i] == 23) || (Idpart[i] == 24))// e- e+
           {
             index_true_electron_partlevel = i;
+            cout << "LOGICAL ERROR: Found electron in QCDPAR but should not!!!!" << endl;
+            exit(1);
             break;
           }
-
-      /*     
-        v_true_scattered_electron - is filled in SelectHadronLevel
-        cout << "true electron: " << v_true_scattered_electron->Px() << " " 
-             << v_true_scattered_electron->Py() << " " 
-             << v_true_scattered_electron->Pz() << " " 
-             << v_true_scattered_electron->E()  
-        << ", id = " << Part_id[index_true_electron_hadlevel] 
-        << ", prt = " << Part_prt[index_true_electron_hadlevel]  
-        << ", E from part_p = " << Part_p[index_true_electron_hadlevel][3] << endl; 
-        
-        cout << "true photon: " << v_true_prompt_photon->Px() << " " 
-             << v_true_prompt_photon->Py() << " " 
-             << v_true_prompt_photon->Pz() << " " 
-             << v_true_prompt_photon->E() << ", id = " << Part_id[index_true_photon_hadlevel]  
-        << ", prt = " << Part_prt[index_true_photon_hadlevel] << endl; 
-
-        for(Int_t i=0; i<Nppart; i++)
-         cout << "parton #" << i << ": " << Ppart[i][0] << " " << Ppart[i][1] << " " << Ppart[i][2] << " " << Ppart[i][3] << ", id = " << Idpart[i] << endl; 
-      */
-
-      // ENERGY OF PHOTON_PARTON  != ENERGY OF PHOTON_HADRON => NO TRUE PRPH
-       // No such instance in the MC - will force to put gamma from hadron level
-        // if (Ppart[index_true_photon_partlevel][3] != Part_p[index_true_photon_hadlevel][3]) 
-        // {
-        //   cerr << "Ppart[index_true_photon_partlevel][3] = " << Ppart[index_true_photon_partlevel][3] 
-        //        << " != Part_p[index_true_photon_hadlevel][3] = " << Part_p[index_true_photon_hadlevel][3] 
-        //        << endl;
-        //   here_is_true_prph = kFALSE;
-        //   // exit(-1);
-        // }
     }
 
   // PrPh cuts on parton level(some):
     
     TLorentzVector tl_true_photon; //prph on the parton level
-    // No such instance in the MC - will force to put gamma from hadron level
-    // tl_true_photon.SetPxPyPzE(Ppart[index_true_photon_partlevel][0],
-  		// 					   Ppart[index_true_photon_partlevel][1],
-  		// 					   Ppart[index_true_photon_partlevel][2],
-  		// 					   Ppart[index_true_photon_partlevel][3]);
     tl_true_photon.SetPxPyPzE(Part_p[index_true_photon_hadlevel][0],
                               Part_p[index_true_photon_hadlevel][1],
                               Part_p[index_true_photon_hadlevel][2],
                               Part_p[index_true_photon_hadlevel][3]);
-    if (tl_true_photon.Et() < 4. || tl_true_photon.Et() > 15. 
-        || tl_true_photon.Eta() < -0.7 || tl_true_photon.Eta() > 0.9)
-      here_is_true_prph = kFALSE;
+    if (tl_true_photon.Et() < 4. || tl_true_photon.Et() > 15. || 
+        tl_true_photon.Eta() < -0.7 || tl_true_photon.Eta() > 0.9) here_is_true_prph = kFALSE;
 
-  // finding jets on parton level, cuts on photon
+  // Finding jets on parton level, cuts on photon
     vector<KtJet::KtLorentzVector> input_partons;
     vector<KtJet::KtLorentzVector> true_parton_jets;
     if (take_pevent && here_is_true_prph) 
@@ -274,32 +171,32 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       // and find # of parton in input_partons that is true photon --> index_photon_vector
         KtJet::KtLorentzVector r;
         cout << "Nppart " << Nppart<< endl;
-        for (Int_t i = 0; i < Npart; i++)
+        for (Int_t i = 0; i < Nppart; i++)
         {
           Double_t M2 = Ppart[i][3] * Ppart[i][3] 
                         - Ppart[i][2] * Ppart[i][2] 
                         - Ppart[i][1] * Ppart[i][1] 
                         - Ppart[i][0] * Ppart[i][0];// parton mass
     					   
-    	    if (i == index_true_electron_partlevel) continue; // Skip DIS electron
+    	    if (i == index_true_electron_partlevel) continue; // Skip DIS electron //will not be found
     	    if (TMath::Abs(Ppart[i][3]) < 1.e-3) continue; // Skip low energy
     	    if (Ppart[i][3] <= 0) continue;
     	    //	if (M2 < 0 ) continue;
     	    //	if (TMath::Abs(Ppart[i][2]) > Ppart[i][3]) continue;
 
-    	    if (i == index_true_photon_partlevel) index_photon_vector = input_partons.size();
+    	    if (i == index_true_photon_partlevel) index_photon_vector = input_partons.size(); //will not be found
     	
+          //TODO: remove else
         	if (TMath::Abs(Ppart[i][2]) < Ppart[i][3]) r = KtJet::KtLorentzVector(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
           else  r = KtJet::KtLorentzVector(Ppart[i][0], Ppart[i][1], Ppart[i][2],
     					     TMath::Sqrt(Ppart[i][0] * Ppart[i][0] 
                               + Ppart[i][1] * Ppart[i][1] 
                               + Ppart[i][2] * Ppart[i][2]));
-            
+
           input_partons.push_back(r);
         }
 
-
-        //add the missing photon to the parton level instances
+        // Add the missing photon to the parton level instances that was missed in the QCDPAR block of ntuples v08a
           {
             Double_t M2 = Part_p[index_true_photon_hadlevel][3] * Part_p[index_true_photon_hadlevel][3] 
                           - Part_p[index_true_photon_hadlevel][2] * Part_p[index_true_photon_hadlevel][2] 
@@ -328,15 +225,15 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
               input_partons.push_back(r);
             }
           }
-          cout << "Now the index_photon_vector should be eq to  Nppart (from QCDPAR block) : " ;
-          if (index_photon_vector == Nppart) cout << " yes" << endl;
-            else cout << "no" << endl;
+          cout << "Now the index_photon_vector should be eq to Nppart (from QCDPAR block) : " ;
+          if (index_photon_vector == Nppart) cout << " index_photon_vector == Nppart" << endl;
+          else cout << "WARNING!!! LOGICAL ERROR: index_photon_vector != Nppart" << endl;
+
       // construct vector of jets --> true_parton_jets
         double rparameter = 1.0;
-        KtJet::KtEvent ev(input_partons, 3, 2 ,1, rparameter);// pe deltaR e rparameter
+        KtJet::KtEvent ev(input_partons, 3, 2 ,1, rparameter);// (vector_of_particles, pe, deltaR, e, rparameter)
         true_parton_jets = ev.getJetsEt();// jets on the parton lev
-        //if (check_cuts)  cout << "index_true_photon_partlevel = " << index_true_photon_partlevel << endl << "index_photon_vector = " << index_photon_vector << endl; 
-      
+        
       // find # of jet containing photon - index_photon_jet
         for(Int_t i = 0; i < true_parton_jets.size(); i++) 
         {
@@ -397,7 +294,17 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
               if (check_cuts) cout << "rejected by photon/jet energy ratio: " << ephoton_over_ejet << endl;
             }
             //      cout << "these must be equal: " << input_partons[index_photon_vector].e() << " = " << Ppart[index_true_photon_partlevel][3] << endl;
-          
+            
+            // Isolation from the electron:
+            TLorentzVector v_electron(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2], Mc_pfsl[3]);
+            TLorentzVector v_photon(input_partons[index_photon_vector].px(), input_partons[index_photon_vector].py(), input_partons[index_photon_vector].pz(), input_partons[index_photon_vector].e());
+            Double_t dr = v_photon.DeltaR(v_electron);
+            if(dr < 0.2)
+            {
+              //is_true_prph_candidate = kFALSE;
+              cout << "rejected by failing isolation from elecron. dr = "<< dr << " < 0.2" << endl;
+            }
+
           // find accompanying jet --> index_of_accomp_jet and v_true_parton_acc_jet
             if (is_true_prph_candidate) 
             {
@@ -509,8 +416,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                     hist.part_cross_deta_e_ph->Fill(part_deta_e_ph, wtx);
 
 
-                }// if (here_is_true_jet
-            } //    if (is_true_prph_candidate)
+                }
+            }
         } 
     } 
 
@@ -545,6 +452,6 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       cout << "================================PARTON LEVEL EVENT " << Eventnr  << " ACCEPTED============================================" << endl;
     }
   
-  check_cuts = kFALSE;//once is enought
+  check_cuts = kFALSE; //once is enought
   return (take_pevent && here_is_true_prph && here_is_true_jet && is_true_prph_candidate);
 }
