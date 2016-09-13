@@ -294,7 +294,6 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
     					     TMath::Sqrt(Ppart[i][0] * Ppart[i][0] 
                               + Ppart[i][1] * Ppart[i][1] 
                               + Ppart[i][2] * Ppart[i][2]));
-            
           input_partons.push_back(r);
         }
 

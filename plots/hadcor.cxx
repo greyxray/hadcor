@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	gStyle->SetTitleY(0.99);
 	gStyle->SetTitleX(0.15);
 
-	TFile *file2 = new TFile("../mc_prph0405e_parton_1-4_5_6.1_7-10.root", "read"); 
+	TFile *file2 = new TFile("../reproduce.root", "read"); 
 	cout << "files attached" << endl;
 
 	const Int_t n_hist = 12;
