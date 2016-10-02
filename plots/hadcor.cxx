@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
 	gStyle->SetTitleY(0.99);
 	gStyle->SetTitleX(0.15);
 
-	TFile *file2 = new TFile("../reproduce.root", "read"); 
+	//TFile *file2 = new TFile("../reproduce.root", "read"); 
+	TFile *file2 = new TFile("../mc_prph0405e_parton.root", "read"); 
 	cout << "files attached" << endl;
 
 	const Int_t n_hist = 12;
@@ -106,10 +107,10 @@ int main(int argc, char *argv[])
 		cout << "\tOK" << endl;
 
 		hist_had_prph[i]->Sumw2();
-hist_had_nopart_prph[i]->Sumw2();
-hist_part_prph[i]->Sumw2();
-hist_part_nohad_prph[i]->Sumw2();
-hist_had_to_part_prph[i]->Sumw2();
+		hist_had_nopart_prph[i]->Sumw2();
+		hist_part_prph[i]->Sumw2();
+		hist_part_nohad_prph[i]->Sumw2();
+		hist_had_to_part_prph[i]->Sumw2();
 	}
 	cout << "histos succesfully read" << endl;
 
@@ -197,8 +198,8 @@ hist_had_to_part_prph[i]->Sumw2();
 			 hist_part_prph[j]->GetBinContent(i+1) << " +- " << hist_part_prph[j]->GetBinError(i+1) 
 			 << " = " << hist_had_to_part_prph[j]->GetBinContent(i+1) << " +- " << hist_had_to_part_prph[j]->GetBinError(i+1) 
 			 << " || "<< hist_had_to_part_prph[j]->GetBinContent(i+1) \
-			 * sqrt(pow(hist_had_prph[j]->GetBinError(i+1)/hist_had_prph[j]->GetBinContent(i+1), 2) \
-			 	+ pow(hist_part_prph[j]->GetBinError(i+1) /hist_part_prph[j]->GetBinContent(i+1),2))  << endl;
+			 * sqrt(pow(hist_had_prph[j]->GetBinError(i+1) / hist_had_prph[j]->GetBinContent(i+1), 2) \
+			 	+ pow(hist_part_prph[j]->GetBinError(i+1) / hist_part_prph[j]->GetBinContent(i+1),2))  << endl;
 			 /*
 			  << " || "<< hist_had_to_part_prph[j]->GetBinContent(i+1) \
 			 * sqrt(pow(hist_had_prph[j]->GetBinError(i+1)/hist_had_prph[j]->GetBinContent(i+1), 2) \

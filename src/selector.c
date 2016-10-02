@@ -195,7 +195,7 @@ Bool_t selector::Process()
 			{
 				wtx *= q2_reweighting(Mc_q2, mc_type); //warning
 			}
-		
+		if (wtx != 1.0) cout << "wtx: " << wtx << endl;
 		{     
 			//    if(Eventnr == 21334) check_cuts = kTRUE;//52258 22172
 			
