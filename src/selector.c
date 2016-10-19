@@ -130,7 +130,6 @@ Bool_t selector::Process()
 			// 	cout << "doh" << endl;
 			// }
 		//
-		cout << "entry " << entry << endl;
 		
 			// It goes by the end by:
 			// 			entry:2  Eventnr:13
@@ -153,6 +152,9 @@ Bool_t selector::Process()
 
 		
 		fChain->GetEntry(entry);
+		//if (Eventnr != 26) continue;
+		//if (Eventnr > 26 || entry > 26) exit(1);
+		cout << "entry: " << entry << "; Eventnr: " << Eventnr << "; Runnr_prev: " << Runnr_prev << endl;
 
 		//save list of runnumbers
 			if (Runnr != Runnr_prev) 
@@ -193,7 +195,7 @@ Bool_t selector::Process()
 
 			if (!Data && mc_type != "mc_bg_rad")
 			{
-				wtx *= q2_reweighting(Mc_q2, mc_type); //warning
+				//wtx *= q2_reweighting(Mc_q2, mc_type); //warning
 			}
 		if (wtx != 1.0) cout << "wtx: " << wtx << endl;
 		{     
@@ -1343,6 +1345,7 @@ Bool_t selector::Process()
 				// //if take_event for jet searching
 			
 			//Some output and some hists fill for Had and Part selections
+				
 			cout << "SelectHadronLevel check: "<<  take_event << " " << here_is_jet << " " << here_is_prph << " " << take_event_trig << endl;
 				if (!Data && SelectHadronLevel(take_event && here_is_jet && here_is_prph && take_event_trig)) 
 				{

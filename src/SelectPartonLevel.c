@@ -20,11 +20,11 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
   if (take_had_event) check_cuts = kTRUE;
 
   // General check of mom-energy conservation on the hadron level:
-    Double_t had_px_sum = 892.48 * TMath::Sin(2.7e-4);
-    Double_t had_py_sum = 892.48 * TMath::Sin(1.3e-4);
-    Double_t had_pz_sum = - 892.48;
-    Double_t had_e_sum = - 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
-    Double_t had_et_sum = 0;
+    Double_t had_px_sum = 0; //892.48 * TMath::Sin(2.7e-4);
+    Double_t had_py_sum = 0; //892.48 * TMath::Sin(1.3e-4);
+    Double_t had_pz_sum = 0; //- 892.48;
+    Double_t had_e_sum  = 0; //- 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
+    Double_t had_et_sum = 0; //0;
     //  cout << "in SelectPartons: number of hadrons is " << Npart << endl;
     for(Int_t i = 0; i < Npart; i++)
     {
@@ -36,6 +36,10 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       v.SetPxPyPzE(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
       had_et_sum += v.Et();
     }
+    cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
+    //cout << "PART: abs(had_e_sum - 947.5) > 1  " << (abs(had_e_sum - 947.5) > 1)  << endl;
+    if (abs(had_e_sum - 947.5) > 1 ) return false; //kFALSE;
+    //cout <<"NO"<<endl;
     /*  
       hist.had_sum_e->Fill(had_e_sum, wtx);
       hist.had_sum_px->Fill(had_px_sum, wtx);
@@ -46,11 +50,11 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
     */
 
   // General check of mom-energy conservation on the parton level:
-    Double_t part_px_sum = 892.48 * TMath::Sin(2.7e-4);
-    Double_t part_py_sum = 892.48 * TMath::Sin(1.3e-4);
-    Double_t part_pz_sum = - 892.48;
-    Double_t part_e_sum = - 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
-    Double_t part_et_sum = 0;
+    Double_t part_px_sum = 0;// = 892.48 * TMath::Sin(2.7e-4);// 0.2409695971
+    Double_t part_py_sum = 0;// = 892.48 * TMath::Sin(1.3e-4);// 0.1160223997
+    Double_t part_pz_sum = 0;// = - 892.48; // sqrt(E12 - m12) = p1 sqrt(E22 - m22) = p2; p1 - p2 = E1 - 
+    Double_t part_e_sum  = 0;// = - 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382); //-947.5204783799
+    Double_t part_et_sum = 0;// = 0;
     //  cout << "number of partons is " << Nppart << endl;
     for(Int_t i = 0; i < Nppart; i++)
     {
@@ -63,6 +67,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       v.SetPxPyPzE(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
       part_et_sum += v.Et();
     }
+    cout << "Parton E/M-conservation: (" << part_px_sum << ", " << part_py_sum << ", " << part_pz_sum << ", " << part_e_sum << ")" << " and Et = " << part_et_sum << endl;
+
     /*  
       hist.part_sum_e->Fill(part_e_sum, wtx);
       hist.part_sum_px->Fill(part_px_sum, wtx);
@@ -98,7 +104,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       take_pevent = kFALSE;
       if (check_cuts) cout << "rejected by cut on true q2 = " << Mc_q2 << endl;
     }
-    TVector3 v_true_electron(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2]); // Four-momentum of final state lepton
+    TVector3 v_true_electron(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2]); // momentum of final state lepton
     if ((v_true_electron.Theta()*180.0 / TMath::Pi() < 140.0 ) ||
         (v_true_electron.Theta()*180.0 / TMath::Pi() > 180.0 ))  
     {
@@ -170,7 +176,12 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
          break;
        }
      }
-
+    cout << "Parton E/M-conservation with photon and electron : (" << part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] << ", " << 
+                                                        part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] << ", " << 
+                                                        part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] << ", " << 
+                                                        part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] << ")" 
+                                                        << " and Et = " << part_et_sum << endl;
+    if (abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - 947.5) > 1 ) return false; //kFALSE;                                
   //find true photon 
   //on the PARTON level --> index_true_photon_partlevel
     Int_t index_true_photon_partlevel = -1;
@@ -216,6 +227,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
             index_true_electron_partlevel = i;
             break;
           }
+        if (index_true_electron_partlevel != -1) cout << "Strange index_true_electron_partlevel: " << index_true_electron_partlevel << endl;
 
       /*     
         v_true_scattered_electron - is filled in SelectHadronLevel
@@ -274,7 +286,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       // and find # of parton in input_partons that is true photon --> index_photon_vector
         KtJet::KtLorentzVector r;
         cout << "Nppart " << Nppart<< endl;
-        for (Int_t i = 0; i < Npart; i++)
+        for (Int_t i = 0; i < Nppart; i++)//Npart
         {
           Double_t M2 = Ppart[i][3] * Ppart[i][3] 
                         - Ppart[i][2] * Ppart[i][2] 

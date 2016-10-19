@@ -29,12 +29,13 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     Double_t accomp_jet_phi = -999.;
     hadron_level_jet_cont_photon_index = -1;
     hadron_level_ephoton_over_ejet = -1;
- cout << "param init" <<endl;
+    cout << "param init" << endl;
+
   hist.mccorel_q2_y->Fill(Mc_q2, Mc_y, wtx);
   hist.mccorel_q2_x->Fill(Mc_q2, Mc_x, wtx);
   hist.mccorel_q2_y_noweight->Fill(Mc_q2, Mc_y);
   hist.mccorel_q2_x_noweight->Fill(Mc_q2, Mc_x);
- check_cuts = kTRUE;
+  check_cuts = kTRUE;
   if (check_cuts) cout << "check cut on true q2 = " << Mc_q2 << endl;
     if (Mc_q2 < 10.) 
     {
@@ -49,7 +50,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
           (v_true_electron.Theta() * 180.0 / TMath::Pi() > 180.0 ))  
       {
         take_hevent = kFALSE;
-        if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta()*180.0/TMath::Pi() << endl;
+        if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta() * 180.0 / TMath::Pi() << endl;
       }
       if (Mc_pfsl[3] < 10.)
       {
@@ -61,11 +62,12 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
       {
         hist.dis_Q2_true->Fill(Mc_q2, wtx);
         hist.dis_electron_e_true->Fill(Mc_pfsl[3], wtx);
-        hist.dis_electron_theta_true->Fill(v_true_electron.Theta()*180.0/TMath::Pi(), wtx);
+        hist.dis_electron_theta_true->Fill(v_true_electron.Theta() * 180.0 / TMath::Pi(), wtx);
         hist.dis_x_true->Fill(Mc_x, wtx);
         hist.dis_y_true->Fill(Mc_y, wtx);
       }
       if (take_hevent) cout << "\t\tpassed electron cuts" << endl;
+
   //find true photon on gen lev --> here_is_true_prph, index_true_photon, index_jet
      Int_t index_true_photon = -1;
      Int_t index_jet = -1;//this variable is to compare with Sanja, Nazar, Ian, Natasha
@@ -90,17 +92,24 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     //       }
     // }
       //New
+    Double_t px_had_sum(0), py_had_sum(0), pz_had_sum(0), E_had_sum(0);
     for(Int_t i = 0; i < Npart; i++)
      {
+       px_had_sum += Part_p[i][0];
+       py_had_sum += Part_p[i][1];
+       pz_had_sum += Part_p[i][2];
+       E_had_sum += Part_p[i][3];
        cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
-       if (Part_prt[i] == 29)
+       if (Part_prt[i] == 29 && index_true_photon == -1)
        {
          index_true_photon = i;
          cout << "true photon found: " << index_true_photon << endl;
-         break;
+         //break;
        }
      }
-
+    cout << "Hadron E/M-conservation: (" << px_had_sum << ", " << py_had_sum << ", " << pz_had_sum << ", " << E_had_sum << ")" << endl;
+    //cout << "HAD: abs(E_had_sum - 947.5) " << abs(E_had_sum - 947.5) << endl;
+    if (abs(E_had_sum - 947.5) > 1 ) return false;
     if (index_true_photon < 0)
     {
       here_is_true_prph = kFALSE;
@@ -159,7 +168,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
 
     //find electron on gen lev
       for(Int_t i = 0; i < Npart; i++)
-        if ((Part_prt[i]==23)||(Part_prt[i]==24))
+        if ((Part_prt[i] == 23) || (Part_prt[i] == 24))
       	{
       	  index_true_electron = i;
       	  break;
@@ -170,12 +179,11 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
       //construct input_hadrons made of Part_p --> input_hadrons
         for (Int_t i = 0; i < Npart; i++)
         {
-          // Skip DIS electron
           Double_t M2 = Part_p[i][3] * Part_p[i][3] 
                       - Part_p[i][2] * Part_p[i][2]
                       - Part_p[i][1] * Part_p[i][1]
                       - Part_p[i][0] * Part_p[i][0];
-    	
+    	    // Skip DIS electron
           if (i == index_true_electron) continue;
           if (TMath::Abs(Part_p[i][3]) < 1.e-3) continue;
           if (Part_p[i][3] <= 0) continue;

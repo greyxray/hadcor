@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
 
 	//TFile *file2 = new TFile("../reproduce.root", "read"); 
 	TFile *file2 = new TFile("../mc_prph0405e_parton.root", "read"); 
+	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
+	
 	cout << "files attached" << endl;
 
 	const Int_t n_hist = 12;
@@ -246,11 +248,11 @@ int main(int argc, char *argv[])
 		else sign_window(c2->GetPad(i+1 - 6), h_window[i], s_dim[i], "hadron / parton", "", "middle");
 
 
-	c1->GetPad(3)->SetLogx();
-	c1->GetPad(4)->SetLogx();
-	c1->GetPad(5)->SetLogx();
-	c2->GetPad(1)->SetLogx();
-	c2->GetPad(2)->SetLogx();
+	//c1->GetPad(3)->SetLogx();
+	//c1->GetPad(4)->SetLogx();
+	//c1->GetPad(5)->SetLogx();
+	//c2->GetPad(1)->SetLogx();
+	//c2->GetPad(2)->SetLogx();
 
 	TF1 *f_unity = new TF1("unity", "1", -10000., 10000.);
 	f_unity->SetLineColor(34);
@@ -338,11 +340,11 @@ int main(int argc, char *argv[])
 		if (i < 6) sign_window(c3->GetPad(i+1), h_window3[i], s_dim[i], "Events / bin width", "", "middle");
 		else sign_window(c3_2->GetPad(i+1 - 6), h_window3[i], s_dim[i], "Events / bin width", "", "middle");
 
-	c3->GetPad(3)->SetLogx();
-	c3->GetPad(4)->SetLogx();
-	c3->GetPad(5)->SetLogx();
-	c3_2->GetPad(1)->SetLogx();
-	c3_2->GetPad(2)->SetLogx();
+	//c3->GetPad(3)->SetLogx();
+	//c3->GetPad(4)->SetLogx();
+	//c3->GetPad(5)->SetLogx();
+	//c3_2->GetPad(1)->SetLogx();
+	//c3_2->GetPad(2)->SetLogx();
 
 	TLegend *leg3 = new TLegend(0.3, 0.68, 0.9, 0.93, "QQ Pythia");
 	leg3->SetBorderSize(0);
