@@ -35,6 +35,19 @@ using KtJet::KtEvent;
 class selector {
  public :
 
+  static const Float_t m_Lepton_Energy = 27.52;
+  static const Float_t m_Proton_Energy = 920.;
+  static const  Double_t E_e = 27.52;
+  static const  Double_t E_p = 920.;
+  static const Int_t maxNjetsInEvent = 50;
+  static const Int_t maxNofJets = 250;
+
+  bool en_mom_conservation;
+  static const Double_t px_cons = -0.35;
+  static const Double_t py_cons = -0.22;
+  static const Double_t pz_cons = 892.5;
+  static const Double_t E_cons = 947.5;
+
     bool nodebugmode;
    Double_t delta_phi(Double_t phi1, Double_t phi2);
   Double_t jet_en_corr(Double_t eta, Double_t et, TString period, TString mc_type);
@@ -157,13 +170,7 @@ class selector {
   Int_t           radiated_candidate_number;
   Int_t           max_et_candidate_number;
   Int_t           candidate_jet_number;
-  //  Int_t           
-  static const Float_t m_Lepton_Energy = 27.52;
-  static const Float_t m_Proton_Energy = 920.;
-  static const  Double_t E_e = 27.52;
-  static const  Double_t E_p = 920.;
-  static const Int_t maxNjetsInEvent = 50;
-  static const Int_t maxNofJets = 250;
+  //  Int_t       
   Double_t yjb;
   Double_t Empz;
   Double_t x_gamma;
@@ -1455,6 +1462,7 @@ class selector {
 //#define selector_init
 void selector::Init(TTree *tree, TString run_period, Bool_t b_Data, TString s_mc_type, TString s_mc_corr_type, Bool_t b_usecorr, Bool_t b_use2ndcorr, Bool_t b_use_clustered)
 {
+  en_mom_conservation = true;
   nodebugmode = kFALSE;
   event_list = new TEventList;
   period = run_period;

@@ -17,11 +17,11 @@ using KtJet::KtEvent;
 Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event = kFALSE)
 {
   cout << "...going into part. selection" << endl;
-  if (take_had_event) check_cuts = kTRUE;
+  if (take_had_event) check_cuts = kFALSE;
 
   // General check of mom-energy conservation on the hadron level:
-    Double_t had_px_sum = 0; //892.48 * TMath::Sin(2.7e-4);
-    Double_t had_py_sum = 0; //892.48 * TMath::Sin(1.3e-4);
+    Double_t had_px_sum = 0; //892.48 * TMath::Sin(2.7e-4); 0.35
+    Double_t had_py_sum = 0; //892.48 * TMath::Sin(1.3e-4); 0.22
     Double_t had_pz_sum = 0; //- 892.48;
     Double_t had_e_sum  = 0; //- 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
     Double_t had_et_sum = 0; //0;
@@ -36,9 +36,16 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       v.SetPxPyPzE(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
       had_et_sum += v.Et();
     }
-    cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
+    if (check_cuts) cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
     //cout << "PART: abs(had_e_sum - 947.5) > 1  " << (abs(had_e_sum - 947.5) > 1)  << endl;
-    if (abs(had_e_sum - 947.5) > 1 ) return false; //kFALSE;
+    if ( abs(had_e_sum  - E_cons)  > 1 ||
+         abs(had_pz_sum - pz_cons) > 1 || 
+         abs(had_px_sum - px_cons) > 0.1 || 
+         abs(had_py_sum - py_cons) > 0.1 ) 
+    {
+      en_mom_conservation = false;
+      return false;
+    }
     //cout <<"NO"<<endl;
     /*  
       hist.had_sum_e->Fill(had_e_sum, wtx);
@@ -67,8 +74,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       v.SetPxPyPzE(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
       part_et_sum += v.Et();
     }
-    cout << "Parton E/M-conservation: (" << part_px_sum << ", " << part_py_sum << ", " << part_pz_sum << ", " << part_e_sum << ")" << " and Et = " << part_et_sum << endl;
-
+    
     /*  
       hist.part_sum_e->Fill(part_e_sum, wtx);
       hist.part_sum_px->Fill(part_px_sum, wtx);
@@ -168,20 +174,33 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
      //New
     for(Int_t i = 0; i < Npart; i++)
      {
-       cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
+       if (check_cuts) cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
        if (Part_prt[i] == 29)
        {
          index_true_photon_hadlevel = i;
-         cout << "true photon found: " << index_true_photon_hadlevel << endl;
+         if (check_cuts) cout << "true photon found: " << index_true_photon_hadlevel << endl;
          break;
        }
      }
-    cout << "Parton E/M-conservation with photon and electron : (" << part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] << ", " << 
+    //if (check_cuts) 
+      cout << "Parton E/M-conservation with photon and electron : (" << part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] << ", " << 
                                                         part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] << ", " << 
                                                         part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] << ", " << 
                                                         part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] << ")" 
                                                         << " and Et = " << part_et_sum << endl;
-    if (abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - 947.5) > 1 ) return false; //kFALSE;                                
+
+    if ( abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - E_cons)  > 1 ||
+         abs(part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] - pz_cons) > 1 || 
+         abs(part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] - py_cons) > 0.1 || 
+         abs(part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] - px_cons) > 0.1 ) 
+    {
+      en_mom_conservation = false;
+      return false;
+    }
+
+    if (abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - 947.5) > 1 ) return false; //kFALSE; 
+
+
   //find true photon 
   //on the PARTON level --> index_true_photon_partlevel
     Int_t index_true_photon_partlevel = -1;
@@ -285,7 +304,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       // construct vector of r's --> input_partons
       // and find # of parton in input_partons that is true photon --> index_photon_vector
         KtJet::KtLorentzVector r;
-        cout << "Nppart " << Nppart<< endl;
+        if (check_cuts) cout << "Nppart " << Nppart<< endl;
         for (Int_t i = 0; i < Nppart; i++)//Npart
         {
           Double_t M2 = Ppart[i][3] * Ppart[i][3] 
@@ -317,7 +336,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                           - Part_p[index_true_photon_hadlevel][1] * Part_p[index_true_photon_hadlevel][1] 
                           - Part_p[index_true_photon_hadlevel][0] * Part_p[index_true_photon_hadlevel][0];// parton mass
              
-                     cout << "photon 4-momentum: " 
+                     if (check_cuts) cout << "photon 4-momentum: " 
                           << Part_p[index_true_photon_hadlevel][0] << " "
                           << Part_p[index_true_photon_hadlevel][1] << " "
                           << Part_p[index_true_photon_hadlevel][2] << " "
@@ -339,9 +358,9 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
               input_partons.push_back(r);
             }
           }
-          cout << "Now the index_photon_vector should be eq to  Nppart (from QCDPAR block) : " ;
-          if (index_photon_vector == Nppart) cout << " yes" << endl;
-            else cout << "no" << endl;
+          if (check_cuts) cout << "Now the index_photon_vector should be eq to  Nppart (from QCDPAR block) : " ;
+          if (index_photon_vector == Nppart && (check_cuts)) cout << " yes" << endl;
+            else if (check_cuts) cout << "no" << endl;
       // construct vector of jets --> true_parton_jets
         double rparameter = 1.0;
         KtJet::KtEvent ev(input_partons, 3, 2 ,1, rparameter);// pe deltaR e rparameter
@@ -352,7 +371,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
         for(Int_t i = 0; i < true_parton_jets.size(); i++) 
         {
           if (check_cuts) 
-            cout << "ktjet #" << i 
+            if (check_cuts) cout << "ktjet #" << i 
                   << ": e = " << true_parton_jets[i].e() 
                   << ", et = " << true_parton_jets[i].et() 
                   << ", eta = " << true_parton_jets[i].eta() 
@@ -365,7 +384,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
             //some output
               {
                 if (check_cuts) 
-                  cout << "found hadron level jet containing true photon: Et_jet_with_gamma = " << true_parton_jets[index_photon_jet].et()
+                  if (check_cuts) cout << "found hadron level jet containing true photon: Et_jet_with_gamma = " << true_parton_jets[index_photon_jet].et()
                         << ", eta_jet_with_gamma = " << true_parton_jets[index_photon_jet].eta() 
                         << " et_photon = " << input_partons[index_photon_vector].et()
                         << "e_photon = " << input_partons[index_photon_vector].e()
@@ -373,7 +392,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                         << "eta_photon = " << input_partons[index_photon_vector].eta()
                         << endl;
                 if (ephoton_over_ejet > 1 || ephoton_over_ejet < 0) 
-                  cout << "strange in Eventnr = " << Eventnr 
+                  if (check_cuts) cout << "strange in Eventnr = " << Eventnr 
                       << ": ephoton_over_ejet = " << ephoton_over_ejet 
                       << ", e_photon = " << input_partons[index_photon_vector].e() 
                       << ", e_jet = " << true_parton_jets[i].e() 
@@ -472,34 +491,34 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
 
                   if (part_x >= 2.e-2) 
                   {
-                    cout <<"==============>parx_x exceeded upper limit\n";
+                    if (check_cuts) cout <<"==============>parx_x exceeded upper limit\n";
                     part_x = 18.e-3;
                   }
                   else if (part_x < 2.e-4) 
                   {
-                    cout <<"==============>parx_x exceeded lower limit\n";
+                    if (check_cuts) cout <<"==============>parx_x exceeded lower limit\n";
                     part_x = 2.e-4;
                   }
 
                   if (part_deta >= 2) 
                   {
-                    cout <<"==============>part_deta exceeded upper limit\n";
+                    if (check_cuts) cout <<"==============>part_deta exceeded upper limit\n";
                     part_deta = 1.5;
                   }
                   else if (part_deta < -2.2) 
                   {
-                    cout <<"==============>part_deta exceeded lower limit\n";
+                    if (check_cuts) cout <<"==============>part_deta exceeded lower limit\n";
                     part_deta = -2.0;
                   }
 
                   if (part_deta_e_ph >= -0.6) 
                   {
-                    cout <<"==============>part_deta_e_ph exceeded upper limit\n";
+                    if (check_cuts) cout <<"==============>part_deta_e_ph exceeded upper limit\n";
                     part_deta_e_ph = -1.0;
                   }
                   else if (part_deta_e_ph < -3.6) 
                   {
-                    cout <<"==============>part_deta_e_ph exceeded lower limit\n";
+                    if (check_cuts) cout <<"==============>part_deta_e_ph exceeded lower limit\n";
                     part_deta_e_ph = -3.1;
                   }
                   hist.part_cross_et->Fill(part_et, wtx);
@@ -513,9 +532,9 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                     hist.part_cross_xp->Fill(part_xp, wtx);
                     hist.part_cross_dphi->Fill(part_dphi, wtx);
                     hist.part_cross_deta->Fill(part_deta, wtx);
-                    cout << "===============> part_deta=============>" << part_deta << endl;
-                    cout << "===============> jet=============>" << accomp_jet_eta << endl;
-                    cout << "===============> prph=============>" << part_eta << endl;
+                    if (check_cuts) cout << "===============> part_deta=============>" << part_deta << endl;
+                    if (check_cuts) cout << "===============> jet=============>" << accomp_jet_eta << endl;
+                    if (check_cuts) cout << "===============> prph=============>" << part_eta << endl;
                     hist.part_cross_dphi_e_ph->Fill(part_dphi_e_ph, wtx);
                     hist.part_cross_deta_e_ph->Fill(part_deta_e_ph, wtx);
 
@@ -528,23 +547,23 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
   //some outup
     if ((take_pevent && here_is_true_prph && here_is_true_jet && is_true_prph_candidate)) 
     {
-      cout << Eventnr << " number of parton level jets: " 
+      if (check_cuts) cout << Eventnr << " number of parton level jets: " 
            << true_parton_jets.size() 
            << endl;
 
       for(Int_t i = 0; i < true_parton_jets.size(); i++)
-        cout << "jet #" << i 
+        if (check_cuts) cout << "jet #" << i 
             << ": et = " << true_parton_jets[i].et() 
             << ", eta = " << true_parton_jets[i].eta() 
             << endl;  
 
-      cout << "found parton level jet containing true photon: et = " << true_parton_jets[index_photon_jet].et()
+      if (check_cuts) cout << "found parton level jet containing true photon: et = " << true_parton_jets[index_photon_jet].et()
   	       << ", eta = " << true_parton_jets[index_photon_jet].eta() 
            << " et_photon = " << input_partons[index_photon_vector].et()
   	       << ", eta_photon = " << input_partons[index_photon_vector].eta() 
            << endl;
 
-      cout << "parton level Eventr = " << Eventnr 
+      if (check_cuts) cout << "parton level Eventr = " << Eventnr 
            << ": q2 = " << Mc_q2 
            << ", et_photon = " 
            << input_partons[index_photon_vector].et()
@@ -553,7 +572,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
         	 << ", eta_accomp_jet = " << accomp_jet_eta 
         	 << ", ephoton_over_ejet = " << ephoton_over_ejet << endl;
 
-      cout << "================================PARTON LEVEL EVENT " << Eventnr  << " ACCEPTED============================================" << endl;
+      if (check_cuts) cout << "================================PARTON LEVEL EVENT " << Eventnr  << " ACCEPTED============================================" << endl;
     }
   
   check_cuts = kFALSE;//once is enought

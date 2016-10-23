@@ -120,6 +120,7 @@ Bool_t selector::Process()
 	check_cuts = kTRUE;
 	for(Long64_t entry = 0; entry < nentries -1  && debugcontinue; entry++)
 	{
+		en_mom_conservation = true;
 		// To test specific entry
 			// if (entry < 4 ) continue;
 			// else 
@@ -1346,7 +1347,6 @@ Bool_t selector::Process()
 			
 			//Some output and some hists fill for Had and Part selections
 				
-			cout << "SelectHadronLevel check: "<<  take_event << " " << here_is_jet << " " << here_is_prph << " " << take_event_trig << endl;
 				if (!Data && SelectHadronLevel(take_event && here_is_jet && here_is_prph && take_event_trig)) 
 				{
 					cout << "SelectHadronLevel selected" << endl;
@@ -1373,12 +1373,16 @@ Bool_t selector::Process()
 					cout << "SelectPartonLevel" << endl;
 					take_part_event = kTRUE;
 					cout << "Parton level event " << Eventnr << " is selected and N of hadron level jets is " << hadron_level_jets.size() << endl;
-					for(Int_t i = 0; i < hadron_level_jets.size(); i++) 
-						cout << "hadr. level jet #" << i << ": et = " << hadron_level_jets[i].et() << ", eta = " << hadron_level_jets[i].eta() << endl;
-					cout << "prompt photon jet is jet #" << hadron_level_jet_cont_photon_index << " with e ratio = " << hadron_level_ephoton_over_ejet << endl;
+					// for(Int_t i = 0; i < hadron_level_jets.size(); i++) 
+					// 	cout << "hadr. level jet #" << i << ": et = " << hadron_level_jets[i].et() << ", eta = " << hadron_level_jets[i].eta() << endl;
+					// cout << "prompt photon jet is jet #" << hadron_level_jet_cont_photon_index << " with e ratio = " << hadron_level_ephoton_over_ejet << endl;
 					cout << " === THE END === " << endl;
 				}
-
+			if (!en_mom_conservation) 
+			{
+				cout <<"EM NOT PRESERVED"<< endl;
+				continue;
+			}
 			//part nohad || part_bin != had_bin
 				if ( (take_part_event && !take_had_event) || 
 					 (take_part_event && take_had_event && hist.part_cross_et->FindBin(part_et) != hist.had_cross_et->FindBin(had_et)) ) 

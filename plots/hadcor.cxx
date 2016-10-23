@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 	//TFile *file2 = new TFile("../reproduce.root", "read"); 
 	TFile *file2 = new TFile("../mc_prph0405e_parton.root", "read"); 
 	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
+	//TFile *file2 = new TFile("../mc_prph0405e_parton_new_mc.root", "read"); 
 	
 	cout << "files attached" << endl;
 
