@@ -110,10 +110,10 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     //if (check_cuts) 
       cout << "Hadron E/M-conservation: (" << px_had_sum << ", " << py_had_sum << ", " << pz_had_sum << ", " << E_had_sum << ")" << endl;
     //cout << "HAD: abs(E_had_sum - 947.5) " << abs(E_had_sum - 947.5) << endl;
-    if ( abs(E_had_sum  - E_cons)  > 1 ||
-         abs(pz_had_sum - pz_cons) > 1 || 
-         abs(py_had_sum - py_cons) > 0.1 || 
-         abs(px_had_sum - px_cons) > 0.1 ) 
+    if (check_en_mom_conservation && ( abs(E_had_sum  - E_cons)  > 1 ||
+             abs(pz_had_sum - pz_cons) > 1 || 
+             abs(py_had_sum - py_cons) > 0.1 || 
+             abs(px_had_sum - px_cons) > 0.1 ) )
     {
       en_mom_conservation = false;
       return false;

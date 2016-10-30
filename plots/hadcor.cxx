@@ -41,11 +41,16 @@ int main(int argc, char *argv[])
 	gStyle->SetTitleFont(42);
 	gStyle->SetTitleY(0.99);
 	gStyle->SetTitleX(0.15);
-
+	////////////////////////////////////////////////////////////////////////////////////
 	//TFile *file2 = new TFile("../reproduce.root", "read"); 
-	TFile *file2 = new TFile("../mc_prph0405e_parton.root", "read"); 
 	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
-	//TFile *file2 = new TFile("../mc_prph0405e_parton_new_mc.root", "read"); 
+
+	//TFile *file2 = new TFile("../mc_prph0405e_parton_really_Ian_without_EM_conserv.root", "read"); // before the constrain on EM cons hist_part: 62370 62370 hist_had: 52412 52412
+	//TFile *file2 = new TFile("../mc_prph0405e_parton_really_Ian_with_EM_conserv.root", "read"); //Ian? hist_part: 46993 46993 hist_had: 39647 39647
+	
+	//TFile *file2 = new TFile("../mc_prph0405e_parton_really_ne_ne_without_EM_conserv.root", "read");//TFile *file2 = new TFile("../new_new_MC/mc_prph0405e_parton_new_mc.root", "read");  //new-new .root
+	TFile *file2 = new TFile("../mc_prph0405e_parton_really_ne_ne_with_EM_conserv.root", "read"); //TFile *file2 = new TFile("../mc_prph0405e_parton_new_new_with_EM_conserv.root", "read");  //new-new .root with EM conserv
+	////////////////////////////////////////////////////////////////////////////////////
 	
 	cout << "files attached" << endl;
 

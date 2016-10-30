@@ -29,6 +29,8 @@ void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type,
 			   //not working yet cout << "filenum2: " << filenum << " should: " << argv[6] << endl;
 
 			// Ian MC
+				//without EM-conserv: num_had = 69727 num_part = 62370
+				//with EM-conserv: num_had = 39647 num_part = 46993
 				/**/
 				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");
 				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
@@ -70,17 +72,20 @@ void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type,
 					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
 					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/250000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_2.root");
 				//----//
-				//New
-					//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root"); 			
-					//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
-					 //chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");
-					//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");
-					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");
-					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");
-					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");
-					//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");
-					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");
-					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
+				//New mv mc_prph0405e_parton.root mc_prph0405e_parton_new_8.root 
+				// hadd mc_prph0405e_parton_new_new_with_EM_conserv.root  mc_prph0405e_parton_new_1.root    mc_prph0405e_parton_new_4.root  mc_prph0405e_parton_new_6-7.root  mc_prph0405e_parton_new_2_1.root  mc_prph0405e_parton_new_5.root  mc_prph0405e_parton_new_8.root
+					//no EM check num_had = 4467 num_part = 4004
+					//with EM check num_had = 2307 num_part = 2720
+					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");// 1		
+					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");// 2
+					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");// 4
+					//  chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");// 5
+					//  chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");// 6
+					//  chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");// 6
+					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");// 7
+					//chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");//no
+					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");// NO
+					// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/100000_ev/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");// NO
 				
 			
 			cout << chain->GetEntries() << " events chained" << endl;

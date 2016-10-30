@@ -38,10 +38,10 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
     }
     if (check_cuts) cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
     //cout << "PART: abs(had_e_sum - 947.5) > 1  " << (abs(had_e_sum - 947.5) > 1)  << endl;
-    if ( abs(had_e_sum  - E_cons)  > 1 ||
-         abs(had_pz_sum - pz_cons) > 1 || 
-         abs(had_px_sum - px_cons) > 0.1 || 
-         abs(had_py_sum - py_cons) > 0.1 ) 
+    if (check_en_mom_conservation && ( abs(had_e_sum  - E_cons)  > 1 ||
+             abs(had_pz_sum - pz_cons) > 1 || 
+             abs(had_px_sum - px_cons) > 0.1 || 
+             abs(had_py_sum - py_cons) > 0.1 ) )
     {
       en_mom_conservation = false;
       return false;
@@ -189,10 +189,10 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                                                         part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] << ")" 
                                                         << " and Et = " << part_et_sum << endl;
 
-    if ( abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - E_cons)  > 1 ||
-         abs(part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] - pz_cons) > 1 || 
-         abs(part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] - py_cons) > 0.1 || 
-         abs(part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] - px_cons) > 0.1 ) 
+    if (check_en_mom_conservation && ( abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - E_cons)  > 1 ||
+             abs(part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] - pz_cons) > 1 || 
+             abs(part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] - py_cons) > 0.1 || 
+             abs(part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] - px_cons) > 0.1 ) )
     {
       en_mom_conservation = false;
       return false;
