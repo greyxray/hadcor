@@ -8,7 +8,6 @@ using namespace std;
 #include <TLorentzVector.h>
 #include <TMath.h>
 #include <TObjArray.h>
-//#include "Dijets.h"
 #include "KtJet/KtEvent.h"
 #include "KtJet/KtLorentzVector.h"
 using KtJet::KtLorentzVector;
@@ -70,28 +69,8 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
 
   //find true photon on gen lev --> here_is_true_prph, index_true_photon, index_jet
      Int_t index_true_photon = -1;
-     Int_t index_jet = -1;//this variable is to compare with Sanja, Nazar, Ian, Natasha
-    // if (!Data)
-    // {
-    //   if (mc_type == "mc_bg_rad")/* || mc_type == "mc_bg_norad")*/
-    //     for (Int_t i = 0; i < Npart; i++)
-    //       if (Part_id[i] == 5)
-    //       {
-    //         // Not Used index_jet = Part_jetid[i] - 1;
-    //         index_true_photon = i;
-    //         break;
-    //       }
-    //   else if (mc_type == "mc_prph")
-    //     for (Int_t i = 0; i < Npart; i++)
-    //       if (Part_id[i] == 12)
-    //       {
-    //         // Not Used index_jet = Part_jetid[i] - 1;
-    //         index_true_photon = i;
-    //         break;
+     
 
-    //       }
-    // }
-      //New
     Double_t px_had_sum(0), py_had_sum(0), pz_had_sum(0), E_had_sum(0);
     for(Int_t i = 0; i < Npart; i++)
      {
@@ -104,12 +83,13 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
        {
          index_true_photon = i;
          if (check_cuts) cout << "true photon found: " << index_true_photon << endl;
-         //break;
        }
      }
-    //if (check_cuts) 
+    if (check_cuts) 
+    {
       cout << "Hadron E/M-conservation: (" << px_had_sum << ", " << py_had_sum << ", " << pz_had_sum << ", " << E_had_sum << ")" << endl;
-    //cout << "HAD: abs(E_had_sum - 947.5) " << abs(E_had_sum - 947.5) << endl;
+      cout << "HAD: abs(E_had_sum - 947.5) " << abs(E_had_sum - 947.5) << endl;
+    }
     if (check_en_mom_conservation && ( abs(E_had_sum  - E_cons)  > 1 ||
              abs(pz_had_sum - pz_cons) > 1 || 
              abs(py_had_sum - py_cons) > 0.1 || 
@@ -131,7 +111,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     {
       TVector3 v_true_photon(Part_p[index_true_photon][0], Part_p[index_true_photon][1], Part_p[index_true_photon][2]);
                v_true_prompt_photon->SetPxPyPzE(Part_p[index_true_photon][0], Part_p[index_true_photon][1], Part_p[index_true_photon][2], Part_p[index_true_photon][3]);
-               // Not Used v_true_jet_cont_prompt_photon->SetPxPyPzE(Ktrjets[index_jet][0], Ktrjets[index_jet][1], Ktrjets[index_jet][2], Ktrjets[index_jet][3]);
+          
       Double_t true_photon_et  = Part_p[index_true_photon][3] * TMath::Sin(v_true_photon.Theta());
       Double_t true_photon_eta = v_true_photon.Eta();
       if (true_photon_et < 4. || true_photon_et > 15.) 
@@ -144,25 +124,8 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         is_true_prph_candidate = kFALSE;
         if (check_cuts) cout << "rejected by cut on true photon eta = " << true_photon_eta << endl;
       }
-      //Missing compared to prev code
-      //    if (Ktrnjets<1) {
-      //      is_true_prph_candidate = kFALSE;
-      //      if (check_cuts)
-      //	cout << "rejected by Ktrnjets<1: " << Ktrnjets << endl;
-      //    }
-      //    if (index_jet<0) {
-      //      is_true_prph_candidate = kFALSE;
-      //      if (check_cuts)
-      //	cout << "rejected by index_jet<0: " << index_jet << endl;
-      //    }
-      //    if ((Part_p[index_true_photon][3]/Ktrjets[index_jet][3])<0.9) {
-      //      is_true_prph_candidate = kFALSE;
-      //      if (check_cuts)
-      //	cout << "rejected by photon/jet energy ratio: " << Part_p[index_true_photon][3]/Ktrjets[index_jet][3] << endl;
-      //    }
     } 
-    if (take_hevent && is_true_prph_candidate ) 
-      if (check_cuts) cout << "\t\tpassed photon cuts" << endl;
+    if (take_hevent && is_true_prph_candidate && check_cuts) cout << "\t\tpassed photon cuts" << endl;
   
   if (take_hevent && is_true_prph_candidate) 
   {
@@ -196,17 +159,15 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
           if (TMath::Abs(Part_p[i][3]) < 1.e-3) continue;
           if (Part_p[i][3] <= 0) continue;
           //	if (M2 < 0 ) continue;
-          //      if (TMath::Abs(Part_p[i][2]) > Part_p[i][3]) continue;
+          //  if (TMath::Abs(Part_p[i][2]) > Part_p[i][3]) continue;
           if (i == index_true_photon) index_photon_vector = input_hadrons.size();
 
-          // create a KtJet with TRUE particles and put it onto
-          // back of the input_particles vector
+          // create a KtJet with TRUE particles and put it to the end of the input_particles vector
           if (TMath::Abs(Part_p[i][2]) < Part_p[i][3])  r = KtJet::KtLorentzVector(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
                                                    else r = KtJet::KtLorentzVector(Part_p[i][0], Part_p[i][1], Part_p[i][2], 
     				                                                TMath::Sqrt(Part_p[i][0] * Part_p[i][0] 
                                                                       + Part_p[i][1]*Part_p[i][1] 
                                                                       + Part_p[i][2]*Part_p[i][2]));
-
           input_hadrons.push_back(r);
         }
 
@@ -339,7 +300,6 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	hist.had_Q2->Fill(Mc_q2, wtx);
         	hist.had_x->Fill(Mc_x, wtx);
 
-          //{0.0002, 0.001, 0.003, 0.01, 0.02};
           if (Mc_x >= 0.02) 
           {
             if (check_cuts)cout <<"==============>Mc_x exceeded upper limit\n";
@@ -470,17 +430,17 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	    hist.hd_cross_eta_jet->Fill(accomp_jet_eta, wtx);
         	    hist.prof_hd_cross_eta_jet->Fill(accomp_jet_eta, accomp_jet_eta, wtx);
             }
-          }// if take_det_event
-        } //    if (take_hevent && here_is_true_prph && here_is_true_jet)    
-    }//if (take_hevent && here_is_true_prph) to find jets and cut on prph kinematics
+          }
+        } 
+    }
 
-    // some output
+    //Additional output
       if ((take_hevent && here_is_true_prph && here_is_true_jet)) 
       {
         if (check_cuts)cout << "hadr level, Eventnr = " << Eventnr << ", N of hadrons = " << Npart << ", N of jets = " << true_jets.size() << ": " << endl;
-        for(Int_t i=0; i<true_jets.size(); i++) {
+        for(Int_t i = 0; i < true_jets.size(); i++) 
           if (check_cuts)cout << "ktjet #" << i << ": e = " << true_jets[i].e() << ", et = " << true_jets[i].et() << ", eta = " << true_jets[i].eta() << endl;;
-        }
+        
         if (check_cuts)cout << "found hadron level jet containing true photon: et = " << true_jets[index_photon_jet].et()
           	 << ", eta = " << true_jets[index_photon_jet].eta() << " et_photon = " << input_hadrons[index_photon_vector].et()
           	 << "e_photon = " << input_hadrons[index_photon_vector].e()
@@ -493,6 +453,5 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         if (check_cuts)cout << "================================HADRON LEVEL EVENT " << Eventnr << " ACCEPTED============================================" << endl;
       }
   }
-  //  if (check_cuts)cout << "...going out hadr. selection" << endl;
   return (take_hevent && here_is_true_prph && here_is_true_jet);
 }

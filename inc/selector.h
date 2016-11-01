@@ -44,8 +44,8 @@ class selector {
 
   bool en_mom_conservation;//per event flag
   bool check_en_mom_conservation;//per process at all
-  static const Double_t px_cons = -0.35;
-  static const Double_t py_cons = -0.22;
+  static const Double_t px_cons = - 0.35;
+  static const Double_t py_cons = - 0.22;
   static const Double_t pz_cons = 892.5;
   static const Double_t E_cons = 947.5;
 
