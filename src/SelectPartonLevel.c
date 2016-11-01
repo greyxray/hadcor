@@ -91,7 +91,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
     hist.had_q2->Fill(Mc_q2, wtx);
     hist.had_y->Fill(Mc_y, wtx);
 
-  //  initialisation of some starting parameters
+  // Initialisation of some starting parameters
     Bool_t take_pevent = kTRUE;
     Bool_t here_is_true_prph = kTRUE;
     Bool_t is_true_prph_candidate = kTRUE;
@@ -112,7 +112,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
         (v_true_electron.Theta()*180.0 / TMath::Pi() > 180.0 ))  
     {
       take_pevent = kFALSE;
-      if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta()*180.0/TMath::Pi() << endl;
+      if (check_cuts) cout << "rejected by cut on true electron theta = " << v_true_electron.Theta() * 180.0 / TMath::Pi() << endl;
     }
     if (Mc_pfsl[3] < 10.)
     {
@@ -120,7 +120,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       if (check_cuts) cout << "rejected by cut on true electron energy = " << Mc_pfsl[3] << endl;
     }
 
-  //chek validity of parton level MC
+  // chek validity of parton level MC
     if (Nppart < 1)
     {
       take_pevent = kFALSE;
@@ -182,7 +182,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       Int_t index_photon_vector = -1;
       Int_t index_photon_jet = -1;
 
-  // finding e and additional energy check for prph
+  // Finding e and additional energy check for prph
     if (take_pevent && here_is_true_prph) 
     {
       //find the electron at hadron level
@@ -192,12 +192,13 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
             index_true_electron_hadlevel = i;
             break;
           }
-
       //find the electron at parton level
         for(Int_t i = 0; i < Nppart; i++)
-          if ((Idpart[i]==23) || (Idpart[i]==24))// e- e+
+          if ((Idpart[i] == 23) || (Idpart[i] == 24))// e- e+
           {
             index_true_electron_partlevel = i;
+            cout << "LOGICAL ERROR: Found electron in QCDPAR but should not!!!!" << endl;
+            exit(1);
             break;
           }
         if (index_true_electron_partlevel != -1) cout << "Strange index_true_electron_partlevel: " << index_true_electron_partlevel << endl;
@@ -232,11 +233,10 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                               Part_p[index_true_photon_hadlevel][1],
                               Part_p[index_true_photon_hadlevel][2],
                               Part_p[index_true_photon_hadlevel][3]);
-    if (tl_true_photon.Et() < 4. || tl_true_photon.Et() > 15. 
-        || tl_true_photon.Eta() < -0.7 || tl_true_photon.Eta() > 0.9)
-      here_is_true_prph = kFALSE;
+    if (tl_true_photon.Et() < 4. || tl_true_photon.Et() > 15. || 
+        tl_true_photon.Eta() < -0.7 || tl_true_photon.Eta() > 0.9) here_is_true_prph = kFALSE;
 
-  // finding jets on parton level, cuts on photon
+  // Finding jets on parton level, cuts on photon
     vector<KtJet::KtLorentzVector> input_partons;
     vector<KtJet::KtLorentzVector> true_parton_jets;
     if (take_pevent && here_is_true_prph) 
@@ -252,24 +252,25 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                         - Ppart[i][1] * Ppart[i][1] 
                         - Ppart[i][0] * Ppart[i][0];// parton mass
     					   
-    	    if (i == index_true_electron_partlevel) continue; // Skip DIS electron
+    	    if (i == index_true_electron_partlevel) continue; // Skip DIS electron //will not be found
     	    if (TMath::Abs(Ppart[i][3]) < 1.e-3) continue; // Skip low energy
     	    if (Ppart[i][3] <= 0) continue;
     	    //	if (M2 < 0 ) continue;
     	    //	if (TMath::Abs(Ppart[i][2]) > Ppart[i][3]) continue;
 
-    	    if (i == index_true_photon_partlevel) index_photon_vector = input_partons.size();
+    	    if (i == index_true_photon_partlevel) index_photon_vector = input_partons.size(); //will not be found
     	
+          //TODO: remove else
         	if (TMath::Abs(Ppart[i][2]) < Ppart[i][3]) r = KtJet::KtLorentzVector(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
           else  r = KtJet::KtLorentzVector(Ppart[i][0], Ppart[i][1], Ppart[i][2],
     					     TMath::Sqrt(Ppart[i][0] * Ppart[i][0] 
                               + Ppart[i][1] * Ppart[i][1] 
                               + Ppart[i][2] * Ppart[i][2]));
+
           input_partons.push_back(r);
         }
 
-
-        //add the missing photon to the parton level instances
+        // Add the missing photon to the parton level instances that was missed in the QCDPAR block of ntuples v08a
           {
             Double_t M2 = Part_p[index_true_photon_hadlevel][3] * Part_p[index_true_photon_hadlevel][3] 
                           - Part_p[index_true_photon_hadlevel][2] * Part_p[index_true_photon_hadlevel][2] 
@@ -303,7 +304,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
           else if (check_cuts) cout << "index_photon_vector == Nppart && (check_cuts): no" << endl;
       // construct vector of jets --> true_parton_jets
         double rparameter = 1.0;
-        KtJet::KtEvent ev(input_partons, 3, 2 ,1, rparameter);// pe deltaR e rparameter
+        KtJet::KtEvent ev(input_partons, 3, 2 ,1, rparameter);// (vector_of_particles, pe, deltaR, e, rparameter)
         true_parton_jets = ev.getJetsEt();// jets on the parton lev
         
       
@@ -479,8 +480,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                     hist.part_cross_deta_e_ph->Fill(part_deta_e_ph, wtx);
 
 
-                }// if (here_is_true_jet
-            } //    if (is_true_prph_candidate)
+                }
+            }
         } 
     } 
 
@@ -515,6 +516,6 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       if (check_cuts) cout << "================================PARTON LEVEL EVENT " << Eventnr  << " ACCEPTED============================================" << endl;
     }
   
-  check_cuts = kFALSE;//once is enought
+  check_cuts = kFALSE; //once is enought
   return (take_pevent && here_is_true_prph && here_is_true_jet && is_true_prph_candidate);
 }

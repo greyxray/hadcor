@@ -20,7 +20,7 @@ using namespace std;
 #include "PrivateNtuplesNames.h"
 void fill(TChain* chain, TString location, TString* str, Int_t n);
 
-void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type, Bool_t use_clustered)
+void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type, Bool_t use_clustered, int filenum)
 {
   	if(mc_type == "mc_prph")
 	{
@@ -97,19 +97,19 @@ void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type,
 			else
 			  fill(chain, str_location_prph0405eprivate, rootFile_prph0405eprivate, numberOfRootFiles_prph0405eprivate);
 			  */      
-		} 
+		}
 	    else if(run_period == "06e") 
 	    {
 			if (!use_clustered)
 			  fill(chain, str_location_prph06e, rootFile_prph06e, numberOfRootFiles_prph06e);
 			else
 			  fill(chain, str_location_prph06eprivate, rootFile_prph06eprivate, numberOfRootFiles_prph06eprivate);      
-	    } 
+	    }
 	    else 
 	    {
 	    	cerr << "mc_prph: unknown period: " << run_period << endl; 
 	    	exit(-1);
-	    }   
+	    }
 	}
   	else
     {

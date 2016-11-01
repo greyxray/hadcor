@@ -23,6 +23,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     Bool_t is_true_prph_candidate = kTRUE;
     Bool_t here_is_true_jet = kFALSE;
     Bool_t take_true_jet = kTRUE;
+    check_cuts = kTRUE;
 
     Double_t accomp_jet_et = 0.;
     Double_t accomp_jet_eta = -999.;
@@ -39,7 +40,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     if (Mc_q2 < 10.) 
     {
       take_hevent = kFALSE;
-      if (check_cuts) cout << "rejected by cut on true q2 = " << Mc_q2 << endl;
+      if (check_cuts) cout << "rejected by cut on true electron energy = " << Mc_pfsl[3] << endl;
     }
 
     //electron sel
@@ -57,7 +58,13 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         if (check_cuts) cout << "rejected by cut on true electron energy = " << Mc_pfsl[3] << endl;
       }
 
-      if (take_hevent) 
+  // Find true photon on generated level --> here_is_true_prph, index_true_photon, index_jet
+    Int_t index_true_photon = -1;
+    Int_t index_jet = -1; 
+    for(Int_t i = 0; i < Npart; i++)
+    {
+      cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
+      if (Part_prt[i] == 29)
       {
         hist.dis_Q2_true->Fill(Mc_q2, wtx);
         hist.dis_electron_e_true->Fill(Mc_pfsl[3], wtx);
@@ -98,15 +105,16 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
       en_mom_conservation = false;
       return false;
     }
+    // TODO: using FMCKin2 check that photon is a daughter of  photon who has no mother 
 
     if (index_true_photon < 0)
     {
       here_is_true_prph = kFALSE;
       if (check_cuts) cout << "there is no photon on hadron level by selecting by ID" << endl;
     }
-  is_true_prph_candidate = here_is_true_prph;
+    is_true_prph_candidate = here_is_true_prph;
 
-  //photon cuts
+  // Photon cuts
     if (take_hevent && here_is_true_prph) 
     {
       TVector3 v_true_photon(Part_p[index_true_photon][0], Part_p[index_true_photon][1], Part_p[index_true_photon][2]);
@@ -168,6 +176,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     				                                                TMath::Sqrt(Part_p[i][0] * Part_p[i][0] 
                                                                       + Part_p[i][1]*Part_p[i][1] 
                                                                       + Part_p[i][2]*Part_p[i][2]));
+          // TODO: убрать else
           input_hadrons.push_back(r);
         }
 
@@ -294,7 +303,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
             Double_t temp_deta = hardest_jet_eta - input_hadrons[index_photon_vector].eta();
             Double_t temp_dphi_e_ph = delta_phi(v_true_electron.Phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
             Double_t temp_deta_e_ph = -TMath::Log(TMath::Tan(v_true_electron.Theta()/2.)) - input_hadrons[index_photon_vector].eta();
- 
+
         	hist.had_prph_e->Fill(input_hadrons[index_photon_vector].et(), wtx);
         	hist.had_jet_e->Fill(accomp_jet_et, wtx);
         	hist.had_Q2->Fill(Mc_q2, wtx);
@@ -329,12 +338,12 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	hist.had_cross_et_jet->Fill(accomp_jet_et, wtx);
         	hist.had_cross_et_jet2->Fill(accomp_jet_et, wtx);
         	hist.had_cross_eta_jet->Fill(accomp_jet_eta, wtx);
-            hist.had_cross_xgamma->Fill(x_gamma, wtx);
-            hist.had_cross_xp->Fill(x_pomeron, wtx);
-            hist.had_cross_dphi->Fill(temp_dphi, wtx);
-            hist.had_cross_deta->Fill(temp_deta, wtx);
-            hist.had_cross_dphi_e_ph->Fill(temp_dphi_e_ph, wtx);
-            hist.had_cross_deta_e_ph->Fill(temp_deta_e_ph, wtx);
+          hist.had_cross_xgamma->Fill(x_gamma, wtx);
+          hist.had_cross_xp->Fill(x_pomeron, wtx);
+          hist.had_cross_dphi->Fill(temp_dphi, wtx);
+          hist.had_cross_deta->Fill(temp_deta, wtx);
+          hist.had_cross_dphi_e_ph->Fill(temp_dphi_e_ph, wtx);
+          hist.had_cross_deta_e_ph->Fill(temp_deta_e_ph, wtx);
 
         	had_et = input_hadrons[index_photon_vector].et();
         	had_eta = input_hadrons[index_photon_vector].eta();
@@ -343,17 +352,17 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	had_x = Mc_x;
         	had_Q2 = Mc_q2;
 
-                  had_xgamma = (input_hadrons[index_photon_vector].e() - input_hadrons[index_photon_vector].pz() 
-                                + true_jets[index_of_accomp_jet].e() - true_jets[index_of_accomp_jet].pz() ) / (2. * E_e * Mc_y);
+          had_xgamma = (input_hadrons[index_photon_vector].e() - input_hadrons[index_photon_vector].pz() 
+                        + true_jets[index_of_accomp_jet].e() - true_jets[index_of_accomp_jet].pz() ) / (2. * E_e * Mc_y);
+          if (had_xgamma >=1) had_xgamma = 0.999;
+          if (x_gamma != had_xgamma) exit(-1);
 
-                  if (had_xgamma >=1) had_xgamma = 0.999;
-                  if (x_gamma != had_xgamma) exit(-1);
-                  had_xp = (input_hadrons[index_photon_vector].e() + input_hadrons[index_photon_vector].pz() 
-                                + true_jets[index_of_accomp_jet].e() + true_jets[index_of_accomp_jet].pz() ) / (2. * E_p);
-                  had_dphi = delta_phi(true_jets[index_of_accomp_jet].phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
-                  had_deta = true_jets[index_of_accomp_jet].eta() - had_eta;
-                  had_dphi_e_ph = delta_phi(v_true_electron.Phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
-                  had_deta_e_ph = v_true_electron.Eta() - had_eta;
+          had_xp = (input_hadrons[index_photon_vector].e() + input_hadrons[index_photon_vector].pz() 
+                        + true_jets[index_of_accomp_jet].e() + true_jets[index_of_accomp_jet].pz() ) / (2. * E_p);
+          had_dphi = delta_phi(true_jets[index_of_accomp_jet].phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
+          had_deta = true_jets[index_of_accomp_jet].eta() - had_eta;
+          had_dphi_e_ph = delta_phi(v_true_electron.Phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
+          had_deta_e_ph = v_true_electron.Eta() - had_eta;
 
         	hist.prof_had_cross_et->Fill(input_hadrons[index_photon_vector].et(), input_hadrons[index_photon_vector].et(), wtx);
         	hist.prof_had_cross_eta->Fill(input_hadrons[index_photon_vector].eta(), input_hadrons[index_photon_vector].eta(), wtx);
@@ -361,12 +370,12 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
         	hist.prof_had_cross_x->Fill(Mc_x, Mc_x, wtx);
         	hist.prof_had_cross_et_jet->Fill(accomp_jet_et, accomp_jet_et, wtx);
         	hist.prof_had_cross_eta_jet->Fill(accomp_jet_eta, accomp_jet_eta, wtx);
-            hist.prof_had_cross_xgamma->Fill(x_gamma, x_gamma, wtx);
-            hist.prof_had_cross_xp->Fill(x_pomeron, x_pomeron, wtx);
-            hist.prof_had_cross_dphi->Fill(temp_dphi, temp_dphi, wtx);
-            hist.prof_had_cross_deta->Fill(temp_deta, temp_deta, wtx);
-            hist.prof_had_cross_dphi_e_ph->Fill(temp_dphi_e_ph, temp_dphi_e_ph, wtx);
-            hist.prof_had_cross_deta_e_ph->Fill(temp_deta_e_ph, temp_deta_e_ph, wtx);
+          hist.prof_had_cross_xgamma->Fill(x_gamma, x_gamma, wtx);
+          hist.prof_had_cross_xp->Fill(x_pomeron, x_pomeron, wtx);
+          hist.prof_had_cross_dphi->Fill(temp_dphi, temp_dphi, wtx);
+          hist.prof_had_cross_deta->Fill(temp_deta, temp_deta, wtx);
+          hist.prof_had_cross_dphi_e_ph->Fill(temp_dphi_e_ph, temp_dphi_e_ph, wtx);
+          hist.prof_had_cross_deta_e_ph->Fill(temp_deta_e_ph, temp_deta_e_ph, wtx);
 
         	if (take_det_event) 
           {

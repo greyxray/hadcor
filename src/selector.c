@@ -193,7 +193,7 @@ Bool_t selector::Process()
 			// 	}
 			// }
 		
-
+			// commented for test
 			if (!Data && mc_type != "mc_bg_rad")
 			{
 				//wtx *= q2_reweighting(Mc_q2, mc_type); //warning

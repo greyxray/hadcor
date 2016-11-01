@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <math.h>
+#include <iomanip>      // std::setprecision
 using namespace std;
 
 #include <TH1D.h>

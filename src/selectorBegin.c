@@ -70,7 +70,9 @@ void selector::Begin(/*TTree * /*tree*/)
   if(use_clustered)
     root_file_name += "_uc";
 
-  root_file_name += "_parton.root"; //warning
+  root_file_name += "_parton";
+  root_file_name +=  "_" + TString::Itoa(filenum, 10);
+  root_file_name += ".root"; //warning
   //  root_file_name += "_inclusive_prph_Matt_trig_thetacut_norew.root";
   //root_file_name = "test_php_signal.root";
   //  root_file_name = "mc_php_res_prph0405e.root";

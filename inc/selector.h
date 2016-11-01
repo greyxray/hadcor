@@ -146,6 +146,7 @@ class selector {
   Int_t           det_cross_sec_bin_dphi_e_ph;
   Int_t           det_cross_sec_bin_deta_e_ph;
 
+  int             filenum;
   Double_t        deltaRtrack;// NOT PRESENTED HERE 
   TString         period;
   TString         mc_type;
