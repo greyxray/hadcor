@@ -73,27 +73,6 @@ extern "C"
 */
 Bool_t selector::Process()
 {	
-	/*
-		// The Process() function is called for each entry in the tree (or possibly
-		// keyed object in the case of PROOF) to be processed. The entry argument
-		// specifies which entry in the currently loaded tree is to be processed.
-		// It can be passed to either selector::GetEntry() or TBranch::GetEntry()
-		// to read either all or the required parts of the data. When processing
-		// keyed objects with PROOF, the object is already loaded and is available
-		// via the fObject pointer.
-		//
-		// This function should contain the "body" of the analysis. It can contain
-		// simple or elaborate selection criteria, run algorithms on the data
-		// of the event and typically fill histograms.
-		//
-		// The processing can be stopped by calling Abort().
-		//
-		// Use fStatus to set the return value of TTree::Process().
-		//
-		// The return value is currently not used.
-		//  cout <<"geting tree... " ;//<< endl;
-	*/
-	
 	Long64_t nentries = fChain->GetEntries();
 	if (!nodebugmode) cout <<"Number of events to process: " << nentries << endl;
 
@@ -118,19 +97,22 @@ Bool_t selector::Process()
 		Int_t missed = 0;
 		int num_had(0), num_part(0);
 	check_cuts = kTRUE;
+	bool test_on_entry = false;
+	int test_entry = 4;
 	for(Long64_t entry = 0; entry < nentries -1  && debugcontinue; entry++)
 	{
 		en_mom_conservation = true;
 		// To test specific entry
-			// if (entry < 4 ) continue;
-			// else 
-			// if (entry > 4) 
-			// {
-			// 	cout << "doh 0 " << endl;
-			// 	exit(0);
-			// 	cout << "doh" << endl;
-			// }
-		
+			if (test_on_entry)
+			{
+				if (entry < 4 ) continue;
+				else if (entry > 4) 
+				{
+					cout << "not interested in restof the entries " << endl;
+					exit(0);
+				}
+			}
+		 
 		fChain->GetEntry(entry);
 		cout << "entry: " << entry << "; Eventnr: " << Eventnr << "; Runnr_prev: " << Runnr_prev << endl;
 
@@ -141,8 +123,8 @@ Bool_t selector::Process()
 		take_event_trig = kTRUE;
 		here_is_prph = kFALSE;
 		here_is_jet = kFALSE;
-		//Some output and some hists fill for Had and Part selections
 
+		//Some output and some hists fill for Had and Part selections
 			if (!Data && SelectHadronLevel(take_event && here_is_jet && here_is_prph && take_event_trig)) 
 			{
 				cout << "SelectHadronLevel selected" << endl;
@@ -159,10 +141,15 @@ Bool_t selector::Process()
 					hist.h2d_uncorr_accjet_et_true_det->Fill(v_true_acc_jet->Et(), v_accomp_uncorr_jet->Et());
 					hist.h2d_uncorr_accjet_eta_true_det->Fill(v_true_acc_jet->Eta(), v_accomp_uncorr_jet->Eta());
 					hist.h2d_uncorr_accjet_phi_true_det->Fill(v_true_acc_jet->Phi(), v_accomp_uncorr_jet->Phi());
-					//      hist.h2d_phot_en_true_det->Fill();
 				}
-				//  event_list->Enter(entry);
 			}
+
+			if (!en_mom_conservation) 
+			{
+				cout <<"EM NOT PRESERVED ON HADRON LEVEL - EVENT DISCARDED"<< endl;
+				continue;
+			}
+
 			if (!Data && SelectPartonLevel(take_event && here_is_jet && here_is_prph && take_event_trig, take_had_event)) 
 			{
 				num_part += 1;
@@ -180,6 +167,7 @@ Bool_t selector::Process()
 				cout <<"EM NOT PRESERVED"<< endl;
 				continue;
 			}
+
 			//part nohad || part_bin != had_bin
 				if ( (take_part_event && !take_had_event) || 
 					 (take_part_event && take_had_event && hist.part_cross_et->FindBin(part_et) != hist.had_cross_et->FindBin(had_et)) ) 
@@ -286,8 +274,6 @@ Bool_t selector::Process()
 				if ( (!take_part_event && take_had_event) || 
 					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
 					hist.had_nopart_cross_deta_e_ph->Fill(had_deta_e_ph);
-
-		}// if exact event
 		hadron_level_jets.clear();
 	}// for entry over entries
 
@@ -303,50 +289,3 @@ void selector::SlaveTerminate()
 	// on each slave server.
 
 }
-
-
-	/*
-		void sortEt(TObjArray *arrayNotSorted, TObjArray *arraySorted)
-		  {
-		//  Double_t maxEt = 0.;// (static_cast<TLorentzVector*> (arrayNotSorted->At(0)))->Et();
-		Double_t et[100];
-
-		Int_t sortedIndex[100] = {0};
-		Int_t counter = 0;
-		for(Int_t i = 0; i < arrayNotSorted->GetEntries(); i++)
-		{
-		et[i] = (static_cast<TLorentzVector*> (arrayNotSorted->At(i)))->Et();
-		}
-		while(counter<arrayNotSorted->GetEntries())
-		{
-		Int_t max;
-		Int_t N = arrayNotSorted->GetEntries();
-		max = findMaxEt(sortedIndex, et, N);
-		Double_t px_jet = (static_cast<TLorentzVector*>(arrayNotSorted->At(max)))->Px();
-		Double_t py_jet = (static_cast<TLorentzVector*>(arrayNotSorted->At(max)))->Py();
-		Double_t pz_jet = (static_cast<TLorentzVector*>(arrayNotSorted->At(max)))->Pz();
-		Double_t e_jet = (static_cast<TLorentzVector*>(arrayNotSorted->At(max)))->E();
-		arraySorted->Add(new TLorentzVector(px_jet, py_jet, pz_jet, e_jet) );
-		sortedIndex[max] = 1;
-		counter++;
-		}
-		}
-
-		Int_t findMaxEt(Int_t sorted[], Double_t et_jets[], Int_t N)
-		{
-		Double_t et;
-		Double_t maxEt = 0;
-		Int_t sort = -1;
-		for(Int_t j=0; j<N; j++)
-		{
-		et = et_jets[j];
-		if (et>maxEt && sorted[j]==0)
-		{
-		maxEt = et;
-		sort = j;
-		}
-		}
-		return sort;
-		}
-	*/
-	//#endif
