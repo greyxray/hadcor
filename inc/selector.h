@@ -44,6 +44,7 @@ class selector {
 
   bool en_mom_conservation;//per event flag
   bool check_en_mom_conservation;//per process at all
+  bool check_en_mom_conservation_on_parton_level;//per process at all
   static const Double_t px_cons = - 0.35;
   static const Double_t py_cons = - 0.22;
   static const Double_t pz_cons = 892.5;
@@ -1464,6 +1465,7 @@ class selector {
 void selector::Init(TTree *tree, TString run_period, Bool_t b_Data, TString s_mc_type, TString s_mc_corr_type, Bool_t b_usecorr, Bool_t b_use2ndcorr, Bool_t b_use_clustered)
 {
   check_en_mom_conservation = true;
+  check_en_mom_conservation_on_parton_level = false;
   en_mom_conservation = true;
   nodebugmode = kFALSE;
   event_list = new TEventList;
