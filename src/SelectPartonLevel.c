@@ -19,32 +19,32 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
   if (take_had_event) check_cuts = kFALSE;
 
   // General check of mom-energy conservation on the hadron level:
-    Double_t had_px_sum = 0; //892.48 * TMath::Sin(2.7e-4); 
-    Double_t had_py_sum = 0; //892.48 * TMath::Sin(1.3e-4); 
-    Double_t had_pz_sum = 0; //- 892.48;
-    Double_t had_e_sum  = 0; //- 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
-    Double_t had_et_sum = 0; //0;
-    if (check_cuts) cout << "in SelectPartons: number of hadrons is " << Npart << endl;
-    for(Int_t i = 0; i < Npart; i++)
-    {
-      had_px_sum += Part_p[i][0];
-      had_py_sum += Part_p[i][1];
-      had_pz_sum += Part_p[i][2];
-      had_e_sum += Part_p[i][3];
-      TLorentzVector v; 
-      v.SetPxPyPzE(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
-      had_et_sum += v.Et();
-    }
-    if (check_cuts) cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
-    if (check_cuts) cout << "PART: abs(had_e_sum - 947.5) > 1  " << (abs(had_e_sum - 947.5) > 1)  << endl;
-    if (check_en_mom_conservation && ( abs(had_e_sum  - E_cons)  > 1 ||
-             abs(had_pz_sum - pz_cons) > 1 || 
-             abs(had_px_sum - px_cons) > 0.1 || 
-             abs(had_py_sum - py_cons) > 0.1 ) )
-    {
-      en_mom_conservation = false;
-      return false;
-    }
+    // Double_t had_px_sum = 0; //892.48 * TMath::Sin(2.7e-4); 
+    // Double_t had_py_sum = 0; //892.48 * TMath::Sin(1.3e-4); 
+    // Double_t had_pz_sum = 0; //- 892.48;
+    // Double_t had_e_sum  = 0; //- 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
+    // Double_t had_et_sum = 0; //0;
+    // if (check_cuts) cout << "in SelectPartons: number of hadrons is " << Npart << endl;
+    // for(Int_t i = 0; i < Npart; i++)
+    // {
+    //   had_px_sum += Part_p[i][0];
+    //   had_py_sum += Part_p[i][1];
+    //   had_pz_sum += Part_p[i][2];
+    //   had_e_sum += Part_p[i][3];
+    //   TLorentzVector v; 
+    //   v.SetPxPyPzE(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
+    //   had_et_sum += v.Et();
+    // }
+    // if (check_cuts) cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
+    // if (check_cuts) cout << "PART: abs(had_e_sum - 947.5) > 1  " << (abs(had_e_sum - 947.5) > 1)  << endl;
+    // if (check_en_mom_conservation && ( abs(had_e_sum  - E_cons)  > 1 ||
+    //          abs(had_pz_sum - pz_cons) > 1 || 
+    //          abs(had_px_sum - px_cons) > 0.1 || 
+    //          abs(had_py_sum - py_cons) > 0.1 ) )
+    // {
+    //   en_mom_conservation = false;
+    //   return false;
+    // }
     /*  
       hist.had_sum_e->Fill(had_e_sum, wtx);
       hist.had_sum_px->Fill(had_px_sum, wtx);
@@ -87,7 +87,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
 
     hist.part_q2->Fill(m_q2_true, wtx);
     hist.part_y->Fill(m_y_true, wtx);
-    hist.h2d_etevent_part_had->Fill(part_et_sum, had_et_sum, wtx);
+    //hist.h2d_etevent_part_had->Fill(part_et_sum, had_et_sum, wtx);
     hist.had_q2->Fill(Mc_q2, wtx);
     hist.had_y->Fill(Mc_y, wtx);
 
@@ -159,7 +159,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                                                         part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] << ")" 
                                                         << " and Et = " << part_et_sum << endl;
 
-    if (check_en_mom_conservation && ( abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - E_cons)  > 1 ||
+    if (check_en_mom_conservation_on_parton_level &&
+        check_en_mom_conservation && ( abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - E_cons)  > 1 ||
              abs(part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] - pz_cons) > 1 || 
              abs(part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] - py_cons) > 0.1 || 
              abs(part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] - px_cons) > 0.1 ) )
