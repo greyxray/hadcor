@@ -101,6 +101,8 @@ Bool_t selector::Process()
 	int test_entry = 4;
 	for(Long64_t entry = 0; entry < nentries -1  && debugcontinue; entry++)
 	{
+		wtx = 1;
+		if (entry>500) exit(1);
 		en_mom_conservation = true;
 		// To test specific entry
 			if (test_on_entry)
@@ -144,11 +146,11 @@ Bool_t selector::Process()
 				}
 			}
 
-			if (!en_mom_conservation) 
-			{
-				cout <<"EM NOT PRESERVED ON HADRON LEVEL - EVENT DISCARDED"<< endl;
-				continue;
-			}
+			// if (!en_mom_conservation) 
+			// {
+			// 	cout <<"EM NOT PRESERVED ON HADRON LEVEL - EVENT DISCARDED"<< endl;
+			// 	//continue;
+			// }
 
 			if (!Data && SelectPartonLevel(take_event && here_is_jet && here_is_prph && take_event_trig, take_had_event)) 
 			{

@@ -1464,6 +1464,7 @@ class selector {
 //#define selector_init
 void selector::Init(TTree *tree, TString run_period, Bool_t b_Data, TString s_mc_type, TString s_mc_corr_type, Bool_t b_usecorr, Bool_t b_use2ndcorr, Bool_t b_use_clustered)
 {
+  wtx = 1;
   check_en_mom_conservation = true;
   check_en_mom_conservation_on_parton_level = false;
   en_mom_conservation = true;

@@ -72,29 +72,39 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
      
 
     Double_t px_had_sum(0), py_had_sum(0), pz_had_sum(0), E_had_sum(0);
-    for(Int_t i = 0; i < Npart; i++)
-     {
-       px_had_sum += Part_p[i][0];
-       py_had_sum += Part_p[i][1];
-       pz_had_sum += Part_p[i][2];
-       E_had_sum += Part_p[i][3];
-       if (check_cuts) cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
-       if (Part_prt[i] == 29 && index_true_photon == -1)
-       {
-         index_true_photon = i;
-         if (check_cuts) cout << "true photon found: " << index_true_photon << endl;
-       }
-     }
-    if (check_cuts) 
+    for(Int_t i = 0; i < Fmck_nstor; i++)
+    {
+      if (Fmck_isthep[i]%10000 != 1) continue;
+      //cout << "P:" << Fmck_px[i] << " "<< Fmck_py[i] << " "<< Fmck_pz[i] << " "<< Fmck_e[i] << endl;
+      px_had_sum += Fmck_px[i];
+      py_had_sum += Fmck_py[i];
+      pz_had_sum += Fmck_pz[i];
+      E_had_sum += Fmck_e[i];
+      if (true || check_cuts) cout << "Fmckin instance: " << i << " :: Fmck_id =" << Fmck_id[i]  << ", Fmck_prt = "<< Fmck_prt[i] << endl;
+      if (Fmck_prt[i] == 29 && index_true_photon == -1)
+      {
+        index_true_photon = i;
+        if (true || check_cuts) cout << "true photon found: " << index_true_photon << endl;
+      }
+    }
+    if (true || check_cuts) 
     {
       cout << "Hadron E/M-conservation: (" << px_had_sum << ", " << py_had_sum << ", " << pz_had_sum << ", " << E_had_sum << ")" << endl;
       cout << "HAD: abs(E_had_sum - 947.5) " << abs(E_had_sum - 947.5) << endl;
+      cout << "OR:"<< endl;
+      cout << "\tabs(E_had_sum  - E_cons) = " <<  abs(E_had_sum  - E_cons) << endl;
+      cout << "\t abs(pz_had_sum - pz_cons) = " << abs(pz_had_sum - pz_cons) << endl;
+      //cout << "\tabs(py_had_sum - py_cons) = " << abs(py_had_sum - py_cons) << endl;
+      //cout << "\tabs(px_had_sum - px_cons) = " << abs(px_had_sum - px_cons) << endl;
     }
     if (check_en_mom_conservation && ( abs(E_had_sum  - E_cons)  > 1 ||
-             abs(pz_had_sum - pz_cons) > 1 || 
-             abs(py_had_sum - py_cons) > 0.1 || 
-             abs(px_had_sum - px_cons) > 0.1 ) )
+             abs(pz_had_sum - pz_cons) > 1 //|| 
+             //abs(py_had_sum - py_cons) > 0.1 || 
+             //abs(px_had_sum - px_cons) > 0.1
+             ) 
+       )
     {
+      cout << "EVENT didin't passed the EM conserv on HAD lev" << endl;
       en_mom_conservation = false;
       return false;
     }
@@ -109,10 +119,10 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
   //photon cuts
     if (take_hevent && here_is_true_prph) 
     {
-      TVector3 v_true_photon(Part_p[index_true_photon][0], Part_p[index_true_photon][1], Part_p[index_true_photon][2]);
-               v_true_prompt_photon->SetPxPyPzE(Part_p[index_true_photon][0], Part_p[index_true_photon][1], Part_p[index_true_photon][2], Part_p[index_true_photon][3]);
+      TVector3 v_true_photon(Fmck_px[index_true_photon], Fmck_py[index_true_photon], Fmck_pz[index_true_photon]);
+               v_true_prompt_photon->SetPxPyPzE(Fmck_px[index_true_photon], Fmck_py[index_true_photon], Fmck_pz[index_true_photon], Fmck_e[index_true_photon]);
           
-      Double_t true_photon_et  = Part_p[index_true_photon][3] * TMath::Sin(v_true_photon.Theta());
+      Double_t true_photon_et  = Fmck_e[index_true_photon] * TMath::Sin(v_true_photon.Theta());
       Double_t true_photon_eta = v_true_photon.Eta();
       if (true_photon_et < 4. || true_photon_et > 15.) 
       {
@@ -138,8 +148,8 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
       Double_t ephoton_over_ejet = -1;
 
     //find electron on gen lev
-      for(Int_t i = 0; i < Npart; i++)
-        if ((Part_prt[i] == 23) || (Part_prt[i] == 24))
+      for(Int_t i = 0; i < Fmck_nstor; i++)
+        if ((Fmck_prt[i] == 23) || (Fmck_prt[i] == 24) && Fmck_isthep[i]%10000 != 1)
       	{
       	  index_true_electron = i;
       	  break;
@@ -148,26 +158,27 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     //jets constructions from particles on the hadron level
       KtJet::KtLorentzVector r;
       //construct input_hadrons made of Part_p --> input_hadrons
-        for (Int_t i = 0; i < Npart; i++)
+        for (Int_t i = 0; i < Fmck_nstor; i++)
         {
-          Double_t M2 = Part_p[i][3] * Part_p[i][3] 
-                      - Part_p[i][2] * Part_p[i][2]
-                      - Part_p[i][1] * Part_p[i][1]
-                      - Part_p[i][0] * Part_p[i][0];
+          if (Fmck_isthep[i]%10000 != 1) continue;
+          Double_t M2 = Fmck_e[i] * Fmck_e[i] 
+                      - Fmck_pz[i] * Fmck_pz[i]
+                      - Fmck_py[i] * Fmck_py[i]
+                      - Fmck_px[i] * Fmck_px[i];
     	    // Skip DIS electron
           if (i == index_true_electron) continue;
-          if (TMath::Abs(Part_p[i][3]) < 1.e-3) continue;
-          if (Part_p[i][3] <= 0) continue;
+          if (TMath::Abs(Fmck_e[i]) < 1.e-3) continue;
+          if (Fmck_e[i] <= 0) continue;
           //	if (M2 < 0 ) continue;
-          //  if (TMath::Abs(Part_p[i][2]) > Part_p[i][3]) continue;
+          //  if (TMath::Abs(Fmck_pz[i]) > Fmck_e[i]) continue;
           if (i == index_true_photon) index_photon_vector = input_hadrons.size();
 
           // create a KtJet with TRUE particles and put it to the end of the input_particles vector
-          if (TMath::Abs(Part_p[i][2]) < Part_p[i][3])  r = KtJet::KtLorentzVector(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
-                                                   else r = KtJet::KtLorentzVector(Part_p[i][0], Part_p[i][1], Part_p[i][2], 
-    				                                                TMath::Sqrt(Part_p[i][0] * Part_p[i][0] 
-                                                                      + Part_p[i][1]*Part_p[i][1] 
-                                                                      + Part_p[i][2]*Part_p[i][2]));
+          if (TMath::Abs(Fmck_pz[i]) < Fmck_e[i])  r = KtJet::KtLorentzVector(Fmck_px[i], Fmck_py[i], Fmck_pz[i], Fmck_e[i]);
+                                                   else r = KtJet::KtLorentzVector(Fmck_px[i], Fmck_py[i], Fmck_pz[i], 
+    				                                                TMath::Sqrt(Fmck_px[i] * Fmck_px[i] 
+                                                                      + Fmck_py[i] * Fmck_py[i] 
+                                                                      + Fmck_pz[i] * Fmck_pz[i]));
           input_hadrons.push_back(r);
         }
 
@@ -437,7 +448,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     //Additional output
       if ((take_hevent && here_is_true_prph && here_is_true_jet)) 
       {
-        if (check_cuts)cout << "hadr level, Eventnr = " << Eventnr << ", N of hadrons = " << Npart << ", N of jets = " << true_jets.size() << ": " << endl;
+        if (check_cuts)cout << "hadr level, Eventnr = " << Eventnr << ", N of hadrons = " << Fmck_nstor << ", N of jets = " << true_jets.size() << ": " << endl;
         for(Int_t i = 0; i < true_jets.size(); i++) 
           if (check_cuts)cout << "ktjet #" << i << ": e = " << true_jets[i].e() << ", et = " << true_jets[i].et() << ", eta = " << true_jets[i].eta() << endl;;
         
