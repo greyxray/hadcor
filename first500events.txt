@@ -1,0 +1,663 @@
+argv[0] = ./main
+argv[1] = 0405e
+argv[2] = mc_prph
+argv[3] = 0
+argv[4] = 0
+argv[5] = 0
+95091 events chained
+95091 events chained
+initializing....
+period = 0405e
+Data = 0
+mc_corr_type = lepto_corr
+use_corr = 0
+take_2ndana_corr = 0
+use_clustered = 0
+!Data: mc_type = mc_prph
+mc_corr_type = lepto_corr
+in selector.h: added new chain with 95091 entries 
+begin time: Sun Nov 13 20:56:32 2016
+root file name: mc_prph0405e_parton.root
+======= C_scale ========
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+++++++==== a0 ---- a1 ======++++++
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+0   1
+Number of events to process: 95091
+entry: 0; Eventnr: 1; Runnr_prev: 0
+going into hadr. selection
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 32 :: Fmck_id =33, Fmck_prt = 55
+Fmckin instance: 36 :: Fmck_id =37, Fmck_prt = 54
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 193
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 55
+Fmckin instance: 41 :: Fmck_id =42, Fmck_prt = 54
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 55
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 54
+Fmckin instance: 48 :: Fmck_id =49, Fmck_prt = 55
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 54
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 54
+Fmckin instance: 53 :: Fmck_id =54, Fmck_prt = 55
+Fmckin instance: 55 :: Fmck_id =56, Fmck_prt = 55
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 54
+Fmckin instance: 59 :: Fmck_id =60, Fmck_prt = 58
+Fmckin instance: 60 :: Fmck_id =61, Fmck_prt = 55
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 55
+Fmckin instance: 62 :: Fmck_id =63, Fmck_prt = 54
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 190
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 54
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 54
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 55
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 191
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 55
+Fmckin instance: 70 :: Fmck_id =71, Fmck_prt = 63
+Fmckin instance: 71 :: Fmck_id =72, Fmck_prt = 190
+Fmckin instance: 72 :: Fmck_id =73, Fmck_prt = 55
+Fmckin instance: 73 :: Fmck_id =74, Fmck_prt = 29
+Fmckin instance: 74 :: Fmck_id =75, Fmck_prt = 29
+Fmckin instance: 75 :: Fmck_id =76, Fmck_prt = 55
+Fmckin instance: 76 :: Fmck_id =77, Fmck_prt = 54
+Fmckin instance: 77 :: Fmck_id =78, Fmck_prt = 54
+Fmckin instance: 79 :: Fmck_id =80, Fmck_prt = 192
+Fmckin instance: 81 :: Fmck_id =82, Fmck_prt = 29
+Fmckin instance: 82 :: Fmck_id =83, Fmck_prt = 29
+Fmckin instance: 83 :: Fmck_id =84, Fmck_prt = 29
+Fmckin instance: 84 :: Fmck_id =85, Fmck_prt = 29
+Fmckin instance: 85 :: Fmck_id =86, Fmck_prt = 29
+Fmckin instance: 86 :: Fmck_id =87, Fmck_prt = 29
+Fmckin instance: 87 :: Fmck_id =88, Fmck_prt = 29
+Fmckin instance: 88 :: Fmck_id =89, Fmck_prt = 29
+Fmckin instance: 89 :: Fmck_id =90, Fmck_prt = 55
+Fmckin instance: 90 :: Fmck_id =91, Fmck_prt = 54
+Fmckin instance: 91 :: Fmck_id =92, Fmck_prt = 29
+Fmckin instance: 92 :: Fmck_id =93, Fmck_prt = 29
+Fmckin instance: 93 :: Fmck_id =94, Fmck_prt = 29
+Fmckin instance: 94 :: Fmck_id =95, Fmck_prt = 29
+Fmckin instance: 95 :: Fmck_id =96, Fmck_prt = 29
+Fmckin instance: 96 :: Fmck_id =97, Fmck_prt = 29
+Hadron E/M-conservation: (-0.352798, -0.30373, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000478283
+OR:
+	abs(E_had_sum  - E_cons) = 0.000478283
+	 abs(pz_had_sum - pz_cons) = 0.000132799
+	abs(py_had_sum - py_cons) = 0.0837303
+	abs(px_had_sum - px_cons) = 0.0027984
+**************************************************************
+* Package KtJet written by:                                  *
+*   Jon Butterworth                                          *
+*   Jon Couchman                                             *
+*   Brian Cox                                                *
+*   Ben Waugh                                                *
+* See documentation at <http://projects.hepforge.org/ktjet/> *
+**************************************************************
+******************************************
+* KtEvent constructor called: inclusive  *
+* Collision type:       pe               *
+* Kt scheme:            DeltaR           *
+* Recombination scheme: E                *
+* Compiled to use single precision.      *
+******************************************
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 1 is selected and N of hadron level jets is 18
+ === THE END === 
+entry: 1; Eventnr: 2; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 18 :: Fmck_id =19, Fmck_prt = 55
+Fmckin instance: 21 :: Fmck_id =22, Fmck_prt = 54
+Fmckin instance: 22 :: Fmck_id =23, Fmck_prt = 192
+Fmckin instance: 24 :: Fmck_id =25, Fmck_prt = 55
+Fmckin instance: 25 :: Fmck_id =26, Fmck_prt = 54
+Fmckin instance: 27 :: Fmck_id =28, Fmck_prt = 54
+Fmckin instance: 29 :: Fmck_id =30, Fmck_prt = 29
+Fmckin instance: 30 :: Fmck_id =31, Fmck_prt = 29
+Fmckin instance: 31 :: Fmck_id =32, Fmck_prt = 55
+Fmckin instance: 32 :: Fmck_id =33, Fmck_prt = 54
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 54
+Fmckin instance: 35 :: Fmck_id =36, Fmck_prt = 55
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 29
+Fmckin instance: 38 :: Fmck_id =39, Fmck_prt = 29
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 29
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 29
+Fmckin instance: 41 :: Fmck_id =42, Fmck_prt = 29
+Fmckin instance: 42 :: Fmck_id =43, Fmck_prt = 29
+Fmckin instance: 46 :: Fmck_id =47, Fmck_prt = 29
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 29
+Fmckin instance: 48 :: Fmck_id =49, Fmck_prt = 29
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 29
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 29
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 29
+Hadron E/M-conservation: (-0.416532, -0.241746, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000486642
+OR:
+	abs(E_had_sum  - E_cons) = 0.000486642
+	 abs(pz_had_sum - pz_cons) = 0.000108764
+	abs(py_had_sum - py_cons) = 0.0217461
+	abs(px_had_sum - px_cons) = 0.066532
+...going into part. selection
+SelectPartonLevel
+Parton level event 2 is selected and N of hadron level jets is 7
+ === THE END === 
+entry: 2; Eventnr: 3; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 24 :: Fmck_id =25, Fmck_prt = 55
+Fmckin instance: 32 :: Fmck_id =33, Fmck_prt = 192
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 58
+Fmckin instance: 41 :: Fmck_id =42, Fmck_prt = 54
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 29
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 29
+Fmckin instance: 45 :: Fmck_id =46, Fmck_prt = 55
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 54
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 55
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 54
+Fmckin instance: 58 :: Fmck_id =59, Fmck_prt = 63
+Fmckin instance: 59 :: Fmck_id =60, Fmck_prt = 63
+Fmckin instance: 60 :: Fmck_id =61, Fmck_prt = 29
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 29
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 54
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 29
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 29
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 29
+Fmckin instance: 67 :: Fmck_id =68, Fmck_prt = 29
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 29
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 29
+Fmckin instance: 70 :: Fmck_id =71, Fmck_prt = 29
+Fmckin instance: 71 :: Fmck_id =72, Fmck_prt = 29
+Fmckin instance: 72 :: Fmck_id =73, Fmck_prt = 29
+Fmckin instance: 73 :: Fmck_id =74, Fmck_prt = 29
+Fmckin instance: 74 :: Fmck_id =75, Fmck_prt = 63
+Fmckin instance: 75 :: Fmck_id =76, Fmck_prt = 29
+Fmckin instance: 76 :: Fmck_id =77, Fmck_prt = 29
+Fmckin instance: 78 :: Fmck_id =79, Fmck_prt = 29
+Fmckin instance: 79 :: Fmck_id =80, Fmck_prt = 29
+Fmckin instance: 81 :: Fmck_id =82, Fmck_prt = 55
+Fmckin instance: 82 :: Fmck_id =83, Fmck_prt = 29
+Fmckin instance: 83 :: Fmck_id =84, Fmck_prt = 29
+Fmckin instance: 84 :: Fmck_id =85, Fmck_prt = 59
+Fmckin instance: 85 :: Fmck_id =86, Fmck_prt = 54
+Fmckin instance: 86 :: Fmck_id =87, Fmck_prt = 54
+Fmckin instance: 87 :: Fmck_id =88, Fmck_prt = 55
+Fmckin instance: 88 :: Fmck_id =89, Fmck_prt = 63
+Fmckin instance: 90 :: Fmck_id =91, Fmck_prt = 55
+Fmckin instance: 91 :: Fmck_id =92, Fmck_prt = 54
+Hadron E/M-conservation: (-0.423672, -0.445715, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.00049587
+OR:
+	abs(E_had_sum  - E_cons) = 0.00049587
+	 abs(pz_had_sum - pz_cons) = 0.000216346
+	abs(py_had_sum - py_cons) = 0.225715
+	abs(px_had_sum - px_cons) = 0.073672
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 3 is selected and N of hadron level jets is 14
+ === THE END === 
+entry: 3; Eventnr: 4; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 22 :: Fmck_id =23, Fmck_prt = 190
+Fmckin instance: 23 :: Fmck_id =24, Fmck_prt = 193
+Fmckin instance: 27 :: Fmck_id =28, Fmck_prt = 54
+Fmckin instance: 33 :: Fmck_id =34, Fmck_prt = 190
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 193
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 55
+Fmckin instance: 41 :: Fmck_id =42, Fmck_prt = 54
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 192
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 55
+Fmckin instance: 45 :: Fmck_id =46, Fmck_prt = 54
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 54
+Fmckin instance: 48 :: Fmck_id =49, Fmck_prt = 55
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 29
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 29
+Fmckin instance: 52 :: Fmck_id =53, Fmck_prt = 55
+Fmckin instance: 54 :: Fmck_id =55, Fmck_prt = 55
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 54
+Fmckin instance: 58 :: Fmck_id =59, Fmck_prt = 192
+Fmckin instance: 59 :: Fmck_id =60, Fmck_prt = 54
+Fmckin instance: 60 :: Fmck_id =61, Fmck_prt = 191
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 55
+Fmckin instance: 62 :: Fmck_id =63, Fmck_prt = 29
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 29
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 29
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 29
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 29
+Fmckin instance: 67 :: Fmck_id =68, Fmck_prt = 29
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 29
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 29
+Fmckin instance: 70 :: Fmck_id =71, Fmck_prt = 29
+Fmckin instance: 71 :: Fmck_id =72, Fmck_prt = 29
+Fmckin instance: 72 :: Fmck_id =73, Fmck_prt = 29
+Fmckin instance: 73 :: Fmck_id =74, Fmck_prt = 29
+Fmckin instance: 74 :: Fmck_id =75, Fmck_prt = 29
+Fmckin instance: 75 :: Fmck_id =76, Fmck_prt = 24
+Fmckin instance: 76 :: Fmck_id =77, Fmck_prt = 23
+Hadron E/M-conservation: (-0.352798, -0.30373, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000475479
+OR:
+	abs(E_had_sum  - E_cons) = 0.000475479
+	 abs(pz_had_sum - pz_cons) = 0.000141762
+	abs(py_had_sum - py_cons) = 0.08373
+	abs(px_had_sum - px_cons) = 0.00279845
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 4 is selected and N of hadron level jets is 15
+ === THE END === 
+entry: 4; Eventnr: 5; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 22 :: Fmck_id =23, Fmck_prt = 54
+Fmckin instance: 25 :: Fmck_id =26, Fmck_prt = 54
+Fmckin instance: 31 :: Fmck_id =32, Fmck_prt = 59
+Fmckin instance: 32 :: Fmck_id =33, Fmck_prt = 54
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 191
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 192
+Fmckin instance: 41 :: Fmck_id =42, Fmck_prt = 54
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 54
+Fmckin instance: 45 :: Fmck_id =46, Fmck_prt = 55
+Fmckin instance: 46 :: Fmck_id =47, Fmck_prt = 54
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 54
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 55
+Fmckin instance: 53 :: Fmck_id =54, Fmck_prt = 55
+Fmckin instance: 55 :: Fmck_id =56, Fmck_prt = 29
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 29
+Fmckin instance: 57 :: Fmck_id =58, Fmck_prt = 58
+Fmckin instance: 58 :: Fmck_id =59, Fmck_prt = 55
+Fmckin instance: 59 :: Fmck_id =60, Fmck_prt = 59
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 54
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 58
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 55
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 54
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 55
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 29
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 29
+Fmckin instance: 73 :: Fmck_id =74, Fmck_prt = 190
+Fmckin instance: 74 :: Fmck_id =75, Fmck_prt = 55
+Fmckin instance: 81 :: Fmck_id =82, Fmck_prt = 55
+Fmckin instance: 83 :: Fmck_id =84, Fmck_prt = 54
+Fmckin instance: 84 :: Fmck_id =85, Fmck_prt = 55
+Fmckin instance: 85 :: Fmck_id =86, Fmck_prt = 54
+Fmckin instance: 86 :: Fmck_id =87, Fmck_prt = 55
+Fmckin instance: 88 :: Fmck_id =89, Fmck_prt = 29
+Fmckin instance: 89 :: Fmck_id =90, Fmck_prt = 29
+Fmckin instance: 90 :: Fmck_id =91, Fmck_prt = 29
+Fmckin instance: 91 :: Fmck_id =92, Fmck_prt = 29
+Fmckin instance: 92 :: Fmck_id =93, Fmck_prt = 29
+Fmckin instance: 93 :: Fmck_id =94, Fmck_prt = 29
+Fmckin instance: 94 :: Fmck_id =95, Fmck_prt = 29
+Fmckin instance: 95 :: Fmck_id =96, Fmck_prt = 29
+Fmckin instance: 96 :: Fmck_id =97, Fmck_prt = 29
+Fmckin instance: 97 :: Fmck_id =98, Fmck_prt = 29
+Fmckin instance: 98 :: Fmck_id =99, Fmck_prt = 29
+Fmckin instance: 99 :: Fmck_id =100, Fmck_prt = 29
+Fmckin instance: 100 :: Fmck_id =101, Fmck_prt = 29
+Fmckin instance: 101 :: Fmck_id =102, Fmck_prt = 29
+Fmckin instance: 102 :: Fmck_id =103, Fmck_prt = 29
+Fmckin instance: 103 :: Fmck_id =104, Fmck_prt = 29
+Fmckin instance: 104 :: Fmck_id =105, Fmck_prt = 29
+Fmckin instance: 105 :: Fmck_id =106, Fmck_prt = 29
+Fmckin instance: 106 :: Fmck_id =107, Fmck_prt = 29
+Fmckin instance: 107 :: Fmck_id =108, Fmck_prt = 29
+Fmckin instance: 108 :: Fmck_id =109, Fmck_prt = 29
+Fmckin instance: 109 :: Fmck_id =110, Fmck_prt = 29
+Fmckin instance: 110 :: Fmck_id =111, Fmck_prt = 29
+Fmckin instance: 111 :: Fmck_id =112, Fmck_prt = 29
+Fmckin instance: 112 :: Fmck_id =113, Fmck_prt = 29
+Fmckin instance: 113 :: Fmck_id =114, Fmck_prt = 29
+Fmckin instance: 114 :: Fmck_id =115, Fmck_prt = 29
+Fmckin instance: 115 :: Fmck_id =116, Fmck_prt = 29
+Fmckin instance: 116 :: Fmck_id =117, Fmck_prt = 29
+Fmckin instance: 117 :: Fmck_id =118, Fmck_prt = 29
+Fmckin instance: 118 :: Fmck_id =119, Fmck_prt = 29
+Fmckin instance: 119 :: Fmck_id =120, Fmck_prt = 29
+Fmckin instance: 120 :: Fmck_id =121, Fmck_prt = 29
+Fmckin instance: 121 :: Fmck_id =122, Fmck_prt = 29
+Hadron E/M-conservation: (-0.506865, -0.208847, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000472413
+OR:
+	abs(E_had_sum  - E_cons) = 0.000472413
+	 abs(pz_had_sum - pz_cons) = 0.0001579
+	abs(py_had_sum - py_cons) = 0.0111531
+	abs(px_had_sum - px_cons) = 0.156865
+SelectHadronLevel selected
+...going into part. selection
+entry: 5; Eventnr: 6; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 24 :: Fmck_id =25, Fmck_prt = 192
+Fmckin instance: 30 :: Fmck_id =31, Fmck_prt = 55
+Fmckin instance: 31 :: Fmck_id =32, Fmck_prt = 54
+Fmckin instance: 35 :: Fmck_id =36, Fmck_prt = 54
+Fmckin instance: 36 :: Fmck_id =37, Fmck_prt = 54
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 55
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 54
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 55
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 54
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 55
+Fmckin instance: 45 :: Fmck_id =46, Fmck_prt = 29
+Fmckin instance: 46 :: Fmck_id =47, Fmck_prt = 29
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 29
+Fmckin instance: 48 :: Fmck_id =49, Fmck_prt = 29
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 55
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 54
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 59
+Fmckin instance: 52 :: Fmck_id =53, Fmck_prt = 54
+Fmckin instance: 55 :: Fmck_id =56, Fmck_prt = 29
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 23
+Fmckin instance: 57 :: Fmck_id =58, Fmck_prt = 24
+Fmckin instance: 58 :: Fmck_id =59, Fmck_prt = 58
+Fmckin instance: 60 :: Fmck_id =61, Fmck_prt = 29
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 29
+Fmckin instance: 62 :: Fmck_id =63, Fmck_prt = 29
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 29
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 29
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 29
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 59
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 29
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 29
+Hadron E/M-conservation: (-0.379668, -0.279407, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000480413
+OR:
+	abs(E_had_sum  - E_cons) = 0.000480413
+	 abs(pz_had_sum - pz_cons) = 0.000122549
+	abs(py_had_sum - py_cons) = 0.0594065
+	abs(px_had_sum - px_cons) = 0.0296684
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 6 is selected and N of hadron level jets is 16
+ === THE END === 
+entry: 6; Eventnr: 7; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 22 :: Fmck_id =23, Fmck_prt = 59
+Fmckin instance: 33 :: Fmck_id =34, Fmck_prt = 190
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 29
+Fmckin instance: 35 :: Fmck_id =36, Fmck_prt = 29
+Fmckin instance: 36 :: Fmck_id =37, Fmck_prt = 54
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 55
+Fmckin instance: 42 :: Fmck_id =43, Fmck_prt = 54
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 54
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 55
+Fmckin instance: 46 :: Fmck_id =47, Fmck_prt = 54
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 59
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 54
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 55
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 54
+Fmckin instance: 53 :: Fmck_id =54, Fmck_prt = 29
+Fmckin instance: 54 :: Fmck_id =55, Fmck_prt = 54
+Fmckin instance: 55 :: Fmck_id =56, Fmck_prt = 55
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 55
+Fmckin instance: 58 :: Fmck_id =59, Fmck_prt = 29
+Fmckin instance: 59 :: Fmck_id =60, Fmck_prt = 29
+Fmckin instance: 60 :: Fmck_id =61, Fmck_prt = 54
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 55
+Fmckin instance: 62 :: Fmck_id =63, Fmck_prt = 29
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 29
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 63
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 29
+Fmckin instance: 67 :: Fmck_id =68, Fmck_prt = 29
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 29
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 29
+Fmckin instance: 70 :: Fmck_id =71, Fmck_prt = 29
+Fmckin instance: 71 :: Fmck_id =72, Fmck_prt = 29
+Fmckin instance: 74 :: Fmck_id =75, Fmck_prt = 29
+Fmckin instance: 75 :: Fmck_id =76, Fmck_prt = 29
+Fmckin instance: 76 :: Fmck_id =77, Fmck_prt = 29
+Fmckin instance: 77 :: Fmck_id =78, Fmck_prt = 29
+Hadron E/M-conservation: (-0.411481, -0.334076, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000472009
+OR:
+	abs(E_had_sum  - E_cons) = 0.000472009
+	 abs(pz_had_sum - pz_cons) = 0.000191696
+	abs(py_had_sum - py_cons) = 0.114076
+	abs(px_had_sum - px_cons) = 0.0614811
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 7 is selected and N of hadron level jets is 15
+ === THE END === 
+entry: 7; Eventnr: 8; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 23 :: Fmck_id =24, Fmck_prt = 190
+Fmckin instance: 26 :: Fmck_id =27, Fmck_prt = 55
+Fmckin instance: 30 :: Fmck_id =31, Fmck_prt = 55
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 55
+Fmckin instance: 35 :: Fmck_id =36, Fmck_prt = 54
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 58
+Fmckin instance: 42 :: Fmck_id =43, Fmck_prt = 54
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 191
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 55
+Fmckin instance: 45 :: Fmck_id =46, Fmck_prt = 54
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 55
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 54
+Fmckin instance: 52 :: Fmck_id =53, Fmck_prt = 55
+Fmckin instance: 54 :: Fmck_id =55, Fmck_prt = 55
+Fmckin instance: 55 :: Fmck_id =56, Fmck_prt = 54
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 54
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 55
+Fmckin instance: 62 :: Fmck_id =63, Fmck_prt = 54
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 59
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 58
+Fmckin instance: 70 :: Fmck_id =71, Fmck_prt = 29
+Fmckin instance: 71 :: Fmck_id =72, Fmck_prt = 29
+Fmckin instance: 72 :: Fmck_id =73, Fmck_prt = 29
+Fmckin instance: 73 :: Fmck_id =74, Fmck_prt = 29
+Fmckin instance: 74 :: Fmck_id =75, Fmck_prt = 29
+Fmckin instance: 75 :: Fmck_id =76, Fmck_prt = 29
+Fmckin instance: 76 :: Fmck_id =77, Fmck_prt = 54
+Fmckin instance: 78 :: Fmck_id =79, Fmck_prt = 55
+Fmckin instance: 79 :: Fmck_id =80, Fmck_prt = 54
+Fmckin instance: 80 :: Fmck_id =81, Fmck_prt = 29
+Fmckin instance: 81 :: Fmck_id =82, Fmck_prt = 29
+Fmckin instance: 82 :: Fmck_id =83, Fmck_prt = 29
+Fmckin instance: 83 :: Fmck_id =84, Fmck_prt = 29
+Fmckin instance: 84 :: Fmck_id =85, Fmck_prt = 29
+Fmckin instance: 85 :: Fmck_id =86, Fmck_prt = 29
+Fmckin instance: 86 :: Fmck_id =87, Fmck_prt = 29
+Fmckin instance: 87 :: Fmck_id =88, Fmck_prt = 29
+Fmckin instance: 88 :: Fmck_id =89, Fmck_prt = 29
+Fmckin instance: 89 :: Fmck_id =90, Fmck_prt = 29
+Fmckin instance: 90 :: Fmck_id =91, Fmck_prt = 54
+Fmckin instance: 91 :: Fmck_id =92, Fmck_prt = 55
+Fmckin instance: 92 :: Fmck_id =93, Fmck_prt = 190
+Fmckin instance: 93 :: Fmck_id =94, Fmck_prt = 55
+Fmckin instance: 94 :: Fmck_id =95, Fmck_prt = 29
+Fmckin instance: 95 :: Fmck_id =96, Fmck_prt = 29
+Fmckin instance: 96 :: Fmck_id =97, Fmck_prt = 55
+Fmckin instance: 97 :: Fmck_id =98, Fmck_prt = 54
+Fmckin instance: 98 :: Fmck_id =99, Fmck_prt = 29
+Fmckin instance: 99 :: Fmck_id =100, Fmck_prt = 29
+Fmckin instance: 513 :: Fmck_id =23, Fmck_prt = 23
+Fmckin instance: 514 :: Fmck_id =29, Fmck_prt = 23
+Fmckin instance: 523 :: Fmck_id =23, Fmck_prt = 54
+Hadron E/M-conservation: (-10.0996, -44.9568, 940.326, 934.283)
+HAD: abs(E_had_sum - 947.5) 13.2168
+OR:
+	abs(E_had_sum  - E_cons) = 13.2168
+	 abs(pz_had_sum - pz_cons) = 47.8259
+	abs(py_had_sum - py_cons) = 44.7368
+	abs(px_had_sum - px_cons) = 9.74958
+EVENT didin't passed the EM conserv on HAD lev
+...going into part. selection
+SelectPartonLevel
+Parton level event 8 is selected and N of hadron level jets is 0
+ === THE END === 
+EM NOT PRESERVED
+entry: 8; Eventnr: 9; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 19 :: Fmck_id =20, Fmck_prt = 190
+Fmckin instance: 25 :: Fmck_id =26, Fmck_prt = 190
+Fmckin instance: 27 :: Fmck_id =28, Fmck_prt = 55
+Fmckin instance: 28 :: Fmck_id =29, Fmck_prt = 54
+Fmckin instance: 29 :: Fmck_id =30, Fmck_prt = 191
+Fmckin instance: 30 :: Fmck_id =31, Fmck_prt = 54
+Fmckin instance: 31 :: Fmck_id =32, Fmck_prt = 192
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 29
+Fmckin instance: 35 :: Fmck_id =36, Fmck_prt = 55
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 54
+Fmckin instance: 38 :: Fmck_id =39, Fmck_prt = 55
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 29
+Fmckin instance: 41 :: Fmck_id =42, Fmck_prt = 29
+Fmckin instance: 42 :: Fmck_id =43, Fmck_prt = 193
+Fmckin instance: 44 :: Fmck_id =45, Fmck_prt = 29
+Fmckin instance: 45 :: Fmck_id =46, Fmck_prt = 29
+Fmckin instance: 46 :: Fmck_id =47, Fmck_prt = 29
+Fmckin instance: 47 :: Fmck_id =48, Fmck_prt = 29
+Fmckin instance: 48 :: Fmck_id =49, Fmck_prt = 29
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 29
+Hadron E/M-conservation: (-0.402227, -0.340025, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000479162
+OR:
+	abs(E_had_sum  - E_cons) = 0.000479162
+	 abs(pz_had_sum - pz_cons) = 0.000152051
+	abs(py_had_sum - py_cons) = 0.120025
+	abs(px_had_sum - px_cons) = 0.0522267
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 9 is selected and N of hadron level jets is 12
+ === THE END === 
+entry: 9; Eventnr: 10; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 21 :: Fmck_id =22, Fmck_prt = 55
+Fmckin instance: 25 :: Fmck_id =26, Fmck_prt = 55
+Fmckin instance: 26 :: Fmck_id =27, Fmck_prt = 54
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 54
+Fmckin instance: 36 :: Fmck_id =37, Fmck_prt = 29
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 29
+Fmckin instance: 38 :: Fmck_id =39, Fmck_prt = 29
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 29
+Fmckin instance: 40 :: Fmck_id =41, Fmck_prt = 54
+Fmckin instance: 42 :: Fmck_id =43, Fmck_prt = 55
+Fmckin instance: 43 :: Fmck_id =44, Fmck_prt = 54
+Fmckin instance: 46 :: Fmck_id =47, Fmck_prt = 63
+Fmckin instance: 48 :: Fmck_id =49, Fmck_prt = 63
+Fmckin instance: 49 :: Fmck_id =50, Fmck_prt = 55
+Fmckin instance: 50 :: Fmck_id =51, Fmck_prt = 54
+Fmckin instance: 51 :: Fmck_id =52, Fmck_prt = 190
+Fmckin instance: 52 :: Fmck_id =53, Fmck_prt = 55
+Fmckin instance: 56 :: Fmck_id =57, Fmck_prt = 29
+Fmckin instance: 57 :: Fmck_id =58, Fmck_prt = 29
+Fmckin instance: 58 :: Fmck_id =59, Fmck_prt = 29
+Fmckin instance: 59 :: Fmck_id =60, Fmck_prt = 29
+Fmckin instance: 60 :: Fmck_id =61, Fmck_prt = 63
+Fmckin instance: 61 :: Fmck_id =62, Fmck_prt = 29
+Fmckin instance: 62 :: Fmck_id =63, Fmck_prt = 29
+Fmckin instance: 63 :: Fmck_id =64, Fmck_prt = 55
+Fmckin instance: 64 :: Fmck_id =65, Fmck_prt = 54
+Fmckin instance: 65 :: Fmck_id =66, Fmck_prt = 29
+Fmckin instance: 66 :: Fmck_id =67, Fmck_prt = 29
+Fmckin instance: 67 :: Fmck_id =68, Fmck_prt = 29
+Fmckin instance: 68 :: Fmck_id =69, Fmck_prt = 29
+Fmckin instance: 69 :: Fmck_id =70, Fmck_prt = 29
+Fmckin instance: 70 :: Fmck_id =71, Fmck_prt = 29
+Hadron E/M-conservation: (-0.352798, -0.30373, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.00046441
+OR:
+	abs(E_had_sum  - E_cons) = 0.00046441
+	 abs(pz_had_sum - pz_cons) = 0.000153028
+	abs(py_had_sum - py_cons) = 0.0837301
+	abs(px_had_sum - px_cons) = 0.002798
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 10 is selected and N of hadron level jets is 15
+ === THE END === 
+entry: 10; Eventnr: 11; Runnr_prev: 0
+param init
+		passed electron cuts
+Fmckin instance: 11 :: Fmck_id =12, Fmck_prt = 29
+true photon found: 11
+Fmckin instance: 12 :: Fmck_id =13, Fmck_prt = 23
+Fmckin instance: 20 :: Fmck_id =21, Fmck_prt = 54
+Fmckin instance: 22 :: Fmck_id =23, Fmck_prt = 192
+Fmckin instance: 23 :: Fmck_id =24, Fmck_prt = 191
+Fmckin instance: 24 :: Fmck_id =25, Fmck_prt = 54
+Fmckin instance: 25 :: Fmck_id =26, Fmck_prt = 192
+Fmckin instance: 26 :: Fmck_id =27, Fmck_prt = 54
+Fmckin instance: 27 :: Fmck_id =28, Fmck_prt = 29
+Fmckin instance: 28 :: Fmck_id =29, Fmck_prt = 29
+Fmckin instance: 29 :: Fmck_id =30, Fmck_prt = 55
+Fmckin instance: 31 :: Fmck_id =32, Fmck_prt = 29
+Fmckin instance: 32 :: Fmck_id =33, Fmck_prt = 29
+Fmckin instance: 33 :: Fmck_id =34, Fmck_prt = 55
+Fmckin instance: 34 :: Fmck_id =35, Fmck_prt = 54
+Fmckin instance: 36 :: Fmck_id =37, Fmck_prt = 29
+Fmckin instance: 37 :: Fmck_id =38, Fmck_prt = 29
+Fmckin instance: 38 :: Fmck_id =39, Fmck_prt = 29
+Fmckin instance: 39 :: Fmck_id =40, Fmck_prt = 29
+Hadron E/M-conservation: (-0.441446, -0.312876, 892.5, 947.5)
+HAD: abs(E_had_sum - 947.5) 0.000470713
+OR:
+	abs(E_had_sum  - E_cons) = 0.000470713
+	 abs(pz_had_sum - pz_cons) = 0.000147909
+	abs(py_had_sum - py_cons) = 0.0928756
+	abs(px_had_sum - px_cons) = 0.0914462
+SelectHadronLevel selected
+...going into part. selection
+SelectPartonLevel
+Parton level event 11 is selected and N of hadron level jets is 7
+ === THE END === 

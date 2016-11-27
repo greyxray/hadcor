@@ -17,50 +17,14 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
 {
   cout << "...going into part. selection" << endl;
   if (take_had_event) check_cuts = kFALSE;
-
-  // General check of mom-energy conservation on the hadron level:
-    // Double_t had_px_sum = 0; //892.48 * TMath::Sin(2.7e-4); 
-    // Double_t had_py_sum = 0; //892.48 * TMath::Sin(1.3e-4); 
-    // Double_t had_pz_sum = 0; //- 892.48;
-    // Double_t had_e_sum  = 0; //- 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382);
-    // Double_t had_et_sum = 0; //0;
-    // if (check_cuts) cout << "in SelectPartons: number of hadrons is " << Npart << endl;
-    // for(Int_t i = 0; i < Npart; i++)
-    // {
-    //   had_px_sum += Part_p[i][0];
-    //   had_py_sum += Part_p[i][1];
-    //   had_pz_sum += Part_p[i][2];
-    //   had_e_sum += Part_p[i][3];
-    //   TLorentzVector v; 
-    //   v.SetPxPyPzE(Part_p[i][0], Part_p[i][1], Part_p[i][2], Part_p[i][3]);
-    //   had_et_sum += v.Et();
-    // }
-    // if (check_cuts) cout << "Hadron-parton E/M-conservation: (" << had_px_sum << ", " << had_py_sum << ", " << had_pz_sum << ", " << had_e_sum << ")" << " and Et = " << had_et_sum << endl;
-    // if (check_cuts) cout << "PART: abs(had_e_sum - 947.5) > 1  " << (abs(had_e_sum - 947.5) > 1)  << endl;
-    // if (check_en_mom_conservation && ( abs(had_e_sum  - E_cons)  > 1 ||
-    //          abs(had_pz_sum - pz_cons) > 1 || 
-    //          abs(had_px_sum - px_cons) > 0.1 || 
-    //          abs(had_py_sum - py_cons) > 0.1 ) )
-    // {
-    //   en_mom_conservation = false;
-    //   return false;
-    // }
-    /*  
-      hist.had_sum_e->Fill(had_e_sum, wtx);
-      hist.had_sum_px->Fill(had_px_sum, wtx);
-      hist.had_sum_py->Fill(had_py_sum, wtx);
-      hist.had_sum_pz->Fill(had_pz_sum, wtx);
-      hist.had_sum_et->Fill(had_et_sum, wtx);
-      cout << "event #" << Eventnr << ": " << had_e_sum << " " << had_px_sum << " " << had_py_sum << " " << had_pz_sum << " " << had_et_sum << endl;
-    */
-
-  // General check of mom-energy conservation on the parton level:
+  // General check of mom-energy conservation on the Parton level:
     Double_t part_px_sum = 0;// = 892.48 * TMath::Sin(2.7e-4);
     Double_t part_py_sum = 0;// = 892.48 * TMath::Sin(1.3e-4);
     Double_t part_pz_sum = 0;// = - 892.48; 
     Double_t part_e_sum  = 0;// = - 27.52 - TMath::Sqrt( 920 * 920 + 0.9382 * 0.9382); //-947.5204783799
     Double_t part_et_sum = 0;// = 0;
     if (check_cuts) cout << "number of partons is " << Nppart << endl;
+    if (true || check_cuts) cout << " Index :: Idpart :: Ppart_x :: Ppart_y :: Ppart_z :: Ppart_E " << endl;
     for(Int_t i = 0; i < Nppart; i++)
     {
       part_px_sum += Ppart[i][0];
@@ -70,16 +34,9 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       TLorentzVector v; 
       v.SetPxPyPzE(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
       part_et_sum += v.Et();
+      if (true || check_cuts) cout << i << " " << Idpart[i] << " " << Ppart[i][0] << " " <<Ppart[i][1] << " " << Ppart[i][2] << " " << Ppart[i][3]<< endl;
     }
     
-    /*  
-      hist.part_sum_e->Fill(part_e_sum, wtx);
-      hist.part_sum_px->Fill(part_px_sum, wtx);
-      hist.part_sum_py->Fill(part_py_sum, wtx);
-      hist.part_sum_pz->Fill(part_pz_sum, wtx);
-      hist.part_sum_et->Fill(part_et_sum, wtx);
-      hist.part_Nppart->Fill(Nppart, wtx);
-    */
   // Additional check
     Double_t m_q2_true = -1. * (bosene * bosene - bospx * bospx - bospy*bospy - bospz*bospz); // parton level
     Double_t m_x_true = m_q2_true / (2. * m_Proton_Energy * (bosene-bospz)); // parton level
@@ -127,50 +84,122 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       if (check_cuts) cout << "in this event Nppart < 1" << endl;
     }
 
-  /* 
-    if (take_pevent) 
-    {
-      hist.dis_Q2_true_part->Fill(Mc_q2, wtx); 
-      hist.dis_electron_e_true_part->Fill(Mc_pfsl[3], wtx); 
-      hist.dis_electron_theta_true_part->Fill(v_true_electron.Theta()*180.0/TMath::Pi(), wtx); 
-      hist.dis_x_true_part->Fill(Mc_x, wtx); 
-      hist.dis_y_true_part->Fill(Mc_y, wtx); 
-    }
-  */
-
   //Find true photon
   //on the HADRON level --> index_true_hadron_partlevel
     Int_t index_true_photon_hadlevel = -1;
-
+    Int_t index_true_photon_hadlevel_fmckin2 = -1;
+    int index_true_electron_partlevel_fmckin2 = -1;
     for(Int_t i = 0; i < Npart; i++)
-     {
-       if (check_cuts) cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
-       if (Part_prt[i] == 29)
-       {
-         index_true_photon_hadlevel = i;
-         if (check_cuts) cout << "true photon found: " << index_true_photon_hadlevel << endl;
-         break;
-       }
-     }
-    if (check_cuts) 
-      cout << "Parton E/M-conservation with photon and electron : (" << part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] << ", " << 
-                                                        part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] << ", " << 
-                                                        part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] << ", " << 
-                                                        part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] << ")" 
-                                                        << " and Et = " << part_et_sum << endl;
-
-    if (check_en_mom_conservation_on_parton_level &&
-        check_en_mom_conservation && ( abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - E_cons)  > 1 ||
-             abs(part_pz_sum + Part_p[index_true_photon_hadlevel][2] + Mc_pfsl[2] - pz_cons) > 1 || 
-             abs(part_py_sum + Part_p[index_true_photon_hadlevel][1] + Mc_pfsl[1] - py_cons) > 0.1 || 
-             abs(part_px_sum + Part_p[index_true_photon_hadlevel][0] + Mc_pfsl[0] - px_cons) > 0.1 ) )
     {
+      if (check_cuts) cout << "Fmckin instance: " << i << " :: Part_id =" << Part_id[i]  << ", Part_prt = "<< Part_prt[i] << endl;
+      if (Part_prt[i] == 29)
+      {
+        index_true_photon_hadlevel = i;
+        if (check_cuts) cout << "true photon found: " << index_true_photon_hadlevel << endl;
+        break;
+      }
+    }
+    TLorentzVector v_PrPh;
+    v_PrPh.SetPxPyPzE(Part_p[index_true_photon_hadlevel][0], Part_p[index_true_photon_hadlevel][1], Part_p[index_true_photon_hadlevel][2], Part_p[index_true_photon_hadlevel][3]);
+
+    vector<TLorentzVector> parton_lev_prt;
+    double part_px_sum_fmckin2 = 0;
+    double part_py_sum_fmckin2 = 0;
+    double part_pz_sum_fmckin2 = 0;
+    double part_e_sum_fmckin2 = 0;
+    if (part_lev_from_fmckin2)
+    {
+      if (check_cuts) cout << " Index :: Fmck_id :: Fmck_isthep :: Fmck_daug :: Fmck_prt :: Fmck_px :: Fmck_py :: Fmck_pz :: Fmck_e " << endl;
+      bool passed_photon = false, passed_electron = false;
+        for (int i = 0; i < Fmck_nstor; i++)
+        {
+          if (Fmck_isthep[i]%10000 == 1 && Fmck_prt[i] == 29) //(Fmck_id[i] == Part_id[index_true_photon_hadlevel]) 
+          {
+            index_true_photon_hadlevel_fmckin2 = i;
+            passed_photon = true;
+            v_PrPh.SetPxPyPzE(Fmck_px[i], Fmck_py[i], Fmck_pz[i], Fmck_e[i]);
+            if (check_cuts) cout << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] <<  "PHOTON" << endl;
+            continue;
+          }
+          // if (!passed_electron && abs(Fmck_px[i] - Mc_pfsl[0]) < 0.01 && 
+          //                        abs(Fmck_py[i] - Mc_pfsl[1]) < 0.01 && 
+          //                        abs(Fmck_pz[i] - Mc_pfsl[2]) < 0.01 && 
+          //                        abs(Fmck_e[i] - Mc_pfsl[3]) < 0.01 ) 
+          if (Fmck_isthep[i]%10000 == 1 && (Fmck_prt[i] == 23 || Fmck_prt[i] == 24))
+          {
+            passed_electron = true; 
+            index_true_electron_partlevel_fmckin2 = i;
+            if (check_cuts) cout << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] <<  "ELECTRON" << endl;
+            continue;
+          }
+          if (!passed_photon) 
+          {
+            if (check_cuts) cout << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] <<  "BEFORE PHOTON" << endl;
+            continue;
+          };
+
+          TLorentzVector v; 
+          if ( abs(part_e_sum_fmckin2 + v_PrPh.E() + Mc_pfsl[3] + Fmck_e[i] - E_cons) > abs(part_e_sum_fmckin2 + v_PrPh.E() + Mc_pfsl[3] - E_cons) ) 
+          {
+            break;
+          }
+          v.SetPxPyPzE(Fmck_px[i], Fmck_py[i], Fmck_pz[i], Fmck_e[i]);
+          parton_lev_prt.push_back(v);
+          part_px_sum_fmckin2 += Fmck_px[i];
+          part_py_sum_fmckin2 += Fmck_py[i];
+          part_pz_sum_fmckin2 += Fmck_pz[i];
+          part_e_sum_fmckin2 += Fmck_e[i];
+          if (check_cuts) cout << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] <<  "TAKEN" << endl;
+          if (Fmck_prt[i] == 2092) break;
+        }
+    }
+    else 
+    {
+      for (int i = 0; i < Nppart; i++)
+      {
+        TLorentzVector v; 
+        v.SetPxPyPzE(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
+        parton_lev_prt.push_back(v);
+        part_px_sum_fmckin2 += Ppart[i][0];
+        part_py_sum_fmckin2 += Ppart[i][1];
+        part_pz_sum_fmckin2 += Ppart[i][2];
+        part_e_sum_fmckin2 += Ppart[i][3];
+      }
+    }
+
+    if (true || check_cuts) 
+    {
+      cout << "Electron: (" << Mc_pfsl[0] << ", " << Mc_pfsl[1] << ", " << Mc_pfsl[2] << ", " << Mc_pfsl[3] << ")" << endl;
+      cout << "Photon: (" << v_PrPh.Px() << ", " << v_PrPh.Py() << ", " << v_PrPh.Pz() << ", " << v_PrPh.E() << ")" << endl;
+      cout << "Parton E/M-conservation with photon and electron : (" << part_px_sum_fmckin2 + v_PrPh.Px() + Mc_pfsl[0] << ", " << 
+                                                        part_py_sum_fmckin2 + v_PrPh.Py() + Mc_pfsl[1] << ", " << 
+                                                        part_pz_sum_fmckin2 + v_PrPh.Pz() + Mc_pfsl[2] << ", " << 
+                                                        part_e_sum_fmckin2  + v_PrPh.E() + Mc_pfsl[3] << ")" 
+                                                        << " and Et = " << part_et_sum << "\n";
+      if (part_lev_from_fmckin2) cout << "FMCKIN2 Parton VS QCDPART :  px: " << part_px_sum_fmckin2 << " " << part_px_sum << 
+                                     ", py: " << part_py_sum_fmckin2 << " " << part_py_sum << 
+                                     ", pz: " << part_pz_sum_fmckin2 << " " << part_pz_sum <<
+                                     ", en: " << part_e_sum_fmckin2  << " " << part_e_sum << endl;
+    }
+
+    // Check Momentum conservation
+    if (check_en_mom_conservation_on_parton_level &&
+        check_en_mom_conservation && ( 
+             abs(part_e_sum_fmckin2  + v_PrPh.E() + Mc_pfsl[3] - E_cons)  > 1
+             || abs(part_pz_sum_fmckin2 + v_PrPh.Pz() + Mc_pfsl[2] - pz_cons) > 1
+             //|| abs(part_py_sum_fmckin2 + v_PrPh.Py() + Mc_pfsl[1] - py_cons) > 0.1
+             //|| abs(part_px_sum_fmckin2 + v_PrPh.Px() + Mc_pfsl[0] - px_cons) > 0.1 
+             ) 
+        )
+    {
+      if (abs(part_e_sum_fmckin2  + v_PrPh.E() + Mc_pfsl[3] - E_cons)  > 1) cout << "E_part broken"<< endl;
+      if (abs(part_pz_sum_fmckin2 + v_PrPh.Pz() + Mc_pfsl[2] - pz_cons) > 1 ) cout << "Pz_part broken"<< endl;
+      if (abs(part_py_sum_fmckin2 + v_PrPh.Py() + Mc_pfsl[1] - py_cons) > 0.1 ) cout << "Py_part broken"<< endl;
+      if (abs(part_px_sum_fmckin2 + v_PrPh.Px() + Mc_pfsl[0] - px_cons) > 0.1 ) cout << "Px_part broken"<< endl;
       en_mom_conservation = false;
       return false;
     }
-
-    if (abs(part_e_sum  + Part_p[index_true_photon_hadlevel][3] + Mc_pfsl[3] - 947.5) > 1 ) return false; 
-
+    //else return true;
 
   //Find true photon 
   //on the PARTON level --> index_true_photon_partlevel
@@ -221,18 +250,18 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                << v_true_prompt_photon->E() << ", id = " << Part_id[index_true_photon_hadlevel]  
           << ", prt = " << Part_prt[index_true_photon_hadlevel] << endl; 
 
-          for(Int_t i=0; i<Nppart; i++)
-           cout << "parton #" << i << ": " << Ppart[i][0] << " " << Ppart[i][1] << " " << Ppart[i][2] << " " << Ppart[i][3] << ", id = " << Idpart[i] << endl; 
+          // for(Int_t i = 0; i<Nppart; i++)
+          //  cout << "parton #" << i << ": " << Ppart[i][0] << " " << Ppart[i][1] << " " << Ppart[i][2] << " " << Ppart[i][3] << ", id = " << Idpart[i] << endl; 
         
         }
     }
 
   // PrPh cuts on parton level(some):
     TLorentzVector tl_true_photon; //prph on the parton level
-    tl_true_photon.SetPxPyPzE(Part_p[index_true_photon_hadlevel][0],
-                              Part_p[index_true_photon_hadlevel][1],
-                              Part_p[index_true_photon_hadlevel][2],
-                              Part_p[index_true_photon_hadlevel][3]);
+    tl_true_photon.SetPxPyPzE(v_PrPh.Px(),
+                              v_PrPh.Py(),
+                              v_PrPh.Pz(),
+                              v_PrPh.E());
     if (tl_true_photon.Et() < 4. || tl_true_photon.Et() > 15. 
         || tl_true_photon.Eta() < -0.7 || tl_true_photon.Eta() > 0.9)
       here_is_true_prph = kFALSE;
@@ -245,57 +274,56 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       // construct vector of r's --> input_partons
       // and find # of parton in input_partons that is true photon --> index_photon_vector
         KtJet::KtLorentzVector r;
-        if (check_cuts) cout << "Nppart " << Nppart<< endl;
-        for (Int_t i = 0; i < Nppart; i++)//Npart
+        //if (check_cuts) cout << "Nppart " << Nppart<< endl;
+        //for (Int_t i = 0; i < Nppart; i++)//Npart
+        for (int i = 0; i < parton_lev_prt.size(); i++)
         {
-          Double_t M2 = Ppart[i][3] * Ppart[i][3] 
-                        - Ppart[i][2] * Ppart[i][2] 
-                        - Ppart[i][1] * Ppart[i][1] 
-                        - Ppart[i][0] * Ppart[i][0];// parton mass
-    					   
-    	    if (i == index_true_electron_partlevel) continue; // Skip DIS electron
-    	    if (TMath::Abs(Ppart[i][3]) < 1.e-3) continue; // Skip low energy
-    	    if (Ppart[i][3] <= 0) continue;
-    	    //	if (M2 < 0 ) continue;
-    	    //	if (TMath::Abs(Ppart[i][2]) > Ppart[i][3]) continue;
-
-    	    if (i == index_true_photon_partlevel) index_photon_vector = input_partons.size();
-    	
-        	if (TMath::Abs(Ppart[i][2]) < Ppart[i][3]) r = KtJet::KtLorentzVector(Ppart[i][0], Ppart[i][1], Ppart[i][2], Ppart[i][3]);
-          else  r = KtJet::KtLorentzVector(Ppart[i][0], Ppart[i][1], Ppart[i][2],
-    					     TMath::Sqrt(Ppart[i][0] * Ppart[i][0] 
-                              + Ppart[i][1] * Ppart[i][1] 
-                              + Ppart[i][2] * Ppart[i][2]));
+          // Double_t M2 = Ppart[i][3] * Ppart[i][3] 
+          //               - Ppart[i][2] * Ppart[i][2] 
+          //               - Ppart[i][1] * Ppart[i][1] 
+          //               - Ppart[i][0] * Ppart[i][0];// parton mass; 
+          double Energy_i = parton_lev_prt[i].E();// Ppart[i][3];
+          double Pz_i = parton_lev_prt[i].Pz();// Ppart[i][2]
+          double Py_i = parton_lev_prt[i].Py();// Ppart[i][1]
+          double Px_i = parton_lev_prt[i].Px();// Ppart[i][0]
+          //if (i == index_true_electron_partlevel) continue; // Skip DIS electron
+          if (TMath::Abs(Energy_i) < 1.e-3) continue; // Skip low energy
+          if (Energy_i <= 0) continue;
+          //  if (M2 < 0 ) continue;
+          //  if (TMath::Abs(Ppart[i][2]) > Energy_i) continue;
+      
+          if (TMath::Abs(Pz_i) < Energy_i) r = KtJet::KtLorentzVector(Px_i, Py_i, Pz_i, Energy_i);
+          else  r = KtJet::KtLorentzVector(Px_i, Py_i, Pz_i, TMath::Sqrt(Px_i * Px_i + Py_i * Py_i + Pz_i * Pz_i));
           input_partons.push_back(r);
         }
 
 
         //add the missing photon to the parton level instances
           {
-            Double_t M2 = Part_p[index_true_photon_hadlevel][3] * Part_p[index_true_photon_hadlevel][3] 
-                          - Part_p[index_true_photon_hadlevel][2] * Part_p[index_true_photon_hadlevel][2] 
-                          - Part_p[index_true_photon_hadlevel][1] * Part_p[index_true_photon_hadlevel][1] 
-                          - Part_p[index_true_photon_hadlevel][0] * Part_p[index_true_photon_hadlevel][0];// parton mass
+            Double_t M2 = v_PrPh.E() * v_PrPh.E() 
+                          - v_PrPh.Pz() * v_PrPh.Pz() 
+                          - v_PrPh.Py() * v_PrPh.Py() 
+                          - v_PrPh.Px() * v_PrPh.Px();// parton mass
              
              if (check_cuts) cout << "photon 4-momentum: " 
-                  << Part_p[index_true_photon_hadlevel][0] << " "
-                  << Part_p[index_true_photon_hadlevel][1] << " "
-                  << Part_p[index_true_photon_hadlevel][2] << " "
-                  << Part_p[index_true_photon_hadlevel][3] << ", M2 = "
+                  << v_PrPh.Px() << " "
+                  << v_PrPh.Py() << " "
+                  << v_PrPh.Pz() << " "
+                  << v_PrPh.E() << ", M2 = "
                   << M2 << endl;
                    
             if (index_true_photon_hadlevel != index_true_electron_partlevel
-                && TMath::Abs(Part_p[index_true_photon_hadlevel][3]) >= 1.e-3
-                && Part_p[index_true_photon_hadlevel][3] > 0) 
+                && TMath::Abs(v_PrPh.E()) >= 1.e-3
+                && v_PrPh.E() > 0) 
             {
 
               index_photon_vector = input_partons.size();
           
-              if (TMath::Abs(Part_p[index_true_photon_hadlevel][2]) < Part_p[index_true_photon_hadlevel][3]) r = KtJet::KtLorentzVector(Part_p[index_true_photon_hadlevel][0], Part_p[index_true_photon_hadlevel][1], Part_p[index_true_photon_hadlevel][2], Part_p[index_true_photon_hadlevel][3]);
-              else  r = KtJet::KtLorentzVector(Part_p[index_true_photon_hadlevel][0], Part_p[index_true_photon_hadlevel][1], Part_p[index_true_photon_hadlevel][2],
-                        TMath::Sqrt(Part_p[index_true_photon_hadlevel][0] * Part_p[index_true_photon_hadlevel][0] 
-                                  + Part_p[index_true_photon_hadlevel][1] * Part_p[index_true_photon_hadlevel][1] 
-                                  + Part_p[index_true_photon_hadlevel][2] * Part_p[index_true_photon_hadlevel][2]));
+              if (TMath::Abs(v_PrPh.Pz()) < v_PrPh.E()) r = KtJet::KtLorentzVector(v_PrPh.Px(), v_PrPh.Py(), v_PrPh.Pz(), v_PrPh.E());
+              else  r = KtJet::KtLorentzVector(v_PrPh.Px(), v_PrPh.Py(), v_PrPh.Pz(),
+                        TMath::Sqrt(v_PrPh.Px() * v_PrPh.Px() 
+                                  + v_PrPh.Py() * v_PrPh.Py() 
+                                  + v_PrPh.Pz() * v_PrPh.Pz()));
               input_partons.push_back(r);
             }
           }
@@ -320,7 +348,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
 
           if (true_parton_jets[i].contains(input_partons[index_photon_vector])) 
           {
-            index_photon_jet = i;	
+            index_photon_jet = i; 
             ephoton_over_ejet = input_partons[index_photon_vector].e() / true_parton_jets[i].e();
             //Additional output
               {
@@ -386,10 +414,10 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                     here_is_true_jet = kTRUE;
                     count_nat++;
                     // Turn on for the check
-                    //	    cout << count_nat << " " << Runnr << " " << Eventnr << endl;
-                    //	    cout << Siq2el[0] << " " << Mc_x << endl;
-                    //	    cout << Mc_pfsl[3] << " " << input_partons[index_photon_vector].et() << " " << true_parton_jets[i].et() << endl;
-                    //	    cout << endl;
+                    //      cout << count_nat << " " << Runnr << " " << Eventnr << endl;
+                    //      cout << Siq2el[0] << " " << Mc_x << endl;
+                    //      cout << Mc_pfsl[3] << " " << input_partons[index_photon_vector].et() << " " << true_parton_jets[i].et() << endl;
+                    //      cout << endl;
 
                     if (true_parton_jets[i].et() > max_et_jet) 
                     {
@@ -499,19 +527,19 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
             << endl;  
 
       if (check_cuts) cout << "found parton level jet containing true photon: et = " << true_parton_jets[index_photon_jet].et()
-  	       << ", eta = " << true_parton_jets[index_photon_jet].eta() 
+           << ", eta = " << true_parton_jets[index_photon_jet].eta() 
            << " et_photon = " << input_partons[index_photon_vector].et()
-  	       << ", eta_photon = " << input_partons[index_photon_vector].eta() 
+           << ", eta_photon = " << input_partons[index_photon_vector].eta() 
            << endl;
 
       if (check_cuts) cout << "parton level Eventr = " << Eventnr 
            << ": q2 = " << Mc_q2 
            << ", et_photon = " 
            << input_partons[index_photon_vector].et()
-  	       << ", eta_photon = " << input_partons[index_photon_vector].eta() 
-        	 << ", et_accomp_jet = " << accomp_jet_et 
-        	 << ", eta_accomp_jet = " << accomp_jet_eta 
-        	 << ", ephoton_over_ejet = " << ephoton_over_ejet << endl;
+           << ", eta_photon = " << input_partons[index_photon_vector].eta() 
+           << ", et_accomp_jet = " << accomp_jet_et 
+           << ", eta_accomp_jet = " << accomp_jet_eta 
+           << ", ephoton_over_ejet = " << ephoton_over_ejet << endl;
 
       if (check_cuts) cout << "================================PARTON LEVEL EVENT " << Eventnr  << " ACCEPTED============================================" << endl;
     }

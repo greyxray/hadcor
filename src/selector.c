@@ -99,10 +99,15 @@ Bool_t selector::Process()
 	check_cuts = kTRUE;
 	bool test_on_entry = false;
 	int test_entry = 4;
-	for(Long64_t entry = 0; entry < nentries -1  && debugcontinue; entry++)
+	  check_en_mom_conservation = true;
+	  check_en_mom_conservation_on_parton_level = true;
+	  nodebugmode = kFALSE;
+	 part_lev_from_fmckin2 = true;
+	 had_lev_from_fmckin2 = true;
+	for(Long64_t entry = 0; entry < nentries - 1  && debugcontinue; entry++)
 	{
 		wtx = 1;
-		if (entry>500) exit(1);
+		//if (entry > 10) exit(1);
 		en_mom_conservation = true;
 		// To test specific entry
 			if (test_on_entry)
@@ -116,6 +121,11 @@ Bool_t selector::Process()
 			}
 		 
 		fChain->GetEntry(entry);
+
+		//cout << "maybe This is ev " << entry << " " <<Fmck_e[11] <<  endl;
+		// if (abs(Fmck_e[11] - 5.80215) > 0.00001) continue;
+		// else cout << "This is ev " << entry << " " <<Fmck_e[11] <<  endl;
+
 		cout << "entry: " << entry << "; Eventnr: " << Eventnr << "; Runnr_prev: " << Runnr_prev << endl;
 
 		take_had_event = kFALSE;
@@ -145,12 +155,6 @@ Bool_t selector::Process()
 					hist.h2d_uncorr_accjet_phi_true_det->Fill(v_true_acc_jet->Phi(), v_accomp_uncorr_jet->Phi());
 				}
 			}
-
-			// if (!en_mom_conservation) 
-			// {
-			// 	cout <<"EM NOT PRESERVED ON HADRON LEVEL - EVENT DISCARDED"<< endl;
-			// 	//continue;
-			// }
 
 			if (!Data && SelectPartonLevel(take_event && here_is_jet && here_is_prph && take_event_trig, take_had_event)) 
 			{
@@ -277,6 +281,7 @@ Bool_t selector::Process()
 					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
 					hist.had_nopart_cross_deta_e_ph->Fill(had_deta_e_ph);
 		hadron_level_jets.clear();
+		//exit(1);
 	}// for entry over entries
 
 	Terminate();
