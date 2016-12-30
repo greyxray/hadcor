@@ -30,29 +30,29 @@ void fill_chain(TChain* chain, TString run_period, Bool_t data, TString mc_type,
 			// Ian MC - new Funnel
 				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01.root");
 				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09.root");
-				// chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09.root");
+				chain->Add("/nfs/dust/zeus/group/glushenko/new_zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10.root");
 			// Ian MC - old Funnel
 				//without EM-conserv: num_had = 69727 num_part = 62370
 				//with EM-conserv: num_had = 39647 num_part = 46993
-				/** /
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");
-//				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");
-				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");
-				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");
-				chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
-				/ **/
+				
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSBF25.H25125.8B.PRPH_DIS_PYT64_2005_01_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_02_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_03_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_04_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_05_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_06_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSNE25.H25125.8B.PRPH_DIS_PYT64_2005_07_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_08_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_09_1.root");
+				// chain->Add("/nfs/dust/zeus/group/glushenko/zmcsp/samples/Ian/ZEUSMC.SDSME25.H25125.8B.PRPH_DIS_PYT64_2005_10_1.root");
+				
 			
 			// My MC
 				//Old

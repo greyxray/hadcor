@@ -75,7 +75,6 @@ Bool_t selector::Process()
 {	
 	Long64_t nentries = fChain->GetEntries();
 	if (!nodebugmode) cout <<"Number of events to process: " << nentries << endl;
-
 	//parameter initialising
 		Bool_t take_had_event = kFALSE;
 		Bool_t take_part_event = kFALSE;
@@ -92,6 +91,8 @@ Bool_t selector::Process()
 
 	//debugging tools
 		ofstream list_of_runs("runs" + period);
+
+  
 		Int_t Runnr_prev = 0;
 		Bool_t debugcontinue = kTRUE;
 		Int_t missed = 0;
@@ -104,7 +105,7 @@ Bool_t selector::Process()
 	  nodebugmode = kFALSE;
 	 part_lev_from_fmckin2 = true;
 	 had_lev_from_fmckin2 = true;
-	for(Long64_t entry = 0; entry < nentries - 1  && debugcontinue; entry++)
+	for( entry = 0; entry < nentries - 1  && debugcontinue; entry++)
 	{
 		wtx = 1;
 		//if (entry > 10) exit(1);
@@ -126,7 +127,7 @@ Bool_t selector::Process()
 		// if (abs(Fmck_e[11] - 5.80215) > 0.00001) continue;
 		// else cout << "This is ev " << entry << " " <<Fmck_e[11] <<  endl;
 
-		cout << "entry: " << entry << "; Eventnr: " << Eventnr << "; Runnr_prev: " << Runnr_prev << endl;
+		//cout << "entry: " << entry << "; Eventnr: " << Eventnr << "; Runnr_prev: " << Runnr_prev << endl;
 
 		take_had_event = kFALSE;
 		take_part_event = kFALSE;
@@ -155,6 +156,7 @@ Bool_t selector::Process()
 					hist.h2d_uncorr_accjet_phi_true_det->Fill(v_true_acc_jet->Phi(), v_accomp_uncorr_jet->Phi());
 				}
 			}
+			
 
 			if (!Data && SelectPartonLevel(take_event && here_is_jet && here_is_prph && take_event_trig, take_had_event)) 
 			{
@@ -170,7 +172,7 @@ Bool_t selector::Process()
 		
 			if (!en_mom_conservation) 
 			{
-				cout <<"EM NOT PRESERVED"<< endl;
+				cout << "EM NOT PRESERVED" << endl;
 				continue;
 			}
 
@@ -281,9 +283,9 @@ Bool_t selector::Process()
 					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
 					hist.had_nopart_cross_deta_e_ph->Fill(had_deta_e_ph);
 		hadron_level_jets.clear();
-		//exit(1);
+		
 	}// for entry over entries
-
+	ofs.close();
 	Terminate();
 	cout << "num_had = " << num_had << " num_part = " << num_part << endl; 
 	return kTRUE;

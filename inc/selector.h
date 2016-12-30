@@ -25,16 +25,19 @@ using namespace std;
 #include <TDatime.h>
 #include <TRandom3.h>
 #include <TEventList.h>
+#include <fstream>
+
 #include "constants.h"
 #include "hist.h"
 #include "KtJet/KtEvent.h"
 #include "KtJet/KtLorentzVector.h"
 using KtJet::KtLorentzVector;
 using KtJet::KtEvent;
-
+#define NFCMSIZ 1500
 class selector {
  public :
-
+   std::ofstream ofs;
+   Long64_t entry;
   static const Float_t m_Lepton_Energy = 27.52;
   static const Float_t m_Proton_Energy = 920.;
   static const  Double_t E_e = 27.52;
@@ -695,19 +698,19 @@ class selector {
     Int_t           Npart;
     Int_t           idlepton;
     Int_t           idphoton;
-    Int_t           Part_prt[511];   //[Npart]
-    Int_t           Part_id[511];   //[Npart]
-    Float_t         Part_p[511][4];   //[Npart]
-    Int_t           Part_motherid[511];   //[Npart]
-    Int_t           Part_motherprt[511];   //[Npart]
+    Int_t           Part_prt[NFCMSIZ];   //[Npart]
+    Int_t           Part_id[NFCMSIZ];   //[Npart]
+    Float_t         Part_p[NFCMSIZ][4];   //[Npart]
+    Int_t           Part_motherid[NFCMSIZ];   //[Npart]
+    Int_t           Part_motherprt[NFCMSIZ];   //[Npart]
 
   //Block: FMCZufo
        Int_t           Fmc_ezisl;
        Int_t           Fmc_gzisl;
        Int_t           Fmc_ezufo;
        Int_t           Fmc_gzufo;
-       Int_t           Fmc_zisl[511];   //[Npart]
-       Int_t           Fmc_zufo[511];   //[Npart]
+       Int_t           Fmc_zisl[NFCMSIZ];   //[Npart]
+       Int_t           Fmc_zufo[NFCMSIZ];   //[Npart]
 
    // THIS IS SOMETHING NEW BLOCK 
        Int_t           fmce5true[4];   //[E5ncand]
@@ -883,8 +886,8 @@ class selector {
 
     //Block: QCDHAD
       Int_t           Nfmckin;
-      Int_t           Idfmckin[511];   //[Nfmckin]
-      Float_t         Ppfmckin[511][4];   //[Nfmckin]
+      Int_t           Idfmckin[NFCMSIZ];   //[Nfmckin]
+      Float_t         Ppfmckin[NFCMSIZ][4];   //[Nfmckin]
 
     //Block: QCDBOSON
       Float_t         bospx;
@@ -894,15 +897,15 @@ class selector {
 
     //Block: QCDPAR
       Int_t           Nppart;
-      Int_t           Idpart[511];   //[Nppart]
-      Float_t         Ppart[511][4];   //[Nppart]
+      Int_t           Idpart[NFCMSIZ];   //[Nppart]
+      Float_t         Ppart[NFCMSIZ][4];   //[Nppart]
 
   // Not in ntuples08
 
        Int_t           npart_my;
-       Int_t           Part_jetid[511];   //[npart_my]
-       Int_t           Part_isthep[511];   //[npart_my]
-       Int_t           Part_charge[511];   //[npart_my]
+       Int_t           Part_jetid[NFCMSIZ];   //[npart_my]
+       Int_t           Part_isthep[NFCMSIZ];   //[npart_my]
+       Int_t           Part_charge[NFCMSIZ];   //[npart_my]
        Int_t           Photn;  //(!)
        Int_t           photprphjetindex;
        Int_t           Photid[100];   //[Photn] //(!)
@@ -991,15 +994,15 @@ class selector {
 
 
       Int_t Fmck_nstor;
-      Int_t Fmck_id[511];
-      Int_t Fmck_prt[511];
-      Float_t Fmck_px[511];
-      Float_t Fmck_py[511];
-      Float_t Fmck_pz[511]; 
-      Float_t Fmck_e[511];  
-      Float_t Fmck_m[511];  
-      Int_t Fmck_isthep[511];  
-      Int_t Fmck_daug[511];  
+      Int_t Fmck_id[NFCMSIZ];
+      Int_t Fmck_prt[NFCMSIZ];
+      Float_t Fmck_px[NFCMSIZ];
+      Float_t Fmck_py[NFCMSIZ];
+      Float_t Fmck_pz[NFCMSIZ]; 
+      Float_t Fmck_e[NFCMSIZ];  
+      Float_t Fmck_m[NFCMSIZ];  
+      Int_t Fmck_isthep[NFCMSIZ];  
+      Int_t Fmck_daug[NFCMSIZ];  
    //----------------------------
    
 
@@ -1466,6 +1469,8 @@ class selector {
 //#define selector_init
 void selector::Init(TTree *tree, TString run_period, Bool_t b_Data, TString s_mc_type, TString s_mc_corr_type, Bool_t b_usecorr, Bool_t b_use2ndcorr, Bool_t b_use_clustered)
 {
+  ofs.open("hadLevEMnotpreserved.txt", std::ofstream::out );
+  entry = 0;
   wtx = 1;
   check_en_mom_conservation = true;
   check_en_mom_conservation_on_parton_level = false;

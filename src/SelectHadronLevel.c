@@ -15,7 +15,7 @@ using KtJet::KtEvent;
 
 Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
 {
-  if (check_cuts)cout << "going into hadr. selection" << endl;
+  if (true) cout << "going into hadr. selection" << endl;
   check_cuts = kFALSE;
   //param init
     Bool_t take_hevent = kTRUE;
@@ -84,7 +84,7 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
       for(Int_t i = 0; i < Fmck_nstor; i++)
       {
         if (Fmck_isthep[i]%10000 != 1) continue;
-        if ((Fmck_prt[i] == 23) || (Fmck_prt[i] == 24) && index_true_electron == -1)  index_true_electron = i;
+        if ((Fmck_prt[i] == 23) || (Fmck_prt[i] == 24) && index_true_electron == -1)  index_true_electron = hadron_lev_prt.size() ;
 
         TLorentzVector v; 
         v.SetPxPyPzE(Fmck_px[i], Fmck_py[i], Fmck_pz[i], Fmck_e[i]);
@@ -153,8 +153,40 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     {
       cout << "EVENT didin't passed the EM conserv on HAD lev" << endl;
       //en_mom_conservation = false;
+
+      // Save failed ev in the file
+      if (true)
+      {
+        ofs << entry << endl;
+            ofs << " Index :: Fmck_id :: Fmck_isthep :: Fmck_daug :: Fmck_prt :: Fmck_px :: Fmck_py :: Fmck_pz :: Fmck_e " << endl;
+            index_true_electron = -1;
+            index_true_photon = -1;
+            for(Int_t i = 0; i < Fmck_nstor; i++)
+            {
+              ofs << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] ;
+              if (Fmck_isthep[i]%10000 == 1) 
+              {
+                ofs << "<--- HADLEV;";
+                if ((Fmck_prt[i] == 23) || (Fmck_prt[i] == 24) && index_true_electron == -1)  
+                {
+                  ofs << " electron;";
+                  index_true_electron = i;
+                }
+                if (Fmck_prt[i] == 29 && index_true_photon == -1) 
+                {
+                  ofs << " PrPh;";
+                  index_true_photon = i;
+                }
+              }
+              ofs << endl;
+            }
+            ofs << "\n The sum of hadrons gives: " << px_had_sum << " " <<  py_had_sum << " " << pz_had_sum << " " <<  E_had_sum << endl;
+            ofs << "=====================================================\n\n"<< endl;
+      }
+
       return false;
     }
+    //else return true;
 
     if (index_true_photon < 0)
     {

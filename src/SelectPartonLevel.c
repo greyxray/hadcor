@@ -132,6 +132,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
             if (check_cuts) cout << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] <<  "ELECTRON" << endl;
             continue;
           }
+          
           if (!passed_photon) 
           {
             if (check_cuts) cout << i << " " << Fmck_id[i] << " " << Fmck_isthep[i] << " " << Fmck_daug[i] << " " << Fmck_prt[i] << " " << Fmck_px[i] << " " <<Fmck_py[i] << " " <<Fmck_pz[i] << " " << Fmck_e[i] <<  "BEFORE PHOTON" << endl;
@@ -167,7 +168,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       }
     }
 
-    if (true || check_cuts) 
+    if (check_cuts) 
     {
       cout << "Electron: (" << Mc_pfsl[0] << ", " << Mc_pfsl[1] << ", " << Mc_pfsl[2] << ", " << Mc_pfsl[3] << ")" << endl;
       cout << "Photon: (" << v_PrPh.Px() << ", " << v_PrPh.Py() << ", " << v_PrPh.Pz() << ", " << v_PrPh.E() << ")" << endl;
