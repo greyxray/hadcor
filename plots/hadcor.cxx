@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 		cout << "integral of hist " << j << endl;
 		cout << "hist_part: ";
 		cout <<  hist_part_prph[j]->Integral(1, hist_part_prph[j]->GetNbinsX()) << " ";
-		cout <<  hist_part_prph[j]->Integral(0, hist_part_prph[j]->GetNbinsX()+1) << endl;
+		cout <<  hist_part_prph[j]->Integral(0, hist_part_prph[j]->GetNbinsX()+1) << endl; //With overunderflow
 		cout << "hist_had: ";
 		cout <<  hist_had_prph[j]->Integral(1, hist_had_prph[j]->GetNbinsX()) << " ";
 		cout <<  hist_had_prph[j]->Integral(0, hist_had_prph[j]->GetNbinsX()+1) << endl;
