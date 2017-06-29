@@ -43,6 +43,14 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
     if (check_cuts) cout << "rejected by cut on true q2 = " << Mc_q2 << endl;
   }
 
+  cout << "HADRON LEVEL:"<< Siq2el[0] << " vs " << Mc_q2 << endl;
+
+  if (Mc_q2 < q2_cut_low || Mc_q2 > q2_cut_high) 
+  {
+    if (check_cuts && !nodebugmode) cout <<"HADRON LEVEL: special cut q2: "<< Mc_q2<< "< q2_cut_low ||  > q2_cut_high"<< endl;
+    take_hevent = kFALSE;
+    //return false;
+  }
   //electron sel
     v_true_scattered_electron->SetPxPyPzE(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2], Mc_pfsl[3]); // need to compare with parton level
     TVector3 v_true_electron(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2]);
@@ -448,6 +456,39 @@ Bool_t selector::SelectHadronLevel(Bool_t take_det_event)
                   had_deta = true_jets[index_of_accomp_jet].eta() - had_eta;
                   had_dphi_e_ph = delta_phi(v_true_electron.Phi(), input_hadrons[index_photon_vector].phi()) * 180.0/TMath::Pi();
                   had_deta_e_ph = v_true_electron.Eta() - had_eta;
+
+          if (Mc_x >= 2.e-2) 
+          {
+            if (check_cuts) cout <<"==============>parx_x exceeded upper limit\n";
+            Mc_x = 18.e-3;
+          }
+          else if (Mc_x < 2.e-4) 
+          {
+            if (check_cuts) cout <<"==============>parx_x exceeded lower limit\n";
+            Mc_x = 2.e-4;
+          }
+
+          if (temp_deta >= 2) 
+          {
+            if (check_cuts) cout <<"==============>temp_deta exceeded upper limit\n";
+            temp_deta = 1.5;
+          }
+          else if (temp_deta < -2.2) 
+          {
+            if (check_cuts) cout <<"==============>temp_deta exceeded lower limit\n";
+            temp_deta = -2.0;
+          }
+
+          if (temp_deta_e_ph >= -0.6) 
+          {
+            if (check_cuts) cout <<"==============>temp_deta_e_ph exceeded upper limit\n";
+            temp_deta_e_ph = -1.0;
+          }
+          else if (temp_deta_e_ph < -3.6) 
+          {
+            if (check_cuts) cout <<"==============>temp_deta_e_ph exceeded lower limit\n";
+            temp_deta_e_ph = -3.1;
+          }
 
         	hist.prof_had_cross_et->Fill(input_hadrons[index_photon_vector].et(), input_hadrons[index_photon_vector].et(), wtx);
         	hist.prof_had_cross_eta->Fill(input_hadrons[index_photon_vector].eta(), input_hadrons[index_photon_vector].eta(), wtx);

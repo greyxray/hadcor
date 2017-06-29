@@ -48,29 +48,25 @@ void selector::Begin(/*TTree * /*tree*/)
   check_cuts = kFALSE;//kTRUE;
   use_ktjetb_prph = kTRUE;//kFALSE;
   root_file_name = "";
-  if(Data)
-    root_file_name += "data";
-  if(!Data)
-    root_file_name += mc_type;
+  if (Data) root_file_name += "data";
+  if (!Data) root_file_name += mc_type;
 
   //  if(mc_type != "mc_prph")
   //    {
   root_file_name += period;
   //    }
-  if(use_corr) {
-    if(take_2ndana_corr)
-      root_file_name += "_2ndcorr";
-    else
-      root_file_name += "_1stcorr";
+  if (use_corr) 
+  {
+    if (take_2ndana_corr) root_file_name += "_2ndcorr";
+    else root_file_name += "_1stcorr";
   }
 
   //  if(!use_corr)
   //      root_file_name += "_nocorr";
 
-  if(use_clustered)
-    root_file_name += "_uc";
-
-  root_file_name += "_parton.root"; //warning
+  if (use_clustered) root_file_name += "_uc";
+  root_file_name += "_parton"; //warning
+  root_file_name += q2_sufix + ".root"; //warning
   //  root_file_name += "_inclusive_prph_Matt_trig_thetacut_norew.root";
   //root_file_name = "test_php_signal.root";
   //  root_file_name = "mc_php_res_prph0405e.root";

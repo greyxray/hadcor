@@ -1460,6 +1460,8 @@ class selector {
   virtual void    Terminate();
    
   //   ClassDef(selector,0);
+  Double_t q2_cut_low, q2_cut_high;
+  TString q2_sufix;
 };
 
 #endif
@@ -1472,6 +1474,9 @@ void selector::Init(TTree *tree, TString run_period, Bool_t b_Data, TString s_mc
   ofs.open("hadLevEMnotpreserved.txt", std::ofstream::out );
   entry = 0;
   wtx = 1;
+  q2_sufix = "";
+  q2_cut_low =  10; 
+  q2_cut_high = 350;
   check_en_mom_conservation = true;
   check_en_mom_conservation_on_parton_level = false;
   part_lev_from_fmckin2 = false;

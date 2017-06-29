@@ -64,6 +64,12 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
       take_pevent = kFALSE;
       if (check_cuts) cout << "rejected by cut on true q2 = " << Mc_q2 << endl;
     }
+    if (Mc_q2 < q2_cut_low || Mc_q2 > q2_cut_high) 
+    {
+      if (check_cuts && !nodebugmode) cout <<"PARTON LEVEL: special cut q2: "<< Mc_q2<< "< q2_cut_low ||  > q2_cut_high"<< endl;
+      take_pevent = kFALSE;
+      //return false;
+    }
     TVector3 v_true_electron(Mc_pfsl[0], Mc_pfsl[1], Mc_pfsl[2]); // momentum of final state lepton
     if ((v_true_electron.Theta()*180.0 / TMath::Pi() < 140.0 ) ||
         (v_true_electron.Theta()*180.0 / TMath::Pi() > 180.0 ))  
@@ -445,7 +451,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                   part_Q2 = Mc_q2;
                   part_xgamma = (input_partons[index_photon_vector].e() - input_partons[index_photon_vector].pz() 
                                 + v_true_parton_acc_jet->E() - v_true_parton_acc_jet->Pz() ) / (2. * E_e * Mc_y);
-                  if (part_xgamma >= 1) part_xgamma = 0.999;
+                  
                   part_xp = (input_partons[index_photon_vector].e() + input_partons[index_photon_vector].pz() 
                                 + v_true_parton_acc_jet->E() + v_true_parton_acc_jet->Pz() ) / (2. * E_p);
                   part_dphi = delta_phi(v_true_parton_acc_jet->Phi(), input_partons[index_photon_vector].phi()) * 180.0/TMath::Pi();
@@ -458,7 +464,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                   hist.part_Q2->Fill(part_Q2, wtx);
                   hist.part_x->Fill(part_x, wtx);
 
-
+                  if (part_xgamma >= 1) part_xgamma = 0.999;
                   if (part_x >= 2.e-2) 
                   {
                     if (check_cuts) cout <<"==============>parx_x exceeded upper limit\n";

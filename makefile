@@ -13,7 +13,8 @@ KTDIR = /afs/desy.de/user/g/glusheno/programs/KtJet-1.08
 #KTDIR = /usr/local
 # Location of CLHEP installation
 #CLHEPDIR = /data/zenith234b/kuprash/programs/clhep_files
-CLHEPDIR = /afs/cern.ch/sw/lcg/external/clhep/2.0.4.0/slc4_amd64_gcc34
+#CLHEPDIR = /afs/cern.ch/sw/lcg/external/clhep/2.0.4.0/slc4_amd64_gcc34
+CLHEPDIR = /cvmfs/sft.cern.ch/lcg/external/clhep/2.0.4.5/x86_64-slc5-gcc43-opt
 #CLHEPDIR = /usr/local
 # Following line may be needed if using version 1 of CLHEP
 #CLHEP1FLAG = -DCLHEP1

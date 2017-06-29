@@ -91,25 +91,27 @@ Bool_t selector::Process()
 
 	//debugging tools
 		ofstream list_of_runs("runs" + period);
+		bool test_on_entry = false;
+		int test_entry = 4;
+		check_cuts = kTRUE;
+		nodebugmode = kFALSE;
+		Bool_t debugcontinue = kTRUE;
 
   
-		Int_t Runnr_prev = 0;
-		Bool_t debugcontinue = kTRUE;
-		Int_t missed = 0;
-		int num_had(0), num_part(0);
-	check_cuts = kTRUE;
-	bool test_on_entry = false;
-	int test_entry = 4;
-	  check_en_mom_conservation = true;
-	  check_en_mom_conservation_on_parton_level = true;
-	  nodebugmode = kFALSE;
-	 part_lev_from_fmckin2 = true;
-	 had_lev_from_fmckin2 = true;
+	Int_t Runnr_prev = 0;
+	Int_t missed = 0;
+	int num_had(0), num_part(0);
+	check_en_mom_conservation = true;
+	check_en_mom_conservation_on_parton_level = true;
+	part_lev_from_fmckin2 = true;
+	had_lev_from_fmckin2 = true;
+
 	for( entry = 0; entry < nentries - 1  && debugcontinue; entry++)
 	{
 		wtx = 1;
 		//if (entry > 10) exit(1);
 		en_mom_conservation = true;
+
 		// To test specific entry
 			if (test_on_entry)
 			{
@@ -178,110 +180,135 @@ Bool_t selector::Process()
 
 			//part nohad || part_bin != had_bin
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_et->FindBin(part_et) != hist.had_cross_et->FindBin(had_et)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_et->FindBin(part_et) != hist.had_cross_et->FindBin(had_et)) ) 
 					hist.part_nohad_cross_et->Fill(part_et);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_eta->FindBin(part_eta) != hist.had_cross_eta->FindBin(had_eta)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_eta->FindBin(part_eta) != hist.had_cross_eta->FindBin(had_eta)) ) 
 					hist.part_nohad_cross_eta->Fill(part_eta);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_Q2->FindBin(part_Q2) != hist.had_cross_Q2->FindBin(had_Q2)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_Q2->FindBin(part_Q2) != hist.had_cross_Q2->FindBin(had_Q2)) ) 
 					hist.part_nohad_cross_Q2->Fill(part_Q2);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_x->FindBin(part_x) != hist.had_cross_x->FindBin(had_x)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_x->FindBin(part_x) != hist.had_cross_x->FindBin(had_x)) ) 
 					hist.part_nohad_cross_x->Fill(part_x);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_et_jet->FindBin(part_et_jet) != hist.had_cross_et_jet->FindBin(had_et_jet)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_et_jet->FindBin(part_et_jet) != hist.had_cross_et_jet->FindBin(had_et_jet)) ) 
 				{
 					hist.part_nohad_cross_et_jet->Fill(part_et_jet);
 					hist.part_nohad_cross_et_jet2->Fill(part_et_jet);
 				}
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_eta_jet->FindBin(part_eta_jet) != hist.had_cross_eta_jet->FindBin(had_eta_jet)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_eta_jet->FindBin(part_eta_jet) != hist.had_cross_eta_jet->FindBin(had_eta_jet)) ) 
 					hist.part_nohad_cross_eta_jet->Fill(part_eta_jet);
 				//new vars
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_xgamma->FindBin(part_xgamma) != hist.had_cross_xgamma->FindBin(had_xgamma)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_xgamma->FindBin(part_xgamma) != hist.had_cross_xgamma->FindBin(had_xgamma)) ) 
 					hist.part_nohad_cross_xgamma->Fill(part_xgamma);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_xp->FindBin(part_xp) != hist.had_cross_xp->FindBin(had_xp)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_xp->FindBin(part_xp) != hist.had_cross_xp->FindBin(had_xp)) ) 
 					hist.part_nohad_cross_xp->Fill(part_xp);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_dphi->FindBin(part_dphi) != hist.had_cross_dphi->FindBin(had_dphi)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_dphi->FindBin(part_dphi) != hist.had_cross_dphi->FindBin(had_dphi)) ) 
 					hist.part_nohad_cross_dphi->Fill(part_dphi);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_deta->FindBin(part_deta) != hist.had_cross_deta->FindBin(had_deta)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_deta->FindBin(part_deta) != hist.had_cross_deta->FindBin(had_deta)) ) 
 					hist.part_nohad_cross_deta->Fill(part_deta);
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_dphi_e_ph->FindBin(part_dphi_e_ph) != hist.had_cross_dphi_e_ph->FindBin(had_dphi_e_ph)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_dphi_e_ph->FindBin(part_dphi_e_ph) != hist.had_cross_dphi_e_ph->FindBin(had_dphi_e_ph)) ) 
 				{
 					hist.part_nohad_cross_dphi_e_ph->Fill(part_dphi_e_ph);
 				}
 
 				if ( (take_part_event && !take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
 					hist.part_nohad_cross_deta_e_ph->Fill(part_deta_e_ph);
 
 			//had nopart || part_bin != had_bin
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_et->FindBin(part_et) != hist.had_cross_et->FindBin(had_et)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_et->FindBin(part_et) != hist.had_cross_et->FindBin(had_et)) ) 
 					hist.had_nopart_cross_et->Fill(had_et);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_eta->FindBin(part_eta) != hist.had_cross_eta->FindBin(had_eta)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_eta->FindBin(part_eta) != hist.had_cross_eta->FindBin(had_eta)) ) 
 					hist.had_nopart_cross_eta->Fill(had_eta);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_Q2->FindBin(part_Q2) != hist.had_cross_Q2->FindBin(had_Q2)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_Q2->FindBin(part_Q2) != hist.had_cross_Q2->FindBin(had_Q2)) ) 
 					hist.had_nopart_cross_Q2->Fill(had_Q2);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_x->FindBin(part_x) != hist.had_cross_x->FindBin(had_x)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_x->FindBin(part_x) != hist.had_cross_x->FindBin(had_x)) ) 
 					hist.had_nopart_cross_x->Fill(had_x);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_et_jet->FindBin(part_et_jet) != hist.had_cross_et_jet->FindBin(had_et_jet)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_et_jet->FindBin(part_et_jet) != hist.had_cross_et_jet->FindBin(had_et_jet)) ) 
 				{
 					hist.had_nopart_cross_et_jet->Fill(had_et_jet);
 					hist.had_nopart_cross_et_jet2->Fill(had_et_jet);
 				}
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_eta_jet->FindBin(part_eta_jet) != hist.had_cross_eta_jet->FindBin(had_eta_jet)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_eta_jet->FindBin(part_eta_jet) != hist.had_cross_eta_jet->FindBin(had_eta_jet)) ) 
 					hist.had_nopart_cross_eta_jet->Fill(had_eta_jet);
 				//new vars
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_xgamma->FindBin(part_xgamma) != hist.had_cross_xgamma->FindBin(had_xgamma)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_xgamma->FindBin(part_xgamma) != hist.had_cross_xgamma->FindBin(had_xgamma)) ) 
 					hist.had_nopart_cross_xgamma->Fill(had_xgamma);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_xp->FindBin(part_xp) != hist.had_cross_xp->FindBin(had_xp)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_xp->FindBin(part_xp) != hist.had_cross_xp->FindBin(had_xp)) ) 
 					hist.had_nopart_cross_xp->Fill(had_xp);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_dphi->FindBin(part_dphi) != hist.had_cross_dphi->FindBin(had_dphi)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_dphi->FindBin(part_dphi) != hist.had_cross_dphi->FindBin(had_dphi)) ) 
 					hist.had_nopart_cross_dphi->Fill(had_dphi);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_deta->FindBin(part_deta) != hist.had_cross_deta->FindBin(had_deta)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_deta->FindBin(part_deta) != hist.had_cross_deta->FindBin(had_deta)) ) 
 					hist.had_nopart_cross_deta->Fill(had_deta);
 
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_dphi_e_ph->FindBin(part_dphi_e_ph) != hist.had_cross_dphi_e_ph->FindBin(had_dphi_e_ph)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_dphi_e_ph->FindBin(part_dphi_e_ph) != hist.had_cross_dphi_e_ph->FindBin(had_dphi_e_ph)) ) 
 				{
 					hist.had_nopart_cross_dphi_e_ph->Fill(had_dphi_e_ph);
 				}
 				if ( (!take_part_event && take_had_event) || 
-					 (take_part_event && take_had_event && hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
+					 (take_part_event && take_had_event && 
+					 	hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
 					hist.had_nopart_cross_deta_e_ph->Fill(had_deta_e_ph);
+		
 		hadron_level_jets.clear();
 		
 	}// for entry over entries
