@@ -41,8 +41,19 @@ int main(int argc, char *argv[])
 	gStyle->SetTitleFont(42);
 	gStyle->SetTitleY(0.99);
 	gStyle->SetTitleX(0.15);
+	TString q2_sufix = "";
+
 	////////////////////////////////////////////////////////////////////////////////////
-	TFile *file2 = new TFile("../mc_prph0405e_parton.root", "read"); 
+	if (argc > 1) 
+		{
+			q2_sufix = (TString)argv[1];
+			q2_sufix = "_" + q2_sufix;
+		}
+	cout << "q2_sufix:" << q2_sufix << endl;
+
+	TString filename = TString("../mc_prph0405e_parton") + q2_sufix + TString(".root");
+	cout << "filename:" << filename << endl;
+	TFile *file2 = new TFile(filename, "read"); 
 	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
 	
 	//TFile *file2 = new TFile("../mc_prph0405e_parton_really_Ian_without_EM_conserv.root", "read"); // before the constrain on EM cons hist_part: 62370 62370 hist_had: 52412 52412
@@ -430,106 +441,14 @@ int main(int argc, char *argv[])
 
 
 		//    hist2[i]->DrawClone("E P X0 SAME");
-		if(i==0)
-			leg3->Draw();
+		if(i==0) leg3->Draw();
 		else if (i == 6)
-			{leg3->Draw();
-				c3->Print("had_part_QQ.png");}
-		else if (i == n_hist - 1 )
-			c_temp->Print("had_part_QQ2.png");
+		{
+			leg3->Draw();
+			c3->Print("had_part_QQ" + q2_sufix + ".png");
+		}
+		else if (i == n_hist - 1 ) c_temp->Print("had_part_QQ2" + q2_sufix + ".png");
 	}
-
-	//c3->Print("had_part_QQ.png");
-
-	// Double_t corr_et[number_etbins] = {0.83640628,
-	// 	0.88917156,
-	// 	0.94435876,
-	// 	1.00351536
-	// };
-	// Double_t corr_eta[number_etabins] = {0.94166076,
-	// 	0.90925161,
-	// 	0.85739744,
-	// 	0.81262133
-	// };
-	// Double_t corr_Q2[number_Q2bins] = {0.92690714,
-	// 	0.89150959,
-	// 	0.84141361,
-	// 	0.84980063,
-	// 	0.87854045
-	// };
-	// Double_t corr_x[number_xbins] = {0.96148003,
-	// 	0.86479910,
-	// 	0.81532121,
-	// 	0.84837804
-	// };
-	// Double_t corr_eta_jet[number_eta_jetbins] = {0.65408845,
-	// 	0.80294960,
-	// 	0.97016302,
-	// 	1.09009874
-	// };
-	// Double_t corr_et_jet[number_et_jetbins] = {0.82223966,
-	// 	0.82569344,
-	// 	0.87374437,
-	// 	0.99634799,
-	// 	1.04819327,
-	// 	1.08043254
-	// };
-	// TH1D* hist_had_to_part_sum[n_hist];
-	// hist_had_to_part_sum[0] = new TH1D("corr_sum" + s_var[0], "", number_etbins, et_bin);
-	// hist_had_to_part_sum[1] = new TH1D("corr_sum" + s_var[1], "", number_etabins, eta_bin_crosssec);
-	// hist_had_to_part_sum[2] = new TH1D("corr_sum" + s_var[2], "", number_Q2bins, Q2_bin);
-	// hist_had_to_part_sum[3] = new TH1D("corr_sum" + s_var[3], "", number_xbins, x_bin);
-	// hist_had_to_part_sum[4] = new TH1D("corr_sum" + s_var[4], "", number_et_jetbins, et_jet_bin);
-	// hist_had_to_part_sum[5] = new TH1D("corr_sum" + s_var[5], "", number_eta_jetbins, eta_jet_bin);
-
-	// for(Int_t i = 0; i<number_etbins; i++) {
-	// 	hist_had_to_part_sum[0]->SetBinContent(i+1, corr_et[i]);
-	// 	hist_had_to_part_sum[0]->SetBinError(i+1, 0);
-	// }
-	// for(Int_t i = 0; i<number_etabins; i++) {
-	// 	hist_had_to_part_sum[1]->SetBinContent(i+1, corr_eta[i]);
-	// 	hist_had_to_part_sum[1]->SetBinError(i+1, 0);
-	// }
-	// for(Int_t i = 0; i<number_Q2bins; i++) {
-	// 	hist_had_to_part_sum[2]->SetBinContent(i+1, corr_Q2[i]);
-	// 	hist_had_to_part_sum[2]->SetBinError(i+1, 0);
-	// }
-	// for(Int_t i = 0; i<number_xbins; i++) {
-	// 	hist_had_to_part_sum[3]->SetBinContent(i+1, corr_x[i]);
-	// 	hist_had_to_part_sum[3]->SetBinError(i+1, 0);
-	// }
-	// for(Int_t i = 0; i<number_et_jetbins; i++) {
-	// 	hist_had_to_part_sum[4]->SetBinContent(i+1, corr_et_jet[i]);
-	// 	hist_had_to_part_sum[4]->SetBinError(i+1, 0);
-	// }
-	// for(Int_t i = 0; i<number_eta_jetbins; i++) {
-	// 	hist_had_to_part_sum[5]->SetBinContent(i+1, corr_eta_jet[i]);
-	// 	hist_had_to_part_sum[5]->SetBinError(i+1, 0);
-	// }
-	// TCanvas* c4;
-	// c4 = new TCanvas("c4", "c4", 800, 600);
-	// c4->Divide(3, 2);
-	// make_clean_pads(c4, 6, 0, 0);
-	// for(Int_t i = 0; i<6; i++)
-	// 	sign_window(c4->GetPad(i+1), h_window[i], s_dim[i], "hadron / parton", "", "middle");
-
-	// c4->GetPad(3)->SetLogx();
-	// c4->GetPad(4)->SetLogx();
-	// c4->GetPad(5)->SetLogx();
-
-	// for(Int_t i = 0; i<n_hist; i++){
-	// 	c4->GetPad(i+1)->cd();
-	// 	h_window[i]->DrawClone();
-	// 	f_unity->DrawClone("SAME");
-	// 	hist_had_to_part_sum[i]->SetLineColor(kBlue);
-	// 	hist_had_to_part_sum[i]->DrawClone("][ HIST SAME");
-	// 	//    hist_had_to_part_sum[i]->SetFillColor(kBlue);
-	// 	//    hist_had_to_part_sum[i]->SetFillStyle(3335);
-	// 	hist_had_to_part_sum[i]->DrawClone("][ E2 SAME");
-	// }
-
-	// c4->Print("hadronisation.eps");
-
 
 	return 0;
 }
