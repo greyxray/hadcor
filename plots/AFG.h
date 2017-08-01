@@ -3,6 +3,7 @@
 #include "../inc/constants.h"
 
 Double_t * all_bins_arrays[12] = {et_bin, eta_bin_crosssec, Q2_bin, x_bin, et_jet_bin, eta_jet_bin, xgamma_bin, xp_bin, dphi_bin, deta_bin, dphi_e_ph_bin, deta_e_ph_bin, };
+int all_numberOfbins_arrays[12] = {number_etabins, number_etbins, number_Q2bins, number_xbins, number_et_jetbins, number_eta_jetbins, number_xgamma_bins, number_xp_bins, number_dphi_bins, number_deta_bins, number_dphi_e_ph_bins, number_deta_e_ph_bins};
 
 //Fontannaz
 	// 0 < Q2 < 350 range

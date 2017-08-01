@@ -34,6 +34,14 @@ using namespace std;
 #include "AFG.h"
 //#include "plot_style_utils.h"
 
+const Int_t n_hist = 12;
+
+TString s_var[n_hist] = {"et", "eta", "Q2", "x", "et_jet", "eta_jet", "xgamma", "xp", "dphi", "deta", "dphi_e_ph", "deta_e_ph"};
+TString s_var_cxx[n_hist] = {"et", "eta", "Q2", "x", "et_jet", "eta_jet", "xgamma", "xp", "dphi", "deta", "dphi_e_gamma", "deta_e_gamma"};
+TString s_dim[n_hist] = {"E_{T}^{#gamma} (GeV)", "#eta^{#gamma}", "Q^{2} (GeV^{2})", "x", "E_{T}^{jet} (GeV)", "#eta^{jet}", "x_{#gamma}", "x_{p}", "#Delta#phi", "#Delta#eta", "#Delta#phi_{e,#gamma}", "#Delta#eta_{e,#gamma}"};
+TString s_nbins[n_hist] = {"number_etbins", "number_etabins", "number_Q2bins", "number_xbins", "number_et_jetbins", "number_eta_jetbins", "number_xgamma_bins", "number_xp_bins", "number_dphi_bins", "number_deta_bins", "number_dphi_e_ph_bins", "number_deta_e_ph_bins"};
+  
+
 void dout() 
 {
     std::cout << std::endl; 
@@ -43,6 +51,35 @@ void dout(Head H, Tail... T)
 {
   std::cout << H << ' ';
   dout(T...);
+}
+
+template<typename T,int N> 
+int size(T (&arr1)[N]) //Passing the array by reference 
+{
+  size_t size;
+  size = sizeof(arr1) / sizeof(arr1[0]);  
+  return N;
+}
+
+void createQ2gt30()
+{
+  dout("Creating Q2>30 AFG");
+  
+  for(int i = 0; i < size(all_theory_cs_font_pt25_Q2gt30); i++)
+  {
+      dout(s_var[i], ":");
+      if (all_theory_cs_font_pt25_Q2gt30[i] != 0)
+      {
+          cout << "\tQ2>30:";
+          for(int j = 0; j < all_numberOfbins_arrays[i]; j++)
+          {
+              all_theory_cs_font_pt25_Q2gt30[i][j] = all_theory_cs_font_pt25[i][j] - all_theory_cs_font_pt25_Q2lt30[i][j];
+              all_theory_cs_font_pt25_pos_Q2gt30[i][j] = sqrt(pow(all_theory_cs_font_pt25_pos[i][j], 2) + pow(all_theory_cs_font_pt25_pos_Q2lt30[i][j], 2) );
+              all_theory_cs_font_pt25_neg_Q2gt30[i][j] = sqrt(pow(all_theory_cs_font_pt25_neg[i][j], 2) + pow(all_theory_cs_font_pt25_neg_Q2lt30[i][j], 2) );
+              cout << all_theory_cs_font_pt25_Q2gt30[i][j] << " ";
+          }
+      }
+  }
 }
 
 int main(int argc, char *argv[])
@@ -62,8 +99,9 @@ int main(int argc, char *argv[])
 			q2_sufix = "_" + q2_sufix;
 		}
 	cout << "q2_sufix:" << q2_sufix << endl;
-
-	TString filename = TString("../mc_prph0405e_parton") + q2_sufix + TString(".root");
+  createQ2gt30();
+  //no_xgamma_rew - no reweighting
+	TString filename = TString("../no_xgamma_rew/mc_prph0405e_parton") + q2_sufix + TString(".root");
 	cout << "filename:" << filename << endl;
 	TFile *file2 = new TFile(filename, "read"); 
 	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
@@ -77,12 +115,12 @@ int main(int argc, char *argv[])
 	
 	cout << "files attached" << endl;
 
-	const Int_t n_hist = 12;
+	// const Int_t n_hist = 12;
 
-	TString s_var[n_hist] = {"et", "eta", "Q2", "x", "et_jet", "eta_jet", "xgamma", "xp", "dphi", "deta", "dphi_e_ph", "deta_e_ph"};
-  TString s_var_cxx[n_hist] = {"et", "eta", "Q2", "x", "et_jet", "eta_jet", "xgamma", "xp", "dphi", "deta", "dphi_e_gamma", "deta_e_gamma"};
-	TString s_dim[n_hist] = {"E_{T}^{#gamma} (GeV)", "#eta^{#gamma}", "Q^{2} (GeV^{2})", "x", "E_{T}^{jet} (GeV)", "#eta^{jet}", "x_{#gamma}", "x_{p}", "#Delta#phi", "#Delta#eta", "#Delta#phi_{e,#gamma}", "#Delta#eta_{e,#gamma}"};
-	TString s_nbins[n_hist] = {"number_etbins", "number_etabins", "number_Q2bins", "number_xbins", "number_et_jetbins", "number_eta_jetbins", "number_xgamma_bins", "number_xp_bins", "number_dphi_bins", "number_deta_bins", "number_dphi_e_ph_bins", "number_deta_e_ph_bins"};
+	// TString s_var[n_hist] = {"et", "eta", "Q2", "x", "et_jet", "eta_jet", "xgamma", "xp", "dphi", "deta", "dphi_e_ph", "deta_e_ph"};
+ //  TString s_var_cxx[n_hist] = {"et", "eta", "Q2", "x", "et_jet", "eta_jet", "xgamma", "xp", "dphi", "deta", "dphi_e_gamma", "deta_e_gamma"};
+	// TString s_dim[n_hist] = {"E_{T}^{#gamma} (GeV)", "#eta^{#gamma}", "Q^{2} (GeV^{2})", "x", "E_{T}^{jet} (GeV)", "#eta^{jet}", "x_{#gamma}", "x_{p}", "#Delta#phi", "#Delta#eta", "#Delta#phi_{e,#gamma}", "#Delta#eta_{e,#gamma}"};
+	// TString s_nbins[n_hist] = {"number_etbins", "number_etabins", "number_Q2bins", "number_xbins", "number_et_jetbins", "number_eta_jetbins", "number_xgamma_bins", "number_xp_bins", "number_dphi_bins", "number_deta_bins", "number_dphi_e_ph_bins", "number_deta_e_ph_bins"};
   TString s_hist_had[n_hist];
 	TString s_hist_part[n_hist];
 	TString s_hist_had_nopart[n_hist];
@@ -525,6 +563,7 @@ int main(int argc, char *argv[])
 
 
   dout("Make a test plot");
+  if (false)
   {
     bool separate_plots = false;
     TH1D * hist_part_rew[n_hist];
