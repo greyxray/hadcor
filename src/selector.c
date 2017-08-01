@@ -80,11 +80,12 @@ Double_t selector::xgamma_reweighting(Double_t bin_point)
 	Double_t res = 1.;
 	Double_t xgamma_reweighting[number_xgamma_bins]          = {3.45773, 2.65429, 3.29308, 3.00665, 1.80445, 0.675592}; //full Q2
 	Double_t xgamma_q2_lt_30_reweighting[number_xgamma_bins] = {3.64784, 3.48182, 3.26379, 2.62304, 1.47672, 0.655219};
-	Double_t xgamma_q2_gt_30_reweighting[number_xgamma_bins] = {1, 1, 1, 1, 1, 1};
+	Double_t xgamma_q2_gt_30_reweighting[number_xgamma_bins] = {3.23014, 1.82548, 3.20257, 3.29511, 2.06904, 0.694089};
 	for(Int_t i = 0; i < number_xgamma_bins; i++) 
 		if (bin_point > xgamma_bin[i] && bin_point < xgamma_bin[i+1]) 
 		{
 			if (q2_sufix.Contains("q2_lt_30")) res = xgamma_q2_lt_30_reweighting[i];
+			else if (q2_sufix.Contains("q2_gt_30")) res = xgamma_q2_gt_30_reweighting[i];
 			else res = xgamma_reweighting[i];
 		}
 

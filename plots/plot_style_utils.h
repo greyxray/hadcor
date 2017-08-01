@@ -1,5 +1,6 @@
 void sign_window(TVirtualPad *p, TH2D* h, TString xaxis, TString yaxis, TString title)
 {
+  std::cout<< "sign_window 1"<< endl;
   Double_t height = 1-p->GetTopMargin()-p->GetBottomMargin();
   Double_t width = 1-p->GetLeftMargin()-p->GetRightMargin();
   //  cout << "pad width is: " << width << endl;
@@ -37,8 +38,10 @@ void sign_window(TVirtualPad *p, TH2D* h, TString xaxis, TString yaxis, TString 
 
 void sign_window(TVirtualPad *p, TH2D* h, TString xaxis, TString yaxis, TString title, TString title_size)
 {
-  Double_t height = 1-p->GetTopMargin()-p->GetBottomMargin();
-  Double_t width = 1-p->GetLeftMargin()-p->GetRightMargin();
+  std::cout<< "sign_window 2"<< endl;
+  std::cout<< "p->GetTopMargin()-p: " << p->GetTopMargin()<< endl;
+  Double_t height = 1 - p->GetTopMargin() - p->GetBottomMargin();
+  Double_t width = 1 - p->GetLeftMargin() - p->GetRightMargin();
   //  cout << "pad width is: " << width << endl;
   //  cout << "pad height is: " << height << endl;
   if((width == 0.) || (height == 0.)) {

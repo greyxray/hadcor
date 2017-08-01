@@ -100,8 +100,8 @@ int main(int argc, char *argv[])
 		}
 	cout << "q2_sufix:" << q2_sufix << endl;
   createQ2gt30();
-  //no_xgamma_rew - no reweighting
-	TString filename = TString("../no_xgamma_rew/mc_prph0405e_parton") + q2_sufix + TString(".root");
+  //no_xgamma_rew - no reweighting dir
+	TString filename = TString("../mc_prph0405e_parton") + q2_sufix + TString(".root");
 	cout << "filename:" << filename << endl;
 	TFile *file2 = new TFile(filename, "read"); 
 	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
@@ -574,6 +574,7 @@ int main(int argc, char *argv[])
       dout("i",i);
       if (all_theory_cs_font_pt25[i] == 0)
       {
+        dout("no predictions");
         AFG[i] = 0;
         h_win[i] = 0;
         continue;
@@ -585,10 +586,19 @@ int main(int argc, char *argv[])
           AFG[i]->SetBinError(bin + 1, all_theory_cs_font_pt25_pos[i][bin]);
           dout("\tsetting bin", bin, AFG[i]->GetBinContent(bin + 1), "VS", all_theory_cs_font_pt25[i][bin]);
       }
-      dout("1.5 * AFG[i]->GetMaximum()", 1.5 * AFG[i]->GetMaximum());
-      if (i != 8 && i != 10) h_win[i] = new TH2D("h_win_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i], 10, 0.1, 1.5 * AFG[i]->GetMaximum());
-      else h_win[i] = new TH2D("h_win_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i], 10, 0.0, 1.5 * AFG[i]->GetMaximum());
+      dout("\t1.5 * AFG[i]->GetMaximum()", 1.5 * AFG[i]->GetMaximum());
+      if (i != 8 && i != 10) 
+      {
+        h_win[i] = new TH2D("h_win_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i], 10, 0.1, 1.5 * AFG[i]->GetMaximum());
+        dout("hist created (1)");
+      }
+      else
+      {
+        h_win[i] = new TH2D("h_win_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i], 10, 0.0, 1.5 * AFG[i]->GetMaximum());
+        dout("hist created (2)");
+      }
     }
+    dout("==============first block DONE ");
 
     TCanvas *c1;
     c1 = new TCanvas("c1", "c1", 800, 600);
@@ -596,7 +606,7 @@ int main(int argc, char *argv[])
     make_clean_pads(c1, 6, 0, 0);
     for(Int_t j = 0; j < 6; j++)
     {
-      dout("j",j);
+      dout("j", j);
       sign_window(c1->GetPad(j+1), h_win[j+6], s_dim[j+6], "cross section, pb", "", "middle");
     }
 
@@ -710,6 +720,8 @@ int main(int argc, char *argv[])
       }
       
       h_win[i]->DrawClone();
+      dout("Integrate part:", hist_part_rew[i]->Integral(1, hist_part_rew[i]->GetNbinsX() ), "second:", hist_part_rew[i]->Integral());
+      dout("Integrate AFG:", AFG[i]->Integral(1, AFG[i]->GetNbinsX() ), "second:", AFG[i]->Integral(), "total_cs:", total_cs);
       hist_part_rew[i]->Draw("HIST SAME");
       AFG[i]->Draw("SAME");
       leg->Draw();
