@@ -71,6 +71,27 @@ extern "C"
 	//Int_t findMaxEt(Int_t sorted[], Double_t et_jets[], Int_t N);
 	//void sortEt(TObjArray *arrayNotSorted, TObjArray *arraySorted);
 */
+
+
+
+Double_t selector::xgamma_reweighting(Double_t bin_point)
+{
+	if (bin_point == -1) return 1;
+	Double_t res = 1.;
+	Double_t xgamma_reweighting[number_xgamma_bins]          = {3.45773, 2.65429, 3.29308, 3.00665, 1.80445, 0.675592}; //full Q2
+	Double_t xgamma_q2_lt_30_reweighting[number_xgamma_bins] = {3.64784, 3.48182, 3.26379, 2.62304, 1.47672, 0.655219};
+	Double_t xgamma_q2_gt_30_reweighting[number_xgamma_bins] = {1, 1, 1, 1, 1, 1};
+	for(Int_t i = 0; i < number_xgamma_bins; i++) 
+		if (bin_point > xgamma_bin[i] && bin_point < xgamma_bin[i+1]) 
+		{
+			if (q2_sufix.Contains("q2_lt_30")) res = xgamma_q2_lt_30_reweighting[i];
+			else res = xgamma_reweighting[i];
+		}
+
+	return res;
+}
+
+
 Bool_t selector::Process()
 {	
 	Long64_t nentries = fChain->GetEntries();
@@ -108,10 +129,10 @@ Bool_t selector::Process()
 
 	for( entry = 0; entry < nentries - 1  && debugcontinue; entry++)
 	{
-		wtx = 1;
+		dout("entry::", entry);
+		
 		//if (entry > 10) exit(1);
 		en_mom_conservation = true;
-
 		// To test specific entry
 			if (test_on_entry)
 			{
@@ -124,6 +145,14 @@ Bool_t selector::Process()
 			}
 		 
 		fChain->GetEntry(entry);
+
+		dout("======TEWEIGHTING=========");
+		wtx = 1;
+		cout << "GetXgamma(false): " << GetXgamma(false) << endl;
+		
+		//continue;
+		wtx *= xgamma_reweighting(GetXgamma(false));
+		dout("===============", wtx);
 
 		//cout << "maybe This is ev " << entry << " " <<Fmck_e[11] <<  endl;
 		// if (abs(Fmck_e[11] - 5.80215) > 0.00001) continue;
@@ -160,7 +189,7 @@ Bool_t selector::Process()
 			}
 			
 
-			if (!Data && SelectPartonLevel(take_event && here_is_jet && here_is_prph && take_event_trig, take_had_event)) 
+			if (!Data && SelectPartonLevel(take_event && here_is_jet && here_is_prph && take_event_trig, take_had_event, kFALSE)) 
 			{
 				num_part += 1;
 				cout << "SelectPartonLevel" << endl;
@@ -308,7 +337,6 @@ Bool_t selector::Process()
 					 (take_part_event && take_had_event && 
 					 	hist.part_cross_deta_e_ph->FindBin(part_deta_e_ph) != hist.had_cross_deta_e_ph->FindBin(had_deta_e_ph)) ) 
 					hist.had_nopart_cross_deta_e_ph->Fill(had_deta_e_ph);
-		
 		hadron_level_jets.clear();
 		
 	}// for entry over entries

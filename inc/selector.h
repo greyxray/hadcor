@@ -38,24 +38,26 @@ class selector {
  public :
    std::ofstream ofs;
    Long64_t entry;
-  static const Float_t m_Lepton_Energy = 27.52;
-  static const Float_t m_Proton_Energy = 920.;
-  static const  Double_t E_e = 27.52;
-  static const  Double_t E_p = 920.;
-  static const Int_t maxNjetsInEvent = 50;
-  static const Int_t maxNofJets = 250;
+  static constexpr Float_t m_Lepton_Energy = 27.52;
+  static constexpr Float_t m_Proton_Energy = 920.;
+  static constexpr  Double_t E_e = 27.52;
+  static constexpr  Double_t E_p = 920.;
+  static constexpr Int_t maxNjetsInEvent = 50;
+  static constexpr Int_t maxNofJets = 250;
 
   bool en_mom_conservation;//per event flag
   bool check_en_mom_conservation;//per process at all
   bool check_en_mom_conservation_on_parton_level;//per process at all
   bool part_lev_from_fmckin2;//per process at all
   bool had_lev_from_fmckin2;//per process at all
-  static const Double_t px_cons = - 0.35;
-  static const Double_t py_cons = - 0.22;
-  static const Double_t pz_cons = 892.5;
-  static const Double_t E_cons = 947.5;
+  static constexpr Double_t px_cons = - 0.35;
+  static constexpr Double_t py_cons = - 0.22;
+  static constexpr Double_t pz_cons = 892.5;
+  static constexpr Double_t E_cons = 947.5;
 
     bool nodebugmode;
+    Double_t xgamma_reweighting(Double_t bin_point);
+    Double_t GetXgamma(bool check_cuts);
    Double_t delta_phi(Double_t phi1, Double_t phi2);
   Double_t jet_en_corr(Double_t eta, Double_t et, TString period, TString mc_type);
   Double_t jet_en_corr(Double_t eta, Double_t et, Double_t* C_scale, Double_t* a0_corr, Double_t* a1_corr, Double_t* a2_corr);
@@ -64,6 +66,24 @@ class selector {
 			 string distribution, // Fmax or deltaZ
 			 Double_t eta,
 			 Double_t et);
+
+//   void dout();
+//   template <typename Head, typename... Tail>
+//   void dout(Head , Tail... );
+//   //#ifndef selector_init
+// //#define selector_init
+void dout() 
+{
+    std::cout << std::endl; 
+}
+template <typename Head, typename... Tail>
+void dout(Head H, Tail... T) 
+{
+  std::cout << H << ' ';
+  dout(T...);
+}
+
+
   Double_t BPRES_mips(TVector3 v_photon, Double_t radius);
   void  getBpreReadout(); // A.Volynets
   Double_t doBpreReadout(Double_t mips); // A.Volynets
@@ -73,7 +93,7 @@ class selector {
   void fill_trigger_bits(TH1D* h[], Int_t trigger[]);
   void fill_trigger_bits_general(TH1D* h[], Int_t trigger[], Int_t n);
   Bool_t SelectHadronLevel(Bool_t take_det_event);
-  Bool_t SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event);
+  Bool_t SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event, Bool_t check_cuts);
   Bool_t SelectPrPhKtJetB(Int_t i_true_rad_photon,  Int_t electron_in_zufo);
   Double_t q2_reweighting(Float_t Mc_q2, TString mc_type);
   Double_t etaph_reweighting(Double_t eta, TString mc_type);
@@ -1467,8 +1487,8 @@ class selector {
 #endif
 
 #ifdef selector_c
-//#ifndef selector_init
-//#define selector_init
+
+
 void selector::Init(TTree *tree, TString run_period, Bool_t b_Data, TString s_mc_type, TString s_mc_corr_type, Bool_t b_usecorr, Bool_t b_use2ndcorr, Bool_t b_use_clustered)
 {
   ofs.open("hadLevEMnotpreserved.txt", std::ofstream::out );

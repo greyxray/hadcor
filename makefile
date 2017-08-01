@@ -23,7 +23,7 @@ CLHEPDIR = /cvmfs/sft.cern.ch/lcg/external/clhep/2.0.4.5/x86_64-slc5-gcc43-opt
 
 # Programs and flags
 CXX          = g++ 
-CXXFLAGS     = -O0 -ansi
+CXXFLAGS     = -O0 -ansi -std=gnu++0x
 RM           = rm -f 
 
 # Assign or Add variables
@@ -64,7 +64,7 @@ src/selectorTerminate.o : src/selectorTerminate.c inc/selector.h inc/constants.h
 	$(CXX) $(CXXFLAGS) $(INC) -o $@ -c $<
 
 .f.o:
-	g++ -o $@ -c $<
+	g++ -std=gnu++0x -o $@ -c $<
 
 
 #src/runinfo.o : src/runinfo.c inc/runinfo.h

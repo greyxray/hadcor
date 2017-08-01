@@ -13,7 +13,7 @@ using namespace std;
 using KtJet::KtLorentzVector;
 using KtJet::KtEvent;
 
-Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event = kFALSE)
+Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event = kFALSE, Bool_t check_cuts = kFALSE)
 {
   cout << "...going into part. selection" << endl;
   if (take_had_event) check_cuts = kFALSE;
@@ -451,7 +451,8 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                   part_Q2 = Mc_q2;
                   part_xgamma = (input_partons[index_photon_vector].e() - input_partons[index_photon_vector].pz() 
                                 + v_true_parton_acc_jet->E() - v_true_parton_acc_jet->Pz() ) / (2. * E_e * Mc_y);
-                  
+                  cout << "Check intermetiate:" << input_partons[index_photon_vector].e() << " - " << input_partons[index_photon_vector].pz()  <<
+                              " + " << v_true_parton_acc_jet->E() << " - " << v_true_parton_acc_jet->Pz() << " / 2 * " << E_e << " * " <<Mc_y << "\n";
                   part_xp = (input_partons[index_photon_vector].e() + input_partons[index_photon_vector].pz() 
                                 + v_true_parton_acc_jet->E() + v_true_parton_acc_jet->Pz() ) / (2. * E_p);
                   part_dphi = delta_phi(v_true_parton_acc_jet->Phi(), input_partons[index_photon_vector].phi()) * 180.0/TMath::Pi();
@@ -504,6 +505,7 @@ Bool_t selector::SelectPartonLevel(Bool_t take_det_event, Bool_t take_had_event 
                   hist.part_cross_et_jet->Fill(accomp_jet_et, wtx);
                   hist.part_cross_et_jet2->Fill(accomp_jet_et, wtx);
                   hist.part_cross_eta_jet->Fill(accomp_jet_eta, wtx);
+                  cout <<"==============>part_xgamma: " << part_xgamma <<"\n";
                     hist.part_cross_xgamma->Fill(part_xgamma, wtx);
                     hist.part_cross_xp->Fill(part_xp, wtx);
                     hist.part_cross_dphi->Fill(part_dphi, wtx);
