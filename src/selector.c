@@ -74,19 +74,25 @@ extern "C"
 
 
 
-Double_t selector::xgamma_reweighting(Double_t bin_point)
+Double_t selector::xgamma_reweighting(Double_t bin_point, bool AFG = true)
 {
 	if (bin_point == -1) return 1;
 	Double_t res = 1.;
 	Double_t xgamma_reweighting[number_xgamma_bins]          = {3.45773, 2.65429, 3.29308, 3.00665, 1.80445, 0.675592}; //full Q2
 	Double_t xgamma_q2_lt_30_reweighting[number_xgamma_bins] = {3.64784, 3.48182, 3.26379, 2.62304, 1.47672, 0.655219};
 	Double_t xgamma_q2_gt_30_reweighting[number_xgamma_bins] = {3.23014, 1.82548, 3.20257, 3.29511, 2.06904, 0.694089};
+	Double_t xgamma_reweighting_BLZ[number_xgamma_bins] = {0.281324, 0.348397, 0.312551, 0.190445, 0.0642162, 1.19316}; //full Q2
+	
 	for(Int_t i = 0; i < number_xgamma_bins; i++) 
 		if (bin_point > xgamma_bin[i] && bin_point < xgamma_bin[i+1]) 
 		{
-			if (q2_sufix.Contains("q2_lt_30")) res = xgamma_q2_lt_30_reweighting[i];
-			else if (q2_sufix.Contains("q2_gt_30")) res = xgamma_q2_gt_30_reweighting[i];
-			else res = xgamma_reweighting[i];
+			if (AFG)
+			{
+				if (q2_sufix.Contains("q2_lt_30")) res = xgamma_q2_lt_30_reweighting[i];
+				else if (q2_sufix.Contains("q2_gt_30")) res = xgamma_q2_gt_30_reweighting[i];
+				else res = xgamma_reweighting[i];
+			}
+			else res = xgamma_reweighting_BLZ[i];
 		}
 
 	return res;
@@ -152,7 +158,7 @@ Bool_t selector::Process()
 		cout << "GetXgamma(false): " << GetXgamma(false) << endl;
 		
 		//continue;
-		wtx *= xgamma_reweighting(GetXgamma(false));
+		wtx *= xgamma_reweighting(GetXgamma(false), false);
 		dout("===============", wtx);
 
 		//cout << "maybe This is ev " << entry << " " <<Fmck_e[11] <<  endl;

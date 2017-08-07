@@ -42,6 +42,29 @@ TString s_dim[n_hist] = {"E_{T}^{#gamma} (GeV)", "#eta^{#gamma}", "Q^{2} (GeV^{2
 TString s_nbins[n_hist] = {"number_etbins", "number_etabins", "number_Q2bins", "number_xbins", "number_et_jetbins", "number_eta_jetbins", "number_xgamma_bins", "number_xp_bins", "number_dphi_bins", "number_deta_bins", "number_dphi_e_ph_bins", "number_deta_e_ph_bins"};
   
 
+TString s_legend[n_hist] = 
+{
+  "electron method",
+  "Double-Angle (zufos)",
+  "Double-Angle (cells)",
+  "Jacquet-Blondel (zufos)"//,
+  //            "Jacquet-Blondel (cells)",
+  //            "Q^{2} at generated level"
+};
+TH1D *hist_had[n_hist];
+TH1D *hist_had_nopart[n_hist];
+TH1D *hist_part[n_hist];
+TH1D *hist_part_nohad[n_hist];
+TH1D *hist_had_to_part[n_hist];
+
+TH1D *hist_had_prph[n_hist];
+TH1D *hist_had_nopart_prph[n_hist];
+TH1D *hist_part_prph[n_hist];
+TH1D *hist_part_nohad_prph[n_hist];
+TH1D *hist_had_to_part_prph[n_hist];
+
+TString q2_sufix = "";
+
 void dout() 
 {
     std::cout << std::endl; 
@@ -51,6 +74,19 @@ void dout(Head H, Tail... T)
 {
   std::cout << H << ' ';
   dout(T...);
+}
+
+template <typename Head>
+Head maxOflist(Head H) 
+{
+  return H;
+}
+template <typename Head, typename... Tail>
+Head maxOflist(Head H, Tail... T) 
+{
+  if (H>=maxOflist(T...)) 
+    return H;
+  else return maxOflist(T...);
 }
 
 template<typename T,int N> 
@@ -82,6 +118,63 @@ void createQ2gt30()
   }
 }
 
+void plotSingle(TH1D* h, int i)
+{
+  TH1D * h_part_prph =(TH1D *) hist_part_prph[i]->Clone("part_new");
+  TH1D * h_had_prph =(TH1D *) hist_had_prph[i]->Clone("had_new");
+  TH1D * h_part_nohad_prph =(TH1D *) hist_part_nohad_prph[i]->Clone("part_nohad_new");
+  TH1D * h_had_nopart_prph =(TH1D *) hist_had_nopart_prph[i]->Clone("had_nopart_new");
+  h_part_prph->SetLineColor(kBlue);
+  h_had_prph->SetLineColor(kBlack);
+  h_part_nohad_prph->SetLineColor(kRed);
+  h_had_nopart_prph->SetLineColor(kGreen);
+  h_part_prph->SetLineWidth(1);
+  h_had_prph->SetLineWidth(1);
+  h_part_nohad_prph->SetLineWidth(1);
+  h_had_nopart_prph->SetLineWidth(1);
+  TCanvas *c2;
+  c2 = new TCanvas("c2", "c2", 800, 600);
+  //make_clean_pads(c1->GetPad(0), 1, 0, 0);
+  make_clean_canv(c2);
+  c2->cd();
+  TH2D * h_win = new TH2D("h_win_sep_" + TString(i), "", h->GetNbinsX(), all_bins_arrays[i], 10, 0.0, 1.5 * maxOflist(h_part_prph->GetMaximum(), h_had_prph->GetMaximum(), h_part_nohad_prph->GetMaximum(), h_had_nopart_prph->GetMaximum()));
+  sign_window(c2->GetPad(0), h_win, s_dim[i], "cs", s_var[i], "small");
+
+  TLegend *leg;
+  if (i != 8 && i != 10) leg = new TLegend(0.6, 0.68, 0.9, 0.93);
+  else leg = new TLegend(0.15, 0.6, 0.45, 0.9);
+  leg->SetBorderSize(0);
+  leg->SetFillColor(0);
+  leg->SetFillStyle(0);
+  leg->AddEntry(h_part_prph, "parton lev", "l");
+  leg->AddEntry(h_had_prph, "hadron lev", "l");
+  leg->AddEntry(h_part_nohad_prph, "parton lev, mig on had lev", "l");
+  leg->AddEntry(h_had_nopart_prph, "had lev, mig on part lev", "l");
+
+  h_win->SetStats(kFALSE);
+  //h_win->SetTitle("Reweighting to AFG control plot," + q2_sufix);
+  h_win->GetXaxis()->SetTitle(s_dim[i]);
+  h_win->GetYaxis()->SetTitle("Arb. units");
+  h_win->GetXaxis()->CenterTitle();
+  h_win->GetYaxis()->CenterTitle();
+  //h_win->GetXaxis()->SetTitleSize(fontsizex);
+  h_win->GetXaxis()->SetTitleFont(42);
+  h_win->GetYaxis()->SetTitleFont(42);
+  //h_win->GetXaxis()->SetLabelSize(fontsizex);
+  h_win->GetXaxis()->SetLabelFont(42);
+  h_win->GetYaxis()->SetLabelFont(42);      
+
+  h_win->DrawClone();
+  h_part_prph->Draw("HIST SAME");
+  h_had_prph->Draw("HIST SAME");
+  h_part_nohad_prph->Draw("HIST SAME");
+  h_had_nopart_prph->Draw("HIST SAME");
+
+  leg->Draw();
+  c2->Print("migration_" + s_var[i] + q2_sufix + ".png");
+
+}
+
 int main(int argc, char *argv[])
 {
 	gROOT->SetStyle("Plain");
@@ -90,9 +183,10 @@ int main(int argc, char *argv[])
 	gStyle->SetTitleFont(42);
 	gStyle->SetTitleY(0.99);
 	gStyle->SetTitleX(0.15);
-	TString q2_sufix = "";
 
 	////////////////////////////////////////////////////////////////////////////////////
+  bool BLZ = true;
+  bool noReweighting = false;
 	if (argc > 1) 
 		{
 			q2_sufix = (TString)argv[1];
@@ -101,7 +195,12 @@ int main(int argc, char *argv[])
 	cout << "q2_sufix:" << q2_sufix << endl;
   createQ2gt30();
   //no_xgamma_rew - no reweighting dir
-	TString filename = TString("../mc_prph0405e_parton") + q2_sufix + TString(".root");
+  //xgamma_rew - all regions reweighted to AFG
+  //xgamma_rew_BLZ - all regions reweighted to BLZ
+	TString filename = TString("../xgamma_rew/mc_prph0405e_parton") + q2_sufix + TString(".root");
+  if (BLZ) filename = TString("../xgamma_rew_BLZ/mc_prph0405e_parton") + q2_sufix + TString(".root");
+  if (noReweighting) filename = TString("../no_xgamma_rew/mc_prph0405e_parton") + q2_sufix + TString(".root");
+
 	cout << "filename:" << filename << endl;
 	TFile *file2 = new TFile(filename, "read"); 
 	//TFile *file2 = new TFile("../temp_root2/temp2.root", "read"); 
@@ -135,26 +234,6 @@ int main(int argc, char *argv[])
 	}
 	//  TString s_hist2[n_hist] = {"h_ana_DetkLvl_JetSel_EtLabJets", "h_ana_DetLvl_JetSel_EtaLabJets", "h_ana_DetLvl_JetSel_EtBreitJets", "h_ana_DetLvl_JetSel_EtaBreitJets"};
 
-	TString s_legend[n_hist] = 
-	{
-		"electron method",
-		"Double-Angle (zufos)",
-		"Double-Angle (cells)",
-		"Jacquet-Blondel (zufos)"//,
-		//			      "Jacquet-Blondel (cells)",
-		//			      "Q^{2} at generated level"
-	};
-	TH1D *hist_had[n_hist];
-	TH1D *hist_had_nopart[n_hist];
-	TH1D *hist_part[n_hist];
-	TH1D *hist_part_nohad[n_hist];
-	TH1D *hist_had_to_part[n_hist];
-
-	TH1D *hist_had_prph[n_hist];
-	TH1D *hist_had_nopart_prph[n_hist];
-	TH1D *hist_part_prph[n_hist];
-	TH1D *hist_part_nohad_prph[n_hist];
-	TH1D *hist_had_to_part_prph[n_hist];
 	for(Int_t i = 0; i < n_hist; i++)
 	{
 		file2->cd();
@@ -185,7 +264,8 @@ int main(int argc, char *argv[])
 		hist_had_to_part_prph[i]->Sumw2();
 	}
 	cout << "histos succesfully read" << endl;
-
+  for (int i = 6; i<11; i++)
+  plotSingle(hist_had_nopart_prph[i], i);
  	cout << "Integrals" << endl;
  	cout << hist_part_prph[0]->Integral() << endl;
 	cout << hist_had_prph[0]->Integral() << endl;
@@ -311,19 +391,19 @@ int main(int argc, char *argv[])
 	cout <<"max_hadcor: " << max_hadcor << endl;
 	TH2D *h_window[n_hist];
 	//max_hadcor = 1.25;
-	h_window[0] = new TH2D("h_window_et", "", number_etbins, et_bin, 10, 0.1, max_hadcor);
-	h_window[1] = new TH2D("h_window_eta", "", number_etabins, eta_bin_crosssec, 10, 0.1, max_hadcor);
-	h_window[2] = new TH2D("h_window_Q2", "", number_Q2bins, Q2_bin, 10, 0.1, max_hadcor);
-	h_window[3] = new TH2D("h_window_x", "", number_xbins, x_bin, 10, 0.1, max_hadcor);
-	h_window[4] = new TH2D("h_window_et_jet", "", number_et_jetbins, et_jet_bin, 10, 0.1, max_hadcor);
+	h_window[0] = new TH2D("h_window_et", "", number_etbins, et_bin, 10, 0.1, hist_had_to_part_prph[0]->GetMaximum() * 1.5);
+	h_window[1] = new TH2D("h_window_eta", "", number_etabins, eta_bin_crosssec, 10, 0.1, hist_had_to_part_prph[1]->GetMaximum() * 1.5);
+	h_window[2] = new TH2D("h_window_Q2", "", number_Q2bins, Q2_bin, 10, 0.1, hist_had_to_part_prph[2]->GetMaximum() * 1.5);
+	h_window[3] = new TH2D("h_window_x", "", number_xbins, x_bin, 10, 0.1, hist_had_to_part_prph[3]->GetMaximum() * 1.5);
+	h_window[4] = new TH2D("h_window_et_jet", "", number_et_jetbins, et_jet_bin, 10, 0.1, hist_had_to_part_prph[4]->GetMaximum() * 1.5);
 	// h_window[4] = new TH2D("h_window_et_jet", "", number_et_jetbins, 2.5, 28., 10, 0.1, 2.);
-	h_window[5] = new TH2D("h_window_eta_jet", "", number_eta_jetbins, eta_jet_bin, 10, 0.1, max_hadcor);
-	h_window[6] = new TH2D("h_window_xgamma", "", number_xgamma_bins, xgamma_bin, 10, 0.1, 1.5 * max_hadcor);
-	h_window[7] = new TH2D("h_window_xp", "", number_xp_bins, xp_bin, 10, 0.1, max_hadcor);
-	h_window[8] = new TH2D("h_window_dphi", "", number_dphi_bins, dphi_bin, 10, 0.1, max_hadcor);
-	h_window[9] = new TH2D("h_window_deta", "", number_deta_bins, deta_bin, 10, 0.1, max_hadcor);
-	h_window[10] = new TH2D("h_window_dphi_e_ph", "", number_dphi_e_ph_bins, dphi_e_ph_bin, 10, 0.1, max_hadcor);
-	h_window[11] = new TH2D("h_window_deta_e_ph", "", number_deta_e_ph_bins, deta_e_ph_bin, 10, 0.1, max_hadcor);
+	h_window[5] = new TH2D("h_window_eta_jet", "", number_eta_jetbins, eta_jet_bin, 10, 0.1, hist_had_to_part_prph[5]->GetMaximum() * 1.5);
+	h_window[6] = new TH2D("h_window_xgamma", "", number_xgamma_bins, xgamma_bin, 10, 0.1, 1.5 * hist_had_to_part_prph[6]->GetMaximum() * 1.5);
+	h_window[7] = new TH2D("h_window_xp", "", number_xp_bins, xp_bin, 10, 0.1, hist_had_to_part_prph[7]->GetMaximum() * 1.5);
+	h_window[8] = new TH2D("h_window_dphi", "", number_dphi_bins, dphi_bin, 10, 0.1, hist_had_to_part_prph[8]->GetMaximum() * 1.5);
+	h_window[9] = new TH2D("h_window_deta", "", number_deta_bins, deta_bin, 10, 0.1, hist_had_to_part_prph[9]->GetMaximum() * 1.5);
+	h_window[10] = new TH2D("h_window_dphi_e_ph", "", number_dphi_e_ph_bins, dphi_e_ph_bin, 10, 0.1, hist_had_to_part_prph[10]->GetMaximum() * 1.5);
+	h_window[11] = new TH2D("h_window_deta_e_ph", "", number_deta_e_ph_bins, deta_e_ph_bin, 10, 0.1, hist_had_to_part_prph[11]->GetMaximum() * 1.5);
 	cout << "TH2D *h_window[n_hist] finished" << endl;
 
 	TCanvas *c1, *c2;
@@ -394,7 +474,7 @@ int main(int argc, char *argv[])
 	cout << "I want my hadronisation_corrections" << endl;
 	
 	cout << "got it" << endl;
-
+  exit(1);
 
 	for(Int_t i = 0; i < n_hist; i++) 
 	{
@@ -542,7 +622,8 @@ int main(int argc, char *argv[])
 
     double total_cs = 0;
     for(Int_t i = 1; i <= hist_part_prph[6]->GetNbinsX(); i++)
-  		total_cs += all_theory_cs_font_pt25[6][i-1] * hist_part_prph[6]->GetBinWidth(i);
+  		if (BLZ) total_cs += all_theory_cs[6][i - 1] * hist_part_prph[6]->GetBinWidth(i);
+      else total_cs += all_theory_cs_font_pt25[6][i-1] * hist_part_prph[6]->GetBinWidth(i);
 
   	temp_sum = 0;
     dout ("hist_part_prph[6]->GetEntries():", hist_part_prph[6]->GetEntries());
@@ -553,7 +634,9 @@ int main(int argc, char *argv[])
   		//p_i - is a fraction of events following in bin i from parton level
   		//a_i - is a fraction of events following in bin i from AFG 
   		//a_i = sigma_i * bin_width_i / [sum over sigma_j * bin_width_j for j running over all bins] [%]
-  		double a_i = all_theory_cs_font_pt25[6][i-1] * binWidth / total_cs ;
+  		double a_i;
+      if  (BLZ) a_i = all_theory_cs[6][i-1] * binWidth / total_cs ;
+      else a_i = all_theory_cs_font_pt25[6][i-1] * binWidth / total_cs ;
   		dout("bin", i, a_i,"/", p_i,"=", a_i/p_i);
   		temp_sum += hist_part_prph[6]->GetBinContent(i) * binWidth ;
   		//dout("bin", i, hist_part_prph[6]->GetBinContent(i)*binWidth , hist_part_prph[6]->Integral(i, i));
@@ -561,30 +644,41 @@ int main(int argc, char *argv[])
   	dout(hist_part_prph[6]->GetEntries());
   	cout << "sum2:"<< temp_sum<<" +- " << "\n";
 
-
   dout("Make a test plot");
-  if (false)
+  if (true)
   {
     bool separate_plots = false;
+    TString tag = "AFG";
+    if (BLZ) tag = "BLZ";
     TH1D * hist_part_rew[n_hist];
     TH2D * h_win[n_hist];
     TH1D * AFG[n_hist];
     for(Int_t i = 0; i < n_hist; i++)
     {
       dout("i",i);
-      if (all_theory_cs_font_pt25[i] == 0)
+      if ((all_theory_cs_font_pt25[i] == 0 && !BLZ) || (all_theory_cs[i] == 0 && BLZ))
       {
         dout("no predictions");
         AFG[i] = 0;
         h_win[i] = 0;
         continue;
       }
-      AFG[i] = new TH1D("h_AFG_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i]);
+
+      AFG[i] = new TH1D("h_" + tag + "_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i]);
       for(Int_t bin = 0; bin < hist_part_prph[i]->GetNbinsX(); bin++)
       {
+        if (!BLZ)
+        {
           AFG[i]->SetBinContent(bin + 1, all_theory_cs_font_pt25[i][bin]);
           AFG[i]->SetBinError(bin + 1, all_theory_cs_font_pt25_pos[i][bin]);
           dout("\tsetting bin", bin, AFG[i]->GetBinContent(bin + 1), "VS", all_theory_cs_font_pt25[i][bin]);
+        }
+        else 
+        {
+          AFG[i]->SetBinContent(bin + 1, all_theory_cs[i][bin]);
+          AFG[i]->SetBinError(bin + 1, (all_theory_pos[i][bin] + all_theory_neg[i][bin]) / 2);
+          dout("\tsetting bin", bin, AFG[i]->GetBinContent(bin + 1), "VS", all_theory_cs[i][bin]);
+        }
       }
       dout("\t1.5 * AFG[i]->GetMaximum()", 1.5 * AFG[i]->GetMaximum());
       if (i != 8 && i != 10) 
@@ -620,15 +714,18 @@ int main(int argc, char *argv[])
       hist_part_rew[i]->Sumw2();
       int nbins  = hist_part_prph[i]->GetNbinsX();
       //if (i != 6) continue;
-      if (all_theory_cs_font_pt25[i] == 0) continue;
+      if ((!BLZ && all_theory_cs_font_pt25[i] == 0) || (BLZ && all_theory_cs[i] == 0)) continue;
       //TH1D * AFG = new TH1D("h_AFG_" + TString(i), "", hist_part_prph[i]->GetNbinsX(), all_bins_arrays[i]);
       hist_part_rew[i]->SetLineWidth(1);
       hist_part_rew[i]->SetLineColor(kRed);
       dout("scale");
       float entriess =  hist_part_prph[i]->GetEntries();
       float total_cs = 0;
+
       for(Int_t j = 1; j <= hist_part_prph[i]->GetNbinsX(); j++)
-        total_cs += all_theory_cs_font_pt25[i][j - 1] * hist_part_prph[i]->GetBinWidth(j);
+        if (BLZ) total_cs += all_theory_cs[i][j - 1] * hist_part_prph[i]->GetBinWidth(j);
+        else total_cs += all_theory_cs_font_pt25[i][j - 1] * hist_part_prph[i]->GetBinWidth(j);
+
       float w = total_cs / entriess;
 
       dout("canvas");
@@ -648,24 +745,11 @@ int main(int argc, char *argv[])
          bin_width = hist_part_prph[i]->GetBinWidth(bin + 1),
          acceptance = 1;
          float Lumi = 3552.40;
-        /*  //s_var
-            lumi_data[0] = 134.003 * 1.01;//  lumi_data[0] = 134.15997;
-            lumi_data[1] = 52.4195 * 1.01;//  lumi_data[1] = 54.79574;
-            lumi_data[2] = 136.219 * 1.01;//  lumi_data[2] = 142.93778;
-            lumi_mc_bg[0] = 271.36;///703;//271.36;
-            lumi_mc_bg[1] = 165.26;
-            lumi_mc_bg[2] = 364.6;
-            lumi_mc_prph = 3552.40;
-            total_luminosity_data = 0.;
-        */
         float part_QQ_rew_cross_sec = part_rew * w; // / (acceptance * bin_width * Lumi);
         hist_part_rew[i]->SetBinContent(bin + 1, part_QQ_rew_cross_sec);
         hist_part_rew[i]->SetBinError(bin + 1, hist_part_prph[i]->GetBinError(bin + 1) * w);
         if (i == 8)
-        {
-          //dout("bin", bin, AFG[i]->GetBinContent(bin + 1), "vs", part_QQ_rew_cross_sec);
           dout("bin", bin, AFG[i]->GetBinContent(bin + 1), "vs", hist_part_rew[i]->GetBinContent(bin + 1));
-        }
           
       }
       TLegend *leg;
@@ -675,7 +759,7 @@ int main(int argc, char *argv[])
       leg->SetFillColor(0);
       leg->SetFillStyle(0);
       leg->AddEntry(hist_part_rew[i], "Part., scaled", "l");
-      leg->AddEntry(AFG[i], "AFG", "l");
+      leg->AddEntry(AFG[i], tag, "l");
 
       if (separate_plots)
       {
@@ -705,7 +789,7 @@ int main(int argc, char *argv[])
         else h_win[i] = new TH2D("h_win_" + TString(i), "", nbins, all_bins_arrays[i], 10, 0.0, 1.25 * AFG[i]->GetMaximum());
     
         h_win[i]->SetStats(kFALSE);
-        h_win[i]->SetTitle("Reweighting to AFG control plot," + q2_sufix);
+        h_win[i]->SetTitle("Reweighting to" + tag + " control plot," + q2_sufix);
         h_win[i]->GetXaxis()->SetTitle(s_dim[i]);
         h_win[i]->GetYaxis()->SetTitle("cross section, pb");
         h_win[i]->GetXaxis()->CenterTitle();
@@ -721,7 +805,7 @@ int main(int argc, char *argv[])
       
       h_win[i]->DrawClone();
       dout("Integrate part:", hist_part_rew[i]->Integral(1, hist_part_rew[i]->GetNbinsX() ), "second:", hist_part_rew[i]->Integral());
-      dout("Integrate AFG:", AFG[i]->Integral(1, AFG[i]->GetNbinsX() ), "second:", AFG[i]->Integral(), "total_cs:", total_cs);
+      dout("Integrate", tag, ":", AFG[i]->Integral(1, AFG[i]->GetNbinsX() ), "second:", AFG[i]->Integral(), "total_cs:", total_cs);
       hist_part_rew[i]->Draw("HIST SAME");
       AFG[i]->Draw("SAME");
       leg->Draw();

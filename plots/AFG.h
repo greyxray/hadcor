@@ -131,5 +131,31 @@ int all_numberOfbins_arrays[12] = {number_etabins, number_etbins, number_Q2bins,
 		Double_t * all_theory_cs_font_pt25[12] 	   = {0, 0, 0, 0, 0, 0, font_xgamma_pt25_Q2full, font_xp_pt25_Q2full, font_dphi_pt25_Q2full, font_deta_pt25_Q2full, font_dphi_e_gamma_pt25_Q2full, font_deta_e_gamma_pt25_Q2full};
 		Double_t * all_theory_cs_font_pt25_pos[12] = {0, 0, 0, 0, 0, 0, font_xgamma_pos_pt25_Q2full, font_xp_pos_pt25_Q2full, font_dphi_pos_pt25_Q2full, font_deta_pos_pt25_Q2full, font_dphi_e_gamma_pos_pt25_Q2full, font_deta_e_gamma_pos_pt25_Q2full};
 		Double_t * all_theory_cs_font_pt25_neg[12] = {0, 0, 0, 0, 0, 0, font_xgamma_neg_pt25_Q2full, font_xp_neg_pt25_Q2full, font_dphi_neg_pt25_Q2full, font_deta_neg_pt25_Q2full, font_dphi_e_gamma_neg_pt25_Q2full, font_deta_e_gamma_neg_pt25_Q2full};
-		
+
+//BLZ - full Q2
+	Double_t theor_xgamma[number_xgamma_bins] = { 0.1564726 , 0.5829751 , 0.7100769 , 0.7371457 , 0.8159014 , 125.7932 };
+	Double_t theor_xp[number_xp_bins] = { 608.9192 , 971.959 , 483.1771 , 177.8382 , 46.68674 , 6.017276 };
+	Double_t theor_dphi[number_dphi_bins] = { 0.03686592 , 0.07791403 , 0.1249631 , 0.1433854 , 0.1480789 , 0.13057 , 0.1080152 };
+	Double_t theor_deta[number_deta_bins] = { 1.715301 , 3.166015 , 4.144682 , 4.433577 , 3.577533 , 1.187959 };
+	Double_t theor_dphi_e_gamma[number_dphi_e_ph_bins] = { 0.02387177 , 0.03478839 , 0.05966719 , 0.1021914 , 0.145871 , 0.1372228 };
+	Double_t theor_deta_e_gamma[number_deta_e_ph_bins] = { 1.45014 , 4.229818 , 6.370512 , 5.772007 , 3.372212 };
+
+	Double_t theor_xgamma_pos_error[number_xgamma_bins] = { 0.099934 , 0.5553299 , 0.7494451 , 0.9207533 , 1.0267256 , 10.9787 };
+	Double_t theor_xp_pos_error[number_xp_bins] = { 92.9838 , 104.714 , 73.7316 , 35.4135 , 7.20303 , 1.56039 };
+	Double_t theor_dphi_pos_error[number_dphi_bins] = { 0.00640039 , 0.01550074 , 0.016768 , 0.0153724 , 0.0136855 , 0.0163622 , 0.0100834 };
+	Double_t theor_deta_pos_error[number_deta_bins] = { 0.255486 , 0.378529 , 0.343385 , 0.466079 , 0.458352 , 0.213107 };
+	Double_t theor_dphi_e_gamma_pos_error[number_dphi_e_ph_bins] = { 0.00827339 , 0.0093863 , 0.01062202 , 0.0081597 , 0.0130729 , 0.0123545 };
+	Double_t theor_deta_e_gamma_pos_error[number_deta_e_ph_bins] = { 0.54098 , 0.961131 , 0.898709 , 0.524189 , 0.304116 };
+
+	Double_t theor_xgamma_neg_error[number_xgamma_bins] = { 0.10682828 , 0.4435552 , 0.5474051 , 0.560472 , 0.6077246 , 17.0 };
+	Double_t theor_xp_neg_error[number_xp_bins] = { 119.1916 , 157.8043 , 67.6632 , 18.823 , 4.73124 , 0.579717 };
+	Double_t theor_dphi_neg_error[number_dphi_bins] = { 0.00535148 , 0.012263 , 0.0185595 , 0.0192699 , 0.0200292 , 0.0217651 , 0.02344284 };
+	Double_t theor_deta_neg_error[number_deta_bins] = { 0.25026 , 0.429392 , 0.559737 , 0.692839 , 0.655773 , 0.2194166 };
+	Double_t theor_dphi_e_gamma_neg_error[number_dphi_e_ph_bins] = { 0.00716782 , 0.00886361 , 0.01054127 , 0.01103255 , 0.013411 , 0.0203905 };
+	Double_t theor_deta_e_gamma_neg_error[number_deta_e_ph_bins] = { 0.323534 , 0.832212 , 1.107124 , 0.758223 , 0.28614 };
+
+	Double_t * all_theory_cs[12] = {0, 0, 0, 0, 0, 0, theor_xgamma, theor_xp, theor_dphi, theor_deta, theor_dphi_e_gamma, theor_deta_e_gamma};
+	Double_t * all_theory_pos[12] = {0, 0, 0, 0, 0, 0, theor_xgamma_pos_error, theor_xp_pos_error, theor_dphi_pos_error, theor_deta_pos_error, theor_dphi_e_gamma_pos_error, theor_deta_e_gamma_pos_error};
+	Double_t * all_theory_neg[12] = {0, 0, 0, 0, 0, 0, theor_xgamma_neg_error, theor_xp_neg_error, theor_dphi_neg_error, theor_deta_neg_error, theor_dphi_e_gamma_neg_error, theor_deta_e_gamma_neg_error};
+
 #endif

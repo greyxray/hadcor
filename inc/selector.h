@@ -56,7 +56,7 @@ class selector {
   static constexpr Double_t E_cons = 947.5;
 
     bool nodebugmode;
-    Double_t xgamma_reweighting(Double_t bin_point);
+    Double_t xgamma_reweighting(Double_t bin_point, bool AFG);
     Double_t GetXgamma(bool check_cuts);
    Double_t delta_phi(Double_t phi1, Double_t phi2);
   Double_t jet_en_corr(Double_t eta, Double_t et, TString period, TString mc_type);
